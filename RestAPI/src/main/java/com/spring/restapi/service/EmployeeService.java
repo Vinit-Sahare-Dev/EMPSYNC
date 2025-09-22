@@ -20,6 +20,13 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
     
+   
+    public void deleteEmployeeById(Long id) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
+        employeeRepository.delete(employee);
+    }
+    
     private void calculateEmployeeDeductions(Employee employee) {
         Double salary = employee.getSalary();
         

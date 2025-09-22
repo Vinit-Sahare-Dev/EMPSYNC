@@ -26,6 +26,12 @@ public class EmployeeController {
                 .body(savedEmployee);
     }
     
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteEmployeeById(@PathVariable Long id) {
+        employeeService.deleteEmployeeById(id);
+        return ResponseEntity.ok().body("Employee with id " + id + " deleted successfully");
+    }   
+    
     // Get all employees
     @GetMapping
     public ResponseEntity<List<Employee>> getAllEmployees() {
@@ -54,4 +60,6 @@ public class EmployeeController {
         List<Employee> employees = employeeService.getEmployeesByGender(gender);
         return ResponseEntity.ok(employees);
     }
+    
+   
 }
