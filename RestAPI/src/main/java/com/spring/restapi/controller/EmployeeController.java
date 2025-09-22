@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
@@ -17,11 +20,38 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
         Employee savedEmployee = employeeService.saveEmployee(employee);
-        
-        
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .header("Location", "/api/employees/" + savedEmployee.getId())
                 .body(savedEmployee);
+    }
+    
+    // Get all employees
+    @GetMapping
+    public ResponseEntity<List<Employee>> getAllEmployees() {
+        List<Employee> employees = employeeService.getAllEmployees();
+        return ResponseEntity.ok(employees);
+    }
+    
+    // Get employee by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+        Optional<Employee> employee = employeeService.getEmployeeById(id);
+        return employee.map(ResponseEntity::ok)
+                     .orElse(ResponseEntity.notFound().build());
+    }
+    
+    // Get employees by department
+    @GetMapping("/department/{department}")
+    public ResponseEntity<List<Employee>> getEmployeesByDepartment(@PathVariable String department) {
+        List<Employee> employees = employeeService.getEmployeesByDepartment(department);
+        return ResponseEntity.ok(employees);
+    }
+    
+    // Get employees by gender
+    @GetMapping("/gender/{gender}")
+    public ResponseEntity<List<Employee>> getEmployeesByGender(@PathVariable String gender) {
+        List<Employee> employees = employeeService.getEmployeesByGender(gender);
+        return ResponseEntity.ok(employees);
     }
 }

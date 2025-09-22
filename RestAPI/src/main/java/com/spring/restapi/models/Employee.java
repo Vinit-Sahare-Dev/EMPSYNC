@@ -1,15 +1,14 @@
 package com.spring.restapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "employees")  // Use lowercase table name
+@Table(name = "employees")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  // Use lowercase 'id' not 'ID'
+    private Long id;
     
     @Column(name = "NAME")
     private String name;
@@ -35,11 +34,9 @@ public class Employee {
     @Column(name = "TAX")
     private Double tax;
     
-    // Default constructor (CRITICAL)
     public Employee() {
     }
     
-    // Parameterized constructor
     public Employee(String name, Double salary, String department, String gender) {
         this.name = name;
         this.salary = salary;
@@ -47,7 +44,7 @@ public class Employee {
         this.gender = gender;
     }
     
-    // Getters and setters for ALL fields
+    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     
