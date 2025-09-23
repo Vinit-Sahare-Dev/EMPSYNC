@@ -26,11 +26,37 @@ public class EmployeeController {
                 .body(savedEmployee);
     }
     
+    
+    // NEW: PUT - Full Update
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
+        try {
+            Employee updatedEmployee = employeeService.updateEmployee(id, employeeDetails);
+            return ResponseEntity.ok(updatedEmployee);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    // NEW: PATCH - Partial Update
+    @PatchMapping("/{id}")
+    public ResponseEntity<Employee> partialUpdateEmployee(
+            @PathVariable Long id,
+            @RequestBody Employee employeeDetails) {
+
+        Employee updatedEmployee = employeeService.partialUpdateEmployee(id, employeeDetails);
+        return ResponseEntity.ok(updatedEmployee);
+    }
+
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEmployeeById(@PathVariable Long id) {
         employeeService.deleteEmployeeById(id);
-        return ResponseEntity.ok().body("Employee with id " + id + " deleted successfully");
-    }   
+        return ResponseEntity.ok("Employee with id " + id + " deleted successfully");
+    }
+ 
+    
+    
     
     // Get all employees
     @GetMapping

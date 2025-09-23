@@ -79,4 +79,48 @@ public class EmployeeService {
         employees.forEach(this::calculateEmployeeDeductions);
         return employees;
     }
+    
+    // NEW: PUT - Full Update
+    public Employee updateEmployee(Long id, Employee employeeDetails) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
+        
+        // Update all fields
+        employee.setName(employeeDetails.getName());
+        employee.setSalary(employeeDetails.getSalary());
+        employee.setDepartment(employeeDetails.getDepartment());
+        employee.setGender(employeeDetails.getGender());
+        
+        // Recalculate deductions
+        calculateEmployeeDeductions(employee);
+        
+        return employeeRepository.save(employee);
+    }
+    
+    // NEW: PATCH - Partial Update
+    public Employee partialUpdateEmployee(Long id, Employee employeeDetails) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
+        
+        // Update only provided fields (check for null)
+        if (employeeDetails.getName() != null) {
+            employee.setName(employeeDetails.getName());
+        }
+        if (employeeDetails.getSalary() != null) {
+            employee.setSalary(employeeDetails.getSalary());
+        }
+        if (employeeDetails.getDepartment() != null) {
+            employee.setDepartment(employeeDetails.getDepartment());
+        }
+        if (employeeDetails.getGender() != null) {
+            employee.setGender(employeeDetails.getGender());
+        }
+        
+        // Recalculate deductions if salary changed
+        if (employeeDetails.getSalary() != null) {
+            calculateEmployeeDeductions(employee);
+        }
+        
+        return employeeRepository.save(employee);
+    }
 }
