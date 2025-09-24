@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
+
 
 @Service
 public class EmployeeService {
@@ -97,30 +99,41 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
     
-    // NEW: PATCH - Partial Update
-    public Employee partialUpdateEmployee(Long id, Employee employeeDetails) {
+    
+    // Save multiple employees
+    public List<Employee> saveAllEmployees(List<Employee> employees) {
+        return employeeRepository.saveAll(employees);
+    }
+
+    // Get total employee count
+    public int getEmployeeCount() {
+        return (int) employeeRepository.count();
+    }
+
+    // Delete all employees
+    public void deleteAllEmployees() {
+        employeeRepository.deleteAll();
+    }
+    
+    public Employee partialUpdateEmployee(Long id, Map<String, Object> updates) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
-        
-        // Update only provided fields (check for null)
-        if (employeeDetails.getName() != null) {
-            employee.setName(employeeDetails.getName());
-        }
-        if (employeeDetails.getSalary() != null) {
-            employee.setSalary(employeeDetails.getSalary());
-        }
-        if (employeeDetails.getDepartment() != null) {
-            employee.setDepartment(employeeDetails.getDepartment());
-        }
-        if (employeeDetails.getGender() != null) {
-            employee.setGender(employeeDetails.getGender());
-        }
-        
-        // Recalculate deductions if salary changed
-        if (employeeDetails.getSalary() != null) {
-            calculateEmployeeDeductions(employee);
-        }
-        
+
+        // Loop through provided fields
+        updates.forEach((key, value) -> {
+            switch (key) {
+                case "name" -> employee.setName((String) value);
+                case "salary" -> {
+                    employee.setSalary(Double.valueOf(value.toString())); 
+                    calculateEmployeeDeductions(employee); // recalc if salary updated
+                }
+                case "department" -> employee.setDepartment((String) value);
+                case "gender" -> employee.setGender((String) value);
+                default -> throw new IllegalArgumentException("Field '" + key + "' is not updatable.");
+            }
+        });
+
         return employeeRepository.save(employee);
     }
+
 }

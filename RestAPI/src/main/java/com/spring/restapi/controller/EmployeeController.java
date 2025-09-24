@@ -1,6 +1,7 @@
 package com.spring.restapi.controller;
 
 import com.spring.restapi.models.Employee;
+
 import com.spring.restapi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -38,13 +40,13 @@ public class EmployeeController {
         }
     }
     
-    // NEW: PATCH - Partial Update
+   
     @PatchMapping("/{id}")
     public ResponseEntity<Employee> partialUpdateEmployee(
             @PathVariable Long id,
-            @RequestBody Employee employeeDetails) {
+            @RequestBody Map<String, Object> updates) {
 
-        Employee updatedEmployee = employeeService.partialUpdateEmployee(id, employeeDetails);
+        Employee updatedEmployee = employeeService.partialUpdateEmployee(id, updates);
         return ResponseEntity.ok(updatedEmployee);
     }
 
@@ -85,6 +87,27 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getEmployeesByGender(@PathVariable String gender) {
         List<Employee> employees = employeeService.getEmployeesByGender(gender);
         return ResponseEntity.ok(employees);
+    }
+    
+    // POST - Save multiple employees
+    @PostMapping("/bulk")
+    public ResponseEntity<List<Employee>> saveAllEmployees(@RequestBody List<Employee> employees) {
+        List<Employee> savedEmployees = employeeService.saveAllEmployees(employees);
+        return ResponseEntity.ok(savedEmployees);
+    }
+
+    // GET - Get total employee count
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getEmployeeCount() {
+        int count = employeeService.getEmployeeCount();
+        return ResponseEntity.ok(count);
+    }
+
+    // DELETE - Delete all employees
+    @DeleteMapping("/all")
+    public ResponseEntity<Void> deleteAllEmployees() {
+        employeeService.deleteAllEmployees();
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
     
    
