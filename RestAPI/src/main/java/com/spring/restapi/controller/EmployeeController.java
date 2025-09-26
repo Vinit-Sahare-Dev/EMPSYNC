@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid; // Required for validation
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Map;
@@ -22,7 +24,7 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
         Employee savedEmployee = employeeService.saveEmployee(employee);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -31,11 +33,12 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @Valid @RequestBody Employee employeeDetails) {
         Employee updatedEmployee = employeeService.updateEmployee(id, employeeDetails);
         return ResponseEntity.ok(updatedEmployee);
     }
 
+    // PATCH validation for partial updates typically requires custom validation logic on the service layer.
     @PatchMapping("/{id}")
     public ResponseEntity<Employee> partialUpdateEmployee(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
         Employee updatedEmployee = employeeService.partialUpdateEmployee(id, updates);
@@ -74,15 +77,15 @@ public class EmployeeController {
         return ResponseEntity.ok(employees);
     }
 
-
     @GetMapping("/gender/{gender}")
     public ResponseEntity<List<Employee>> getEmployeesByGender(@PathVariable String gender) {
         List<Employee> employees = employeeService.getEmployeesByGender(gender);
         return ResponseEntity.ok(employees);
     }
 
+    // Bulk validation for @Valid List<Employee> requires further configuration in some Spring versions.
     @PostMapping("/bulk")
-    public ResponseEntity<List<Employee>> saveAllEmployees(@RequestBody List<Employee> employees) {
+    public ResponseEntity<List<Employee>> saveAllEmployees(@RequestBody List<@Valid Employee> employees) {
         List<Employee> savedEmployees = employeeService.saveAllEmployees(employees);
         return ResponseEntity.ok(savedEmployees);
     }

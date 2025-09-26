@@ -6,17 +6,21 @@ import com.spring.restapi.exception.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.validation.annotation.Validated; // Add this line
+import jakarta.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Map;
 
 @Service
+@Validated // Activates validation in this service layer
 public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public Employee saveEmployee(Employee employee) {
+    public Employee saveEmployee(@Valid Employee employee) {
         calculateEmployeeDeductions(employee);
         return employeeRepository.save(employee);
     }
@@ -73,7 +77,7 @@ public class EmployeeService {
         return employees;
     }
 
-    public Employee updateEmployee(Long id, Employee employeeDetails) {
+    public Employee updateEmployee(Long id, @Valid Employee employeeDetails) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + id));
         employee.setName(employeeDetails.getName());
@@ -84,7 +88,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public List<Employee> saveAllEmployees(List<Employee> employees) {
+    public List<Employee> saveAllEmployees(List<@Valid Employee> employees) {
         employees.forEach(this::calculateEmployeeDeductions);
         return employeeRepository.saveAll(employees);
     }
