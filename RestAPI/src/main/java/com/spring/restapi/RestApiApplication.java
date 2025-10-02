@@ -13,14 +13,14 @@ public class RestApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(RestApiApplication.class, args);
         
-        logger.trace("🔍 [TRACE] Starting up in TRACE mode."); // Trace level
-        logger.debug("🐛 [DEBUG] Application initialization details."); // Debug level
-        logger.info("🎉 [INFO] REST API Application started successfully!"); // Info level
-        logger.warn("⚠️ [WARN] Ensure all environment variables are set."); // Warn level
-        logger.error("🔥 [ERROR] (Sample error) No real error at start."); // Error level
+        logger.trace("🔍 [TRACE] Starting up in TRACE mode."); 
+        logger.debug("🐛 [DEBUG] Application initialization details."); 
+        logger.info("🎉 [INFO] REST API Application started successfully!"); 
+        logger.warn("⚠️ [WARN] Ensure all environment variables are set."); 
+        logger.error("🔥 [ERROR] (Sample error) No real error at start."); 
 
-        logger.info("🌟 Ready to handle requests!"); // Info level
-        logger.info("📊 Swagger UI: http://localhost:8080/swagger-ui.html"); // Info level
-        logger.info("📚 API Docs: http://localhost:8080/v3/api-docs"); // Info level
+        logger.info("🌟 Ready to handle requests!"); 
+        logger.info("📊 Swagger UI: http://localhost:8080/swagger-ui.html");
+        logger.info("📚 API Docs: http://localhost:8080/v3/api-docs"); // 
     }
 }
