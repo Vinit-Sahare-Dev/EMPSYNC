@@ -103,3 +103,5 @@
 2025-10-02 09:59:41.153 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
 2025-10-02 09:59:41.153 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
 2025-10-02 09:59:41.153 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
+2025-10-02 18:22:42.584 [HikariPool-2:housekeeper] WARN  c.z.h.p.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h27m19s940ms663µs600ns).
+2025-10-02 20:36:38.675 [HikariPool-2:housekeeper] WARN  c.z.h.p.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h56s400ms429µs100ns).
