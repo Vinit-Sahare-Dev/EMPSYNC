@@ -1,17 +1,17 @@
-2025-10-02 09:58:24.315 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 18528 (C:\Springdevtools\RESTAPIs\RestAPI\target\classes started by 91992 in C:\Springdevtools\RESTAPIs\RestAPI)
-2025-10-02 09:58:24.322 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-02 09:58:24.323 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-02 09:58:26.037 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-02 09:58:26.061 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-02 09:58:26.799 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
-2025-10-02 09:58:27.038 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2025-10-02 09:58:27.040 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
-2025-10-02 09:58:27.073 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-02 09:58:28.076 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-05 13:23:48.641 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 19200 (C:\Springdevtools\RESTAPIs\RestAPI\target\classes started by 91992 in C:\Springdevtools\RESTAPIs\RestAPI)
+2025-10-05 13:23:48.648 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-05 13:23:48.649 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-05 13:23:50.533 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-05 13:23:50.559 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-05 13:23:51.253 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-10-05 13:23:51.512 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-10-05 13:23:51.515 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-05 13:23:51.551 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-05 13:23:52.682 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists dataanotations cascade 
-2025-10-02 09:58:28.083 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-05 13:23:52.690 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists employees cascade 
-2025-10-02 09:58:28.089 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-05 13:23:52.698 [restartedMain] DEBUG org.hibernate.SQL - 
     create table dataanotations (
         id integer not null,
         salary float(53) not null,
@@ -20,7 +20,7 @@
         name varchar(255),
         primary key (id)
     )
-2025-10-02 09:58:28.098 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-05 13:23:52.706 [restartedMain] DEBUG org.hibernate.SQL - 
     create table employees (
         bonus float(53) check (bonus>=0),
         pf float(53) check (pf>=0),
@@ -32,45 +32,44 @@
         name varchar(255) not null,
         primary key (id)
     )
-2025-10-02 09:58:28.680 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-02 09:58:29.182 [restartedMain] WARN  o.s.b.d.a.OptionalLiveReloadServer - Unable to start LiveReload server
-2025-10-02 09:58:29.215 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
-2025-10-02 09:58:29.226 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
-2025-10-02 09:58:29.234 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
-2025-10-02 09:58:29.303 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
-2025-10-02 09:58:29.382 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 5.606 seconds (process running for 6.488)
-2025-10-02 09:58:29.387 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Starting up in TRACE mode.
-2025-10-02 09:58:29.387 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Application initialization details.
-2025-10-02 09:58:29.387 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
-2025-10-02 09:58:29.388 [restartedMain] WARN  c.s.r.RestApiApplication - ⚠️ [WARN] Ensure all environment variables are set.
-2025-10-02 09:58:29.388 [restartedMain] ERROR c.s.r.RestApiApplication - 🔥 [ERROR] (Sample error) No real error at start.
-2025-10-02 09:58:29.388 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
-2025-10-02 09:58:29.388 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
-2025-10-02 09:58:29.388 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
-2025-10-02 09:59:00.435 [XNIO-1 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-10-02 09:59:40.340 [Thread-1] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
-2025-10-02 09:59:40.344 [Thread-1] INFO  io.undertow.servlet - Destroying Spring FrameworkServlet 'dispatcherServlet'
-2025-10-02 09:59:40.350 [Thread-1] DEBUG org.hibernate.SQL - 
+2025-10-05 13:23:53.254 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-05 13:23:53.824 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-05 13:23:53.836 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
+2025-10-05 13:23:53.847 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2025-10-05 13:23:53.920 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2025-10-05 13:23:54.010 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 5.954 seconds (process running for 6.674)
+2025-10-05 13:23:54.014 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-05 13:23:54.015 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
+2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8080
+2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
+2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
+2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8080/actuator/health
+2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8080/actuator/metrics
+2025-10-05 13:23:54.016 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-05 13:29:15.618 [Thread-5] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-05 13:29:15.632 [Thread-5] DEBUG org.hibernate.SQL - 
     drop table if exists dataanotations cascade 
-2025-10-02 09:59:40.352 [Thread-1] DEBUG org.hibernate.SQL - 
+2025-10-05 13:29:15.633 [Thread-5] DEBUG org.hibernate.SQL - 
     drop table if exists employees cascade 
-2025-10-02 09:59:40.358 [Thread-1] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
-2025-10-02 09:59:40.359 [Thread-1] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-10-02 09:59:40.360 [Thread-1] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-10-02 09:59:40.431 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 18528 (C:\Springdevtools\RESTAPIs\RestAPI\target\classes started by 91992 in C:\Springdevtools\RESTAPIs\RestAPI)
-2025-10-02 09:59:40.431 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-02 09:59:40.431 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-02 09:59:40.800 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-02 09:59:40.802 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-02 09:59:40.850 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Starting...
-2025-10-02 09:59:40.852 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=SA
-2025-10-02 09:59:40.852 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Start completed.
-2025-10-02 09:59:40.852 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-02 09:59:40.905 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-05 13:29:15.642 [Thread-5] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-05 13:29:15.642 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-10-05 13:29:15.644 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-10-05 13:29:15.732 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 19200 (C:\Springdevtools\RESTAPIs\RestAPI\target\classes started by 91992 in C:\Springdevtools\RESTAPIs\RestAPI)
+2025-10-05 13:29:15.732 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-05 13:29:15.732 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-05 13:29:16.304 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-05 13:29:16.305 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-05 13:29:16.364 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Starting...
+2025-10-05 13:29:16.367 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=SA
+2025-10-05 13:29:16.367 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Start completed.
+2025-10-05 13:29:16.368 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-05 13:29:16.430 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists dataanotations cascade 
-2025-10-02 09:59:40.906 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-05 13:29:16.431 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists employees cascade 
-2025-10-02 09:59:40.906 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-05 13:29:16.431 [restartedMain] DEBUG org.hibernate.SQL - 
     create table dataanotations (
         id integer not null,
         salary float(53) not null,
@@ -79,7 +78,7 @@
         name varchar(255),
         primary key (id)
     )
-2025-10-02 09:59:40.907 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-05 13:29:16.433 [restartedMain] DEBUG org.hibernate.SQL - 
     create table employees (
         bonus float(53) check (bonus>=0),
         pf float(53) check (pf>=0),
@@ -91,17 +90,53 @@
         name varchar(255) not null,
         primary key (id)
     )
-2025-10-02 09:59:40.990 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-02 09:59:41.101 [restartedMain] WARN  o.s.b.d.a.OptionalLiveReloadServer - Unable to start LiveReload server
-2025-10-02 09:59:41.114 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
-2025-10-02 09:59:41.150 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.749 seconds (process running for 78.256)
-2025-10-02 09:59:41.152 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Starting up in TRACE mode.
-2025-10-02 09:59:41.153 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Application initialization details.
-2025-10-02 09:59:41.153 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
-2025-10-02 09:59:41.153 [restartedMain] WARN  c.s.r.RestApiApplication - ⚠️ [WARN] Ensure all environment variables are set.
-2025-10-02 09:59:41.153 [restartedMain] ERROR c.s.r.RestApiApplication - 🔥 [ERROR] (Sample error) No real error at start.
-2025-10-02 09:59:41.153 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
-2025-10-02 09:59:41.153 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
-2025-10-02 09:59:41.153 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
-2025-10-02 18:22:42.584 [HikariPool-2:housekeeper] WARN  c.z.h.p.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h27m19s940ms663µs600ns).
-2025-10-02 20:36:38.675 [HikariPool-2:housekeeper] WARN  c.z.h.p.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h56s400ms429µs100ns).
+2025-10-05 13:29:16.550 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-05 13:29:16.713 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-05 13:29:16.752 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 1.058 seconds (process running for 329.416)
+2025-10-05 13:29:16.756 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-05 13:29:16.756 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
+2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8080
+2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
+2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
+2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8080/actuator/health
+2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8080/actuator/metrics
+2025-10-05 13:29:16.757 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-05 14:23:05.388 [XNIO-2 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-05 14:23:05.464 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
+2025-10-05 14:23:05.485 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
+2025-10-05 14:23:05.956 [XNIO-2 task-2] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        employees e1_0
+2025-10-05 14:23:06.015 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
+2025-10-05 14:23:06.018 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0
+2025-10-05 14:23:06.022 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
+2025-10-05 14:23:06.022 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
+2025-10-05 14:23:06.025 [XNIO-2 task-2] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        employees e1_0
+2025-10-05 14:23:06.025 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
+2025-10-05 14:23:06.026 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0
+2025-10-05 14:23:25.540 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
+2025-10-05 14:23:25.540 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
+2025-10-05 14:23:25.541 [XNIO-2 task-2] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        employees e1_0
+2025-10-05 14:23:25.542 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
+2025-10-05 14:23:25.542 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0
+2025-10-05 14:23:25.546 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
+2025-10-05 14:23:25.546 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
+2025-10-05 14:23:25.546 [XNIO-2 task-2] DEBUG org.hibernate.SQL - 
+    select
+        count(*) 
+    from
+        employees e1_0
+2025-10-05 14:23:25.546 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
+2025-10-05 14:23:25.549 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0

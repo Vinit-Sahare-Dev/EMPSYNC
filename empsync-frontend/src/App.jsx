@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
-import Sidebar from './components/layout/Sidebar';
-import Dashboard from './components/dashboard/Dashboard';
-import EmployeeGrid from './components/employees/EmployeeGrid';
+import Navbar from './components/layout/Navbar.jsx';
+import Sidebar from './components/layout/Sidebar.jsx';
+import Dashboard from './components/dashboard/Dashboard.jsx';
+import EmployeeGrid from './components/employees/EmployeeGrid.jsx';
 import './styles/App.css';
 
 function App() {
