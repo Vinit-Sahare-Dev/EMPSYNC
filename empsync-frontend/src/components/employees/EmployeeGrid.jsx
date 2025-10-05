@@ -3,9 +3,9 @@ import { empSyncAPI } from '../../services/apiService';
 import EmployeeCard from './EmployeeCard';
 import EmployeeModal from './EmployeeModal';
 import EmployeeFilters from './EmployeeFilters';
-import SearchBar from '../common/SearchBar';
+import SearchBar from '../common/SearchBar';  // Fixed path
 import LoadingSpinner from '../layout/LoadingSpinner';
-import EmptyState from '../common/EmptyState';
+import EmptyState from '../common/EmptyState';  // Fixed from EmployeeState to EmptyState
 
 const EmployeeGrid = () => {
   const [employees, setEmployees] = useState([]);
