@@ -1,17 +1,17 @@
-2025-10-05 13:23:48.641 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 19200 (C:\Springdevtools\RESTAPIs\RestAPI\target\classes started by 91992 in C:\Springdevtools\RESTAPIs\RestAPI)
-2025-10-05 13:23:48.648 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-05 13:23:48.649 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-05 13:23:50.533 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-05 13:23:50.559 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-05 13:23:51.253 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
-2025-10-05 13:23:51.512 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2025-10-05 13:23:51.515 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
-2025-10-05 13:23:51.551 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-05 13:23:52.682 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 09:24:52.527 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 11588 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 09:24:52.600 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 09:24:52.614 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 09:25:13.215 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 09:25:13.578 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 09:25:22.864 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-10-06 09:25:25.330 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 09:25:25.350 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-06 09:25:25.654 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 09:25:36.774 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists dataanotations cascade 
-2025-10-05 13:23:52.690 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 09:25:36.816 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists employees cascade 
-2025-10-05 13:23:52.698 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 09:25:36.868 [restartedMain] DEBUG org.hibernate.SQL - 
     create table dataanotations (
         id integer not null,
         salary float(53) not null,
@@ -20,7 +20,7 @@
         name varchar(255),
         primary key (id)
     )
-2025-10-05 13:23:52.706 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 09:25:36.929 [restartedMain] DEBUG org.hibernate.SQL - 
     create table employees (
         bonus float(53) check (bonus>=0),
         pf float(53) check (pf>=0),
@@ -32,44 +32,49 @@
         name varchar(255) not null,
         primary key (id)
     )
-2025-10-05 13:23:53.254 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-05 13:23:53.824 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
-2025-10-05 13:23:53.836 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
-2025-10-05 13:23:53.847 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
-2025-10-05 13:23:53.920 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
-2025-10-05 13:23:54.010 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 5.954 seconds (process running for 6.674)
-2025-10-05 13:23:54.014 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
-2025-10-05 13:23:54.015 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
-2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
-2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
-2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8080
-2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
-2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
-2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8080/actuator/health
-2025-10-05 13:23:54.015 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8080/actuator/metrics
-2025-10-05 13:23:54.016 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
-2025-10-05 13:29:15.618 [Thread-5] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
-2025-10-05 13:29:15.632 [Thread-5] DEBUG org.hibernate.SQL - 
+2025-10-06 09:25:42.403 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-06 09:25:47.959 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-06 09:25:48.052 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
+2025-10-06 09:25:48.154 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2025-10-06 09:25:48.683 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2025-10-06 09:25:49.504 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 61.976 seconds (process running for 70.697)
+2025-10-06 09:25:49.537 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-06 09:25:49.541 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-06 09:25:49.543 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
+2025-10-06 09:25:49.543 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-06 09:25:49.543 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8080
+2025-10-06 09:25:49.543 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
+2025-10-06 09:25:49.543 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
+2025-10-06 09:25:49.543 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8080/actuator/health
+2025-10-06 09:25:49.551 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8080/actuator/metrics
+2025-10-06 09:25:49.555 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-06 09:25:50.022 [XNIO-1 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-06 09:38:40.127 [HikariPool-1:housekeeper] WARN  c.z.h.p.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m15s2ms669µs100ns).
+2025-10-06 14:39:36.345 [HikariPool-1:housekeeper] WARN  c.z.h.p.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5h1m662ms565µs200ns).
+2025-10-06 14:40:32.624 [RMI TCP Connection(17)-127.0.0.1] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-06 14:40:32.628 [RMI TCP Connection(17)-127.0.0.1] INFO  io.undertow.servlet - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2025-10-06 14:40:32.628 [Thread-7] INFO  c.s.r.RestApiApplication - 🛑 REST API Application is shutting down gracefully...
+2025-10-06 14:40:32.635 [RMI TCP Connection(17)-127.0.0.1] DEBUG org.hibernate.SQL - 
     drop table if exists dataanotations cascade 
-2025-10-05 13:29:15.633 [Thread-5] DEBUG org.hibernate.SQL - 
+2025-10-06 14:40:32.636 [RMI TCP Connection(17)-127.0.0.1] DEBUG org.hibernate.SQL - 
     drop table if exists employees cascade 
-2025-10-05 13:29:15.642 [Thread-5] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
-2025-10-05 13:29:15.642 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-10-05 13:29:15.644 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-10-05 13:29:15.732 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 19200 (C:\Springdevtools\RESTAPIs\RestAPI\target\classes started by 91992 in C:\Springdevtools\RESTAPIs\RestAPI)
-2025-10-05 13:29:15.732 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-05 13:29:15.732 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-05 13:29:16.304 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-05 13:29:16.305 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-05 13:29:16.364 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Starting...
-2025-10-05 13:29:16.367 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=SA
-2025-10-05 13:29:16.367 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Start completed.
-2025-10-05 13:29:16.368 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-05 13:29:16.430 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 14:40:32.642 [RMI TCP Connection(17)-127.0.0.1] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 14:40:32.643 [RMI TCP Connection(17)-127.0.0.1] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-10-06 14:40:32.646 [RMI TCP Connection(17)-127.0.0.1] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-10-06 15:15:50.286 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:15:50.289 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:15:50.290 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:15:52.016 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:15:52.048 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:15:52.780 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-10-06 15:15:52.999 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:15:53.001 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-06 15:15:53.033 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:15:54.015 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists dataanotations cascade 
-2025-10-05 13:29:16.431 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:15:54.020 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists employees cascade 
-2025-10-05 13:29:16.431 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:15:54.025 [restartedMain] DEBUG org.hibernate.SQL - 
     create table dataanotations (
         id integer not null,
         salary float(53) not null,
@@ -78,7 +83,7 @@
         name varchar(255),
         primary key (id)
     )
-2025-10-05 13:29:16.433 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:15:54.033 [restartedMain] DEBUG org.hibernate.SQL - 
     create table employees (
         bonus float(53) check (bonus>=0),
         pf float(53) check (pf>=0),
@@ -90,70 +95,910 @@
         name varchar(255) not null,
         primary key (id)
     )
-2025-10-05 13:29:16.550 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-05 13:29:16.713 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
-2025-10-05 13:29:16.752 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 1.058 seconds (process running for 329.416)
-2025-10-05 13:29:16.756 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
-2025-10-05 13:29:16.756 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
-2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
-2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
-2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8080
-2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
-2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
-2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8080/actuator/health
-2025-10-05 13:29:16.756 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8080/actuator/metrics
-2025-10-05 13:29:16.757 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
-2025-10-05 14:23:05.388 [XNIO-2 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-10-05 14:23:05.464 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
-2025-10-05 14:23:05.485 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
-2025-10-05 14:23:05.956 [XNIO-2 task-2] DEBUG org.hibernate.SQL - 
+2025-10-06 15:15:54.586 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-06 15:15:55.123 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-06 15:15:55.134 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
+2025-10-06 15:15:55.144 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2025-10-06 15:15:55.218 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2025-10-06 15:15:55.305 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 5.489 seconds (process running for 6.291)
+2025-10-06 15:15:55.310 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-06 15:15:55.310 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-06 15:15:55.310 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-06 15:15:55.310 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-06 15:15:55.310 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-06 15:15:55.310 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-06 15:15:55.310 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-06 15:15:55.310 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-06 15:15:55.311 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-06 15:15:55.311 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-06 15:17:21.002 [XNIO-1 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-06 15:17:21.036 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - GET APPLICATION INFO REQUEST - App: EMPSYNC
+2025-10-06 15:17:21.037 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - APPLICATION INFO RETURNED - Name: EMPSYNC, Env: development, DB: H2 In-Memory Database
+2025-10-06 15:21:26.478 [Thread-5] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-06 15:21:26.482 [Thread-5] INFO  io.undertow.servlet - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2025-10-06 15:21:26.487 [Thread-5] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:21:26.489 [Thread-5] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:21:26.497 [Thread-5] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:21:26.497 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-10-06 15:21:26.499 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-10-06 15:21:26.579 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:21:26.580 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:21:26.580 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:21:26.986 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:21:26.987 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:21:27.035 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Starting...
+2025-10-06 15:21:27.041 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:21:27.041 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Start completed.
+2025-10-06 15:21:27.042 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:21:27.095 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:21:27.095 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:21:27.096 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:21:27.097 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:21:27.185 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-06 15:21:27.315 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-06 15:21:27.352 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.803 seconds (process running for 338.338)
+2025-10-06 15:21:27.354 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-06 15:21:27.356 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-06 15:21:27.356 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-06 15:21:27.356 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-06 15:21:27.356 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-06 15:21:27.356 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-06 15:21:27.356 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-06 15:21:27.356 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-06 15:21:27.356 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-06 15:21:27.356 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-06 15:21:36.960 [Thread-8] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-06 15:21:36.965 [Thread-8] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:21:36.966 [Thread-8] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:21:36.967 [Thread-8] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:21:36.968 [Thread-8] INFO  c.z.h.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2025-10-06 15:21:36.968 [Thread-8] INFO  c.z.h.HikariDataSource - HikariPool-2 - Shutdown completed.
+2025-10-06 15:21:37.048 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:21:37.048 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:21:37.048 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:21:37.407 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:21:37.409 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:21:37.451 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-3 - Starting...
+2025-10-06 15:21:37.455 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:21:37.455 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-3 - Start completed.
+2025-10-06 15:21:37.456 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:21:37.506 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:21:37.507 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:21:37.507 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:21:37.508 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:21:37.586 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-06 15:21:37.716 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-06 15:21:37.761 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.745 seconds (process running for 348.747)
+2025-10-06 15:21:37.764 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-06 15:21:37.764 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-06 15:21:37.765 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-06 15:21:37.765 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-06 15:21:37.765 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-06 15:21:37.765 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-06 15:21:37.765 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-06 15:21:37.765 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-06 15:21:37.765 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-06 15:21:37.765 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-06 15:22:01.769 [Thread-14] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-06 15:22:01.773 [Thread-14] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:22:01.773 [Thread-14] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:22:01.774 [Thread-14] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:22:01.774 [Thread-14] INFO  c.z.h.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2025-10-06 15:22:01.775 [Thread-14] INFO  c.z.h.HikariDataSource - HikariPool-3 - Shutdown completed.
+2025-10-06 15:22:01.846 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:22:01.846 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:22:01.846 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:22:02.252 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:22:02.254 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:22:02.299 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-4 - Starting...
+2025-10-06 15:22:02.303 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-4 - Added connection conn30: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:22:02.304 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-4 - Start completed.
+2025-10-06 15:22:02.304 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:22:02.357 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:22:02.357 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:22:02.358 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:22:02.359 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:22:02.437 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-06 15:22:02.540 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-06 15:22:02.575 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.758 seconds (process running for 373.561)
+2025-10-06 15:22:02.577 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-06 15:22:02.577 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-06 15:22:02.577 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-06 15:22:02.577 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-06 15:22:02.577 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-06 15:22:02.577 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-06 15:22:02.577 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-06 15:22:02.577 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-06 15:22:02.578 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-06 15:22:02.578 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-06 15:22:09.126 [Thread-19] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-06 15:22:09.129 [Thread-19] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:22:09.130 [Thread-19] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:22:09.132 [Thread-19] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:22:09.132 [Thread-19] INFO  c.z.h.HikariDataSource - HikariPool-4 - Shutdown initiated...
+2025-10-06 15:22:09.133 [Thread-19] INFO  c.z.h.HikariDataSource - HikariPool-4 - Shutdown completed.
+2025-10-06 15:22:09.200 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:22:09.200 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:22:09.200 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:22:09.541 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:22:09.544 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:22:09.589 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-5 - Starting...
+2025-10-06 15:22:09.591 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-5 - Added connection conn40: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:22:09.591 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-5 - Start completed.
+2025-10-06 15:22:09.591 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:22:09.637 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:22:09.637 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:22:09.637 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:22:09.638 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:22:09.649 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfo': Lookup method resolution failed
+2025-10-06 15:22:09.650 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:22:09.650 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:22:09.651 [restartedMain] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:22:09.653 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-5 - Shutdown initiated...
+2025-10-06 15:22:09.653 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-5 - Shutdown completed.
+2025-10-06 15:22:09.682 [restartedMain] ERROR o.s.b.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfo': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:498) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:368) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1334) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1229) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.6.jar:3.5.6]
+	at com.spring.restapi.RestApiApplication.main(RestApiApplication.java:15) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.spring.restapi.config.SystemInfo] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@537a037c]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483) ~[spring-core-6.2.11.jar:6.2.11]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:476) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 26 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: Map
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3402) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2504) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465) ~[spring-core-6.2.11.jar:6.2.11]
+	... 28 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Map
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 32 common frames omitted
+2025-10-06 15:22:46.113 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:22:46.113 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:22:46.113 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:22:46.477 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:22:46.478 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:22:46.522 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-6 - Starting...
+2025-10-06 15:22:46.523 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-6 - Added connection conn41: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:22:46.524 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-6 - Start completed.
+2025-10-06 15:22:46.524 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:22:46.575 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:22:46.576 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:22:46.576 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:22:46.578 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:22:46.588 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfo': Lookup method resolution failed
+2025-10-06 15:22:46.588 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:22:46.589 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:22:46.590 [restartedMain] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:22:46.590 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-6 - Shutdown initiated...
+2025-10-06 15:22:46.590 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-6 - Shutdown completed.
+2025-10-06 15:22:46.597 [restartedMain] ERROR o.s.b.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfo': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:498) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:368) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1334) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1229) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.6.jar:3.5.6]
+	at com.spring.restapi.RestApiApplication.main(RestApiApplication.java:15) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.spring.restapi.config.SystemInfo] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@2b3376f6]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483) ~[spring-core-6.2.11.jar:6.2.11]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:476) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 26 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: Map
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3402) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2504) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465) ~[spring-core-6.2.11.jar:6.2.11]
+	... 28 common frames omitted
+Caused by: java.lang.ClassNotFoundException: Map
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[na:na]
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:467) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520) ~[na:na]
+	... 32 common frames omitted
+2025-10-06 15:22:52.201 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:22:52.201 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:22:52.201 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:22:52.536 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:22:52.538 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:22:52.579 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-7 - Starting...
+2025-10-06 15:22:52.580 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-7 - Added connection conn42: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:22:52.580 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-7 - Start completed.
+2025-10-06 15:22:52.581 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:22:52.631 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:22:52.631 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:22:52.632 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:22:52.633 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:22:52.641 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+2025-10-06 15:22:52.642 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:22:52.642 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:22:52.644 [restartedMain] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:22:52.644 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-7 - Shutdown initiated...
+2025-10-06 15:22:52.645 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-7 - Shutdown completed.
+2025-10-06 15:22:52.651 [restartedMain] ERROR o.s.b.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1357) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1242) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.6.jar:3.5.6]
+	at com.spring.restapi.RestApiApplication.main(RestApiApplication.java:15) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:223) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1351) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 24 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problems: 
+	The import javax.annotation.PostConstruct cannot be resolved
+	The public type SystemInfoConfig must be defined in its own file
+	PostConstruct cannot be resolved to a type
+
+	at com.spring.restapi.config.SystemInfoConfig.<init>(SystemInfoconfig.java:9) ~[classes/:na]
+	at com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0.<init>(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:197) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 26 common frames omitted
+2025-10-06 15:24:35.999 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:24:35.999 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:24:35.999 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:24:36.351 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:24:36.352 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:24:36.393 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-8 - Starting...
+2025-10-06 15:24:36.396 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-8 - Added connection conn43: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:24:36.396 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-8 - Start completed.
+2025-10-06 15:24:36.397 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:24:36.445 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:24:36.445 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:24:36.445 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:24:36.446 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:24:36.455 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+2025-10-06 15:24:36.455 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:24:36.456 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:24:36.457 [restartedMain] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:24:36.457 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-8 - Shutdown initiated...
+2025-10-06 15:24:36.458 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-8 - Shutdown completed.
+2025-10-06 15:24:36.464 [restartedMain] ERROR o.s.b.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1357) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1242) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.6.jar:3.5.6]
+	at com.spring.restapi.RestApiApplication.main(RestApiApplication.java:15) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:223) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1351) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 24 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	The public type SystemInfoConfig must be defined in its own file
+
+	at com.spring.restapi.config.SystemInfoConfig.<init>(SystemInfoconfig.java:17) ~[classes/:na]
+	at com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0.<init>(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:197) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 26 common frames omitted
+2025-10-06 15:25:38.618 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:25:38.618 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:25:38.618 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:25:38.990 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:25:38.992 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:25:39.038 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-9 - Starting...
+2025-10-06 15:25:39.039 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-9 - Added connection conn44: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:25:39.039 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-9 - Start completed.
+2025-10-06 15:25:39.040 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:25:39.086 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:25:39.087 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:25:39.087 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:25:39.088 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:25:39.098 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+2025-10-06 15:25:39.098 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:25:39.099 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:25:39.100 [restartedMain] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:25:39.100 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-9 - Shutdown initiated...
+2025-10-06 15:25:39.101 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-9 - Shutdown completed.
+2025-10-06 15:25:39.109 [restartedMain] ERROR o.s.b.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1357) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1242) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.6.jar:3.5.6]
+	at com.spring.restapi.RestApiApplication.main(RestApiApplication.java:15) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:223) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1351) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 24 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	The public type SystemInfoConfig must be defined in its own file
+
+	at com.spring.restapi.config.SystemInfoConfig.<init>(SystemInfoconfig.java:17) ~[classes/:na]
+	at com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0.<init>(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:197) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 26 common frames omitted
+2025-10-06 15:28:00.520 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12904 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:28:00.520 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:28:00.520 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:28:00.969 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:28:00.970 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:28:01.018 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-10 - Starting...
+2025-10-06 15:28:01.019 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-10 - Added connection conn45: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:28:01.019 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-10 - Start completed.
+2025-10-06 15:28:01.020 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:28:01.067 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:28:01.067 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:28:01.068 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:28:01.069 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:28:01.077 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+2025-10-06 15:28:01.078 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:28:01.078 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:28:01.079 [restartedMain] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:28:01.079 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-10 - Shutdown initiated...
+2025-10-06 15:28:01.079 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-10 - Shutdown completed.
+2025-10-06 15:28:01.087 [restartedMain] ERROR o.s.b.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1357) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1242) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.11.jar:6.2.11]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.5.6.jar:3.5.6]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.5.6.jar:3.5.6]
+	at com.spring.restapi.RestApiApplication.main(RestApiApplication.java:15) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.5.6.jar:3.5.6]
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:223) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:123) ~[spring-beans-6.2.11.jar:6.2.11]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1351) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 24 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	The public type SystemInfoConfig must be defined in its own file
+
+	at com.spring.restapi.config.SystemInfoConfig.<init>(SystemInfoconfig.java:12) ~[classes/:na]
+	at com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0.<init>(<generated>) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:197) ~[spring-beans-6.2.11.jar:6.2.11]
+	... 26 common frames omitted
+2025-10-06 15:28:22.669 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 16540 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:28:22.671 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:28:22.672 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:28:24.338 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:28:24.372 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:28:24.958 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-10-06 15:28:25.162 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:28:25.164 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-06 15:28:25.187 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:28:26.150 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:28:26.154 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:28:26.158 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:28:26.166 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:28:26.192 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+2025-10-06 15:28:26.192 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:28:26.194 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:28:26.203 [restartedMain] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:28:26.203 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-10-06 15:28:26.205 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-10-06 15:28:26.244 [restartedMain] ERROR o.s.b.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'systemInfoConfig' defined in file [C:\Springdevtools\EMPSYNC\empsync-backend\target\classes\com\spring\restapi\config\SystemInfoConfig.class]: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1357)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1242)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:569)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:529)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:339)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:373)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:337)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1221)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1187)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1123)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:987)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.spring.restapi.RestApiApplication.main(RestApiApplication.java:15)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50)
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:223)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:123)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1351)
+	... 24 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	The public type SystemInfoConfig must be defined in its own file
+
+	at com.spring.restapi.config.SystemInfoConfig.<init>(SystemInfoconfig.java:12)
+	at com.spring.restapi.config.SystemInfoConfig$$SpringCGLIB$$0.<init>(<generated>)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:197)
+	... 26 common frames omitted
+2025-10-06 15:29:50.167 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12384 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:29:50.169 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:29:50.169 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:29:51.675 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:29:51.695 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:29:52.252 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-10-06 15:29:52.480 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:29:52.483 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-06 15:29:52.507 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:29:53.360 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:29:53.365 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:29:53.369 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table dataanotations (
+        id integer not null,
+        salary float(53) not null,
+        dept varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+2025-10-06 15:29:53.376 [restartedMain] DEBUG org.hibernate.SQL - 
+    create table employees (
+        bonus float(53) check (bonus>=0),
+        pf float(53) check (pf>=0),
+        salary float(53) not null check (salary>=0),
+        tax float(53) check (tax>=0),
+        id bigint generated by default as identity,
+        department varchar(255) not null,
+        gender varchar(255) not null,
+        name varchar(255) not null,
+        primary key (id)
+    )
+2025-10-06 15:29:53.796 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-06 15:29:54.302 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-06 15:29:54.312 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
+2025-10-06 15:29:54.321 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2025-10-06 15:29:54.379 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2025-10-06 15:29:54.471 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 4.748 seconds (process running for 5.446)
+2025-10-06 15:29:54.476 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-06 15:29:54.476 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-06 15:29:54.476 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-06 15:29:54.476 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-06 15:29:54.476 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-06 15:29:54.477 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-06 15:29:54.477 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-06 15:29:54.477 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-06 15:29:54.477 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-06 15:29:54.477 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-06 15:30:55.486 [XNIO-1 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-06 15:30:55.511 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - GET APPLICATION INFO REQUEST - App: EMPSYNC
+2025-10-06 15:30:55.511 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - APPLICATION INFO RETURNED - Name: EMPSYNC, Env: development, DB: H2 In-Memory Database
+2025-10-06 15:31:06.979 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - GET SERVER INFO REQUEST - Port: 0
+2025-10-06 15:31:06.980 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - SERVER INFO RETURNED - URL: HTTP://10.82.87.8:0/, Uptime: 73s, Port: 0
+2025-10-06 15:31:20.747 [XNIO-1 task-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "system-info"]
+2025-10-06 15:31:40.234 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - HEALTH CHECK REQUEST - App: EMPSYNC
+2025-10-06 15:31:40.250 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
+2025-10-06 15:31:40.578 [XNIO-1 task-2] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         employees e1_0
-2025-10-05 14:23:06.015 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
-2025-10-05 14:23:06.018 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0
-2025-10-05 14:23:06.022 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
-2025-10-05 14:23:06.022 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
-2025-10-05 14:23:06.025 [XNIO-2 task-2] DEBUG org.hibernate.SQL - 
+2025-10-06 15:31:40.626 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
+2025-10-06 15:31:40.629 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
+2025-10-06 15:31:40.630 [XNIO-1 task-2] DEBUG org.hibernate.SQL - 
     select
         count(*) 
     from
         employees e1_0
-2025-10-05 14:23:06.025 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
-2025-10-05 14:23:06.026 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0
-2025-10-05 14:23:25.540 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
-2025-10-05 14:23:25.540 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
-2025-10-05 14:23:25.541 [XNIO-2 task-2] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        employees e1_0
-2025-10-05 14:23:25.542 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
-2025-10-05 14:23:25.542 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0
-2025-10-05 14:23:25.546 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
-2025-10-05 14:23:25.546 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
-2025-10-05 14:23:25.546 [XNIO-2 task-2] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        employees e1_0
-2025-10-05 14:23:25.546 [XNIO-2 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
-2025-10-05 14:23:25.549 [XNIO-2 task-2] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0
-2025-10-05 16:09:25.832 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 21.0.8 with PID 2496 (C:\Springdevtools\EMPSYNC\RestAPI\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\RestAPI)
-2025-10-05 16:09:25.833 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-05 16:09:25.835 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-05 16:09:27.489 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-05 16:09:27.520 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-05 16:09:28.205 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
-2025-10-05 16:09:28.423 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2025-10-05 16:09:28.425 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
-2025-10-05 16:09:28.455 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-05 16:09:29.467 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:31:40.631 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
+2025-10-06 15:31:40.631 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - HEALTH CHECK - Status: UP, Employees: 0, Uptime: 106s, Port: 0
+2025-10-06 15:33:21.862 [XNIO-1 task-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "system-info"]
+2025-10-06 15:33:53.984 [XNIO-1 task-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'id': Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; For input string: "system-info"]
+2025-10-06 15:36:41.522 [Thread-5] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-06 15:36:41.527 [Thread-5] INFO  io.undertow.servlet - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2025-10-06 15:36:41.532 [Thread-5] DEBUG org.hibernate.SQL - 
     drop table if exists dataanotations cascade 
-2025-10-05 16:09:29.471 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:36:41.533 [Thread-5] DEBUG org.hibernate.SQL - 
     drop table if exists employees cascade 
-2025-10-05 16:09:29.476 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:36:41.539 [Thread-5] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:36:41.539 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-10-06 15:36:41.541 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-10-06 15:36:41.618 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12384 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:36:41.619 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:36:41.619 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:36:42.047 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:36:42.049 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:36:42.100 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Starting...
+2025-10-06 15:36:42.102 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:36:42.102 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Start completed.
+2025-10-06 15:36:42.103 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:36:42.157 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists dataanotations cascade 
+2025-10-06 15:36:42.158 [restartedMain] DEBUG org.hibernate.SQL - 
+    drop table if exists employees cascade 
+2025-10-06 15:36:42.158 [restartedMain] DEBUG org.hibernate.SQL - 
     create table dataanotations (
         id integer not null,
         salary float(53) not null,
@@ -162,7 +1007,7 @@
         name varchar(255),
         primary key (id)
     )
-2025-10-05 16:09:29.485 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:36:42.161 [restartedMain] DEBUG org.hibernate.SQL - 
     create table employees (
         bonus float(53) check (bonus>=0),
         pf float(53) check (pf>=0),
@@ -174,44 +1019,43 @@
         name varchar(255) not null,
         primary key (id)
     )
-2025-10-05 16:09:30.085 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-05 16:09:30.585 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
-2025-10-05 16:09:30.597 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
-2025-10-05 16:09:30.609 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
-2025-10-05 16:09:30.766 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
-2025-10-05 16:09:30.905 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 5.639 seconds (process running for 6.156)
-2025-10-05 16:09:30.911 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
-2025-10-05 16:09:30.912 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
-2025-10-05 16:09:30.912 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
-2025-10-05 16:09:30.912 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
-2025-10-05 16:09:30.913 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8080
-2025-10-05 16:09:30.913 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
-2025-10-05 16:09:30.913 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
-2025-10-05 16:09:30.913 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8080/actuator/health
-2025-10-05 16:09:30.913 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8080/actuator/metrics
-2025-10-05 16:09:30.913 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
-2025-10-05 16:16:42.916 [Thread-5] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
-2025-10-05 16:16:42.934 [Thread-5] DEBUG org.hibernate.SQL - 
+2025-10-06 15:36:42.261 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-06 15:36:42.401 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-06 15:36:42.435 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.853 seconds (process running for 413.411)
+2025-10-06 15:36:42.439 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-06 15:36:42.439 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-06 15:36:42.439 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-06 15:36:42.439 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-06 15:36:42.440 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-06 15:36:42.440 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-06 15:36:42.440 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-06 15:36:42.440 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-06 15:36:42.440 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-06 15:36:42.440 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-06 15:36:43.613 [RMI TCP Connection(16)-127.0.0.1] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-06 15:36:43.615 [Thread-13] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-06 15:36:43.615 [Thread-7] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-06 15:36:43.617 [RMI TCP Connection(16)-127.0.0.1] DEBUG org.hibernate.SQL - 
     drop table if exists dataanotations cascade 
-2025-10-05 16:16:42.936 [Thread-5] DEBUG org.hibernate.SQL - 
+2025-10-06 15:36:43.618 [RMI TCP Connection(16)-127.0.0.1] DEBUG org.hibernate.SQL - 
     drop table if exists employees cascade 
-2025-10-05 16:16:42.943 [Thread-5] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
-2025-10-05 16:16:42.944 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-10-05 16:16:42.946 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-10-05 16:16:43.039 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 21.0.8 with PID 2496 (C:\Springdevtools\EMPSYNC\RestAPI\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\RestAPI)
-2025-10-05 16:16:43.039 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-05 16:16:43.040 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-05 16:16:43.481 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-05 16:16:43.483 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-05 16:16:43.561 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Starting...
-2025-10-05 16:16:43.563 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=SA
-2025-10-05 16:16:43.563 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Start completed.
-2025-10-05 16:16:43.564 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-05 16:16:43.621 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:36:43.619 [RMI TCP Connection(16)-127.0.0.1] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
+2025-10-06 15:36:43.619 [RMI TCP Connection(16)-127.0.0.1] INFO  c.z.h.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2025-10-06 15:36:43.620 [RMI TCP Connection(16)-127.0.0.1] INFO  c.z.h.HikariDataSource - HikariPool-2 - Shutdown completed.
+2025-10-06 15:36:46.178 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12916 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-06 15:36:46.181 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-06 15:36:46.182 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-06 15:36:47.691 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-06 15:36:47.717 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-06 15:36:48.330 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-10-06 15:36:48.547 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-10-06 15:36:48.551 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-06 15:36:48.563 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-06 15:36:49.513 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists dataanotations cascade 
-2025-10-05 16:16:43.622 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:36:49.513 [restartedMain] DEBUG org.hibernate.SQL - 
     drop table if exists employees cascade 
-2025-10-05 16:16:43.623 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:36:49.530 [restartedMain] DEBUG org.hibernate.SQL - 
     create table dataanotations (
         id integer not null,
         salary float(53) not null,
@@ -220,7 +1064,7 @@
         name varchar(255),
         primary key (id)
     )
-2025-10-05 16:16:43.624 [restartedMain] DEBUG org.hibernate.SQL - 
+2025-10-06 15:36:49.530 [restartedMain] DEBUG org.hibernate.SQL - 
     create table employees (
         bonus float(53) check (bonus>=0),
         pf float(53) check (pf>=0),
@@ -232,203 +1076,22 @@
         name varchar(255) not null,
         primary key (id)
     )
-2025-10-05 16:16:43.728 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-05 16:16:43.894 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
-2025-10-05 16:16:43.931 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.931 seconds (process running for 439.182)
-2025-10-05 16:16:43.935 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
-2025-10-05 16:16:43.935 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
-2025-10-05 16:16:43.936 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
-2025-10-05 16:16:43.936 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
-2025-10-05 16:16:43.936 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8080
-2025-10-05 16:16:43.936 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
-2025-10-05 16:16:43.937 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
-2025-10-05 16:16:43.937 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8080/actuator/health
-2025-10-05 16:16:43.937 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8080/actuator/metrics
-2025-10-05 16:16:43.937 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
-2025-10-05 16:17:27.770 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 12352 (C:\Springdevtools\EMPSYNC\RestAPI\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\RestAPI)
-2025-10-05 16:17:27.772 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-05 16:17:27.773 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-05 16:17:29.225 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-05 16:17:29.250 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-05 16:17:29.921 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
-2025-10-05 16:17:30.144 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2025-10-05 16:17:30.146 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
-2025-10-05 16:17:30.171 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-05 16:17:31.180 [restartedMain] DEBUG org.hibernate.SQL - 
-    drop table if exists dataanotations cascade 
-2025-10-05 16:17:31.185 [restartedMain] DEBUG org.hibernate.SQL - 
-    drop table if exists employees cascade 
-2025-10-05 16:17:31.191 [restartedMain] DEBUG org.hibernate.SQL - 
-    create table dataanotations (
-        id integer not null,
-        salary float(53) not null,
-        dept varchar(255),
-        gender varchar(255),
-        name varchar(255),
-        primary key (id)
-    )
-2025-10-05 16:17:31.199 [restartedMain] DEBUG org.hibernate.SQL - 
-    create table employees (
-        bonus float(53) check (bonus>=0),
-        pf float(53) check (pf>=0),
-        salary float(53) not null check (salary>=0),
-        tax float(53) check (tax>=0),
-        id bigint generated by default as identity,
-        department varchar(255) not null,
-        gender varchar(255) not null,
-        name varchar(255) not null,
-        primary key (id)
-    )
-2025-10-05 16:17:31.707 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-05 16:17:32.154 [restartedMain] WARN  o.s.b.d.a.OptionalLiveReloadServer - Unable to start LiveReload server
-2025-10-05 16:17:32.189 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
-2025-10-05 16:17:32.197 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
-2025-10-05 16:17:32.205 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
-2025-10-05 16:17:32.262 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
-2025-10-05 16:17:32.332 [restartedMain] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
-2025-10-05 16:17:32.338 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
-2025-10-05 16:17:32.340 [restartedMain] DEBUG org.hibernate.SQL - 
-    drop table if exists dataanotations cascade 
-2025-10-05 16:17:32.343 [restartedMain] DEBUG org.hibernate.SQL - 
-    drop table if exists employees cascade 
-2025-10-05 16:17:32.349 [restartedMain] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
-2025-10-05 16:17:32.350 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-10-05 16:17:32.352 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-10-05 16:17:32.390 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Web server failed to start. Port 8080 was already in use.
-
-Action:
-
-Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
-
-2025-10-05 16:51:16.980 [XNIO-2 task-3] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-10-05 16:51:17.046 [XNIO-2 task-3] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
-2025-10-05 16:51:17.067 [XNIO-2 task-3] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
-2025-10-05 16:51:17.558 [XNIO-2 task-3] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        employees e1_0
-2025-10-05 16:51:17.618 [XNIO-2 task-3] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
-2025-10-05 16:51:17.623 [XNIO-2 task-3] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0
-2025-10-05 16:51:17.629 [XNIO-2 task-3] INFO  c.s.r.c.EmployeeController - GET EMPLOYEE COUNT REQUEST
-2025-10-05 16:51:17.629 [XNIO-2 task-3] INFO  c.s.r.s.EmployeeService - FETCHING EMPLOYEE COUNT
-2025-10-05 16:51:17.631 [XNIO-2 task-3] DEBUG org.hibernate.SQL - 
-    select
-        count(*) 
-    from
-        employees e1_0
-2025-10-05 16:51:17.632 [XNIO-2 task-3] INFO  c.s.r.s.EmployeeService - TOTAL EMPLOYEE COUNT: 0
-2025-10-05 16:51:17.632 [XNIO-2 task-3] INFO  c.s.r.c.EmployeeController - EMPLOYEE COUNT: 0
-2025-10-05 17:18:11.887 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 8984 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
-2025-10-05 17:18:11.890 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-05 17:18:11.890 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-05 17:18:13.479 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-05 17:18:13.500 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-05 17:18:14.075 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
-2025-10-05 17:18:14.256 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2025-10-05 17:18:14.258 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
-2025-10-05 17:18:14.283 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-05 17:18:15.165 [restartedMain] DEBUG org.hibernate.SQL - 
-    drop table if exists dataanotations cascade 
-2025-10-05 17:18:15.170 [restartedMain] DEBUG org.hibernate.SQL - 
-    drop table if exists employees cascade 
-2025-10-05 17:18:15.175 [restartedMain] DEBUG org.hibernate.SQL - 
-    create table dataanotations (
-        id integer not null,
-        salary float(53) not null,
-        dept varchar(255),
-        gender varchar(255),
-        name varchar(255),
-        primary key (id)
-    )
-2025-10-05 17:18:15.181 [restartedMain] DEBUG org.hibernate.SQL - 
-    create table employees (
-        bonus float(53) check (bonus>=0),
-        pf float(53) check (pf>=0),
-        salary float(53) not null check (salary>=0),
-        tax float(53) check (tax>=0),
-        id bigint generated by default as identity,
-        department varchar(255) not null,
-        gender varchar(255) not null,
-        name varchar(255) not null,
-        primary key (id)
-    )
-2025-10-05 17:18:15.636 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-05 17:18:16.113 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
-2025-10-05 17:18:16.122 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
-2025-10-05 17:18:16.133 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
-2025-10-05 17:18:16.197 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
-2025-10-05 17:18:16.283 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 4.841 seconds (process running for 5.518)
-2025-10-05 17:18:16.288 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
-2025-10-05 17:18:16.288 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
-2025-10-05 17:18:16.289 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
-2025-10-05 17:18:16.289 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
-2025-10-05 17:18:16.289 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8080
-2025-10-05 17:18:16.289 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
-2025-10-05 17:18:16.289 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
-2025-10-05 17:18:16.289 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8080/actuator/health
-2025-10-05 17:18:16.289 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8080/actuator/metrics
-2025-10-05 17:18:16.289 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
-2025-10-05 17:19:52.003 [Thread-5] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
-2025-10-05 17:19:52.021 [Thread-5] DEBUG org.hibernate.SQL - 
-    drop table if exists dataanotations cascade 
-2025-10-05 17:19:52.023 [Thread-5] DEBUG org.hibernate.SQL - 
-    drop table if exists employees cascade 
-2025-10-05 17:19:52.029 [Thread-5] WARN  o.s.b.f.s.DisposableBeanAdapter - Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-232]
-2025-10-05 17:19:52.030 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-10-05 17:19:52.032 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-10-05 17:19:59.956 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 8984 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
-2025-10-05 17:19:59.956 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-05 17:19:59.956 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-05 17:20:00.361 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-05 17:20:00.363 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-05 17:20:00.409 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-3 - Starting...
-2025-10-05 17:20:00.411 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:testdb user=SA
-2025-10-05 17:20:00.411 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-3 - Start completed.
-2025-10-05 17:20:00.412 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-05 17:20:00.465 [restartedMain] DEBUG org.hibernate.SQL - 
-    drop table if exists dataanotations cascade 
-2025-10-05 17:20:00.466 [restartedMain] DEBUG org.hibernate.SQL - 
-    drop table if exists employees cascade 
-2025-10-05 17:20:00.466 [restartedMain] DEBUG org.hibernate.SQL - 
-    create table dataanotations (
-        id integer not null,
-        salary float(53) not null,
-        dept varchar(255),
-        gender varchar(255),
-        name varchar(255),
-        primary key (id)
-    )
-2025-10-05 17:20:00.467 [restartedMain] DEBUG org.hibernate.SQL - 
-    create table employees (
-        bonus float(53) check (bonus>=0),
-        pf float(53) check (pf>=0),
-        salary float(53) not null check (salary>=0),
-        tax float(53) check (tax>=0),
-        id bigint generated by default as identity,
-        department varchar(255) not null,
-        gender varchar(255) not null,
-        name varchar(255) not null,
-        primary key (id)
-    )
-2025-10-05 17:20:00.545 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-10-05 17:20:00.665 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
-2025-10-05 17:20:00.703 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.779 seconds (process running for 109.937)
-2025-10-05 17:20:00.705 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
-2025-10-05 17:20:00.705 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
-2025-10-05 17:20:00.705 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] REST API Application started successfully!
-2025-10-05 17:20:00.705 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
-2025-10-05 17:20:00.705 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8080
-2025-10-05 17:20:00.706 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8080/swagger-ui.html
-2025-10-05 17:20:00.706 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8080/v3/api-docs
-2025-10-05 17:20:00.706 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8080/actuator/health
-2025-10-05 17:20:00.706 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8080/actuator/metrics
-2025-10-05 17:20:00.706 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-06 15:36:50.008 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-06 15:36:50.504 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-06 15:36:50.513 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
+2025-10-06 15:36:50.522 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2025-10-06 15:36:50.578 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2025-10-06 15:36:50.659 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 4.973 seconds (process running for 5.655)
+2025-10-06 15:36:50.664 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-06 15:36:50.665 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-06 15:36:50.665 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-06 15:36:50.665 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-06 15:36:50.665 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-06 15:36:50.665 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-06 15:36:50.665 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-06 15:36:50.666 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-06 15:36:50.666 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-06 15:36:50.666 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-06 15:37:08.831 [XNIO-1 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-06 15:37:08.864 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - GET SYSTEM INFO REQUEST
+2025-10-06 15:37:08.864 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - SYSTEM INFO RETURNED - OS: Windows 11, Java: 17.0.4, Memory: 3 GB

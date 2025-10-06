@@ -1,5 +1,8 @@
 package com.spring.restapi.controller;
 
+import com.spring.restapi.config.ApplicationInfo;
+import com.spring.restapi.config.ServerInfo;
+import com.spring.restapi.config.SystemInfo;
 import com.spring.restapi.models.Employee;
 import com.spring.restapi.service.EmployeeService;
 import com.spring.restapi.exception.EmployeeNotFoundException;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +31,119 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private ApplicationInfo applicationInfo;
+
+    @Autowired
+    private ServerInfo serverInfo;
+    
+    @Autowired
+    private SystemInfo systemInfo; 
+
+    @GetMapping("/app-info")
+    public ResponseEntity<Map<String, Object>> getApplicationInfo() {
+        logger.info("GET APPLICATION INFO REQUEST - App: {}", applicationInfo.getName());
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("application", applicationInfo.getFormattedInfo());
+        response.put("name", applicationInfo.getName());
+        response.put("version", applicationInfo.getVersion());
+        response.put("description", applicationInfo.getDescription());
+        response.put("environment", applicationInfo.getEnvironment());
+        response.put("database", applicationInfo.getDatabase());
+        response.put("h2Console", applicationInfo.getH2ConsolePath());
+        response.put("databaseInfo", applicationInfo.getDatabaseInfo());
+        
+        logger.info("APPLICATION INFO RETURNED - Name: {}, Env: {}, DB: {}", 
+                   applicationInfo.getName(), applicationInfo.getEnvironment(), 
+                   applicationInfo.getDatabase());
+        
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/server-info")
+    public ResponseEntity<Map<String, Object>> getServerInfo() {
+        logger.info("GET SERVER INFO REQUEST - Port: {}", serverInfo.getPort());
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("server", serverInfo.getFormattedInfo());
+        response.put("applicationName", serverInfo.getApplicationName());
+        response.put("url", serverInfo.getServerUrl());
+        response.put("host", serverInfo.getHost());
+        response.put("port", serverInfo.getPort());
+        response.put("configuredPort", serverInfo.getConfiguredPort());
+        response.put("portInfo", serverInfo.getPortInfo());
+        response.put("startupTime", serverInfo.getFormattedStartupTime());
+        response.put("uptimeSeconds", serverInfo.getUptimeInSeconds());
+        response.put("protocol", serverInfo.getProtocol());
+        response.put("contextPath", serverInfo.getContextPath());
+        
+        logger.info("SERVER INFO RETURNED - URL: {}, Uptime: {}s, Port: {}", 
+                   serverInfo.getServerUrl(), serverInfo.getUptimeInSeconds(),
+                   serverInfo.getPort());
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/system-info")
+    public ResponseEntity<Map<String, Object>> getSystemInfo() {
+        logger.info("GET SYSTEM INFO REQUEST");
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("summary", systemInfo.getFormattedSystemInfo());
+        response.put("details", systemInfo.getDetailedSystemInfo());
+        
+        logger.info("SYSTEM INFO RETURNED - OS: {}, Java: {}, Memory: {}", 
+                   systemInfo.getOperatingSystem(), systemInfo.getJavaVersion(), 
+                   systemInfo.getMaxMemory());
+        
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, Object>> getHealthStatus() {
+        logger.info("HEALTH CHECK REQUEST - App: {}", applicationInfo.getName());
+        
+        Map<String, Object> healthInfo = new HashMap<>();
+        healthInfo.put("status", "UP");
+        healthInfo.put("application", applicationInfo.getFormattedInfo());
+        healthInfo.put("server", serverInfo.getFormattedInfo());
+        healthInfo.put("timestamp", java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        healthInfo.put("employeeCount", employeeService.getEmployeeCount());
+        healthInfo.put("uptimeSeconds", serverInfo.getUptimeInSeconds());
+        healthInfo.put("database", "H2 In-Memory (Connected)");
+        healthInfo.put("h2Console", "Available at " + serverInfo.getServerUrl() + applicationInfo.getH2ConsolePath());
+        healthInfo.put("port", serverInfo.getPort());
+        healthInfo.put("configuredPort", serverInfo.getConfiguredPort());
+        
+        logger.info("HEALTH CHECK - Status: UP, Employees: {}, Uptime: {}s, Port: {}", 
+                   employeeService.getEmployeeCount(), serverInfo.getUptimeInSeconds(),
+                   serverInfo.getPort());
+        
+        return ResponseEntity.ok(healthInfo);
+    }
+
+    @GetMapping("/h2-console-info")
+    public ResponseEntity<Map<String, Object>> getH2ConsoleInfo() {
+        logger.info("H2 CONSOLE INFO REQUEST");
+        
+        String h2ConsoleUrl = serverInfo.getServerUrl() + applicationInfo.getH2ConsolePath();
+        
+        Map<String, Object> consoleInfo = new HashMap<>();
+        consoleInfo.put("consoleUrl", h2ConsoleUrl);
+        consoleInfo.put("databaseUrl", "jdbc:h2:mem:testdb");
+        consoleInfo.put("username", "sa");
+        consoleInfo.put("description", "H2 In-Memory Database Console");
+        consoleInfo.put("driverClass", "org.h2.Driver");
+        consoleInfo.put("application", applicationInfo.getName());
+        consoleInfo.put("fullApplicationInfo", applicationInfo.getFormattedInfo());
+        
+        logger.info("H2 CONSOLE INFO - URL: {}, DB: {}", h2ConsoleUrl, "jdbc:h2:mem:testdb");
+        
+        return ResponseEntity.ok(consoleInfo);
+    }
+
+    // ... (rest of your existing controller methods remain exactly the same)
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
         logger.info("CREATE EMPLOYEE REQUEST - Name: {}, Department: {}, Gender: {}, Salary: {}", 
