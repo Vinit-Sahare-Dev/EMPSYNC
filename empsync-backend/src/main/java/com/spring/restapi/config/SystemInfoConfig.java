@@ -1,45 +1,64 @@
 package com.spring.restapi.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Configuration
 @PropertySource("classpath:system-info.properties")
 public class SystemInfoConfig {
 
     @Bean
-    public SystemInfo systemInfo() {
+    public SystemInfo systemInfo(
+            @Value("#{T(java.lang.System).getProperty('os.name')}") String operatingSystem,
+            @Value("#{T(java.lang.System).getProperty('java.version')}") String javaVersion,
+            @Value("#{T(java.lang.System).getProperty('java.vendor')}") String javaVendor,
+            @Value("#{T(java.lang.System).getProperty('java.vm.version')}") String jvmVersion,
+            @Value("#{T(java.lang.System).getProperty('java.vm.vendor')}") String jvmVendor,
+            @Value("#{T(java.lang.Runtime).getRuntime().availableProcessors()}") int availableProcessors,
+            @Value("#{T(com.spring.restapi.config.SystemInfoConfig).formatMemory(T(java.lang.Runtime).getRuntime().maxMemory())}") String maxMemory,
+            @Value("#{T(com.spring.restapi.config.SystemInfoConfig).formatMemory(T(java.lang.Runtime).getRuntime().totalMemory())}") String allocatedMemory,
+            @Value("#{T(com.spring.restapi.config.SystemInfoConfig).formatMemory(T(java.lang.Runtime).getRuntime().freeMemory())}") String freeMemory,
+            @Value("#{T(java.lang.System).getProperty('os.arch')}") String systemArchitecture,
+            @Value("#{T(java.lang.System).getProperty('user.timezone')}") String userTimezone,
+            @Value("#{T(java.lang.System).getProperty('file.encoding')}") String fileEncoding,
+            @Value("#{T(java.lang.Thread).activeCount()}") int threadCount,
+            @Value("#{T(java.time.LocalDateTime).now().format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd HH:mm:ss'))}") String startupTime,
+            @Value("#{T(java.lang.System).getProperty('user.dir')}") String workingDirectory,
+            @Value("#{T(java.lang.System).getProperty('java.io.tmpdir')}") String tempDirectory,
+            @Value("#{T(java.lang.System).getProperty('user.name')}") String userName,
+            @Value("#{T(java.lang.System).getProperty('user.home')}") String userHome) {
+        
         SystemInfo systemInfo = new SystemInfo();
         
-        // Set all values dynamically from system properties
-        systemInfo.setOperatingSystem(System.getProperty("os.name"));
-        systemInfo.setJavaVersion(System.getProperty("java.version"));
-        systemInfo.setJavaVendor(System.getProperty("java.vendor"));
-        systemInfo.setJvmVersion(System.getProperty("java.vm.version"));
-        systemInfo.setJvmVendor(System.getProperty("java.vm.vendor"));
-        systemInfo.setAvailableProcessors(Runtime.getRuntime().availableProcessors());
-        systemInfo.setMaxMemory(formatMemory(Runtime.getRuntime().maxMemory()));
-        systemInfo.setAllocatedMemory(formatMemory(Runtime.getRuntime().totalMemory()));
-        systemInfo.setFreeMemory(formatMemory(Runtime.getRuntime().freeMemory()));
-        systemInfo.setSystemArchitecture(System.getProperty("os.arch"));
-        systemInfo.setUserTimezone(System.getProperty("user.timezone"));
-        systemInfo.setFileEncoding(System.getProperty("file.encoding"));
-        systemInfo.setCpuCores(Runtime.getRuntime().availableProcessors());
-        systemInfo.setThreadCount(Thread.activeCount());
-        systemInfo.setStartupTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        systemInfo.setWorkingDirectory(System.getProperty("user.dir"));
-        systemInfo.setTempDirectory(System.getProperty("java.io.tmpdir"));
-        systemInfo.setUserName(System.getProperty("user.name"));
-        systemInfo.setUserHome(System.getProperty("user.home"));
+        systemInfo.setOperatingSystem(operatingSystem);
+        systemInfo.setJavaVersion(javaVersion);
+        systemInfo.setJavaVendor(javaVendor);
+        systemInfo.setJvmVersion(jvmVersion);
+        systemInfo.setJvmVendor(jvmVendor);
+        systemInfo.setAvailableProcessors(availableProcessors);
+        systemInfo.setMaxMemory(maxMemory);
+        systemInfo.setAllocatedMemory(allocatedMemory);
+        systemInfo.setFreeMemory(freeMemory);
+        systemInfo.setSystemArchitecture(systemArchitecture);
+        systemInfo.setUserTimezone(userTimezone);
+        systemInfo.setFileEncoding(fileEncoding);
+        systemInfo.setCpuCores(availableProcessors); // Same as available processors
+        systemInfo.setThreadCount(threadCount);
+        systemInfo.setStartupTime(startupTime);
+        systemInfo.setWorkingDirectory(workingDirectory);
+        systemInfo.setTempDirectory(tempDirectory);
+        systemInfo.setUserName(userName);
+        systemInfo.setUserHome(userHome);
         
         return systemInfo;
     }
 
-    private String formatMemory(long memory) {
+    public static String formatMemory(long memory) {
+        if (memory == Long.MAX_VALUE) {
+            return "Unlimited";
+        }
         if (memory < 1024) {
             return memory + " B";
         } else if (memory < 1024 * 1024) {
