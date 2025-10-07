@@ -8,7 +8,6 @@ const EmployeeModal = ({ employee, onSave, onClose }) => {
     gender: ''
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const departments = ['IT', 'HR', 'Finance'];
   const genders = ['Male', 'Female', 'Other'];
@@ -35,18 +34,15 @@ const EmployeeModal = ({ employee, onSave, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
 
     try {
       const employeeData = {
         ...formData,
         salary: parseFloat(formData.salary)
       };
-
       await onSave(employeeData);
-      // Modal will close on successful save
-    } catch (err) {
-      setError(err.message || 'Failed to save employee. Please try again.');
+    } catch (error) {
+      // Error is handled in parent component
     } finally {
       setLoading(false);
     }
@@ -64,20 +60,6 @@ const EmployeeModal = ({ employee, onSave, onClose }) => {
 
         <form onSubmit={handleSubmit}>
           <div className="modal-body">
-            {error && (
-              <div style={{
-                background: '#fef2f2',
-                border: '1px solid #fecaca',
-                color: '#dc2626',
-                padding: '0.75rem 1rem',
-                borderRadius: '8px',
-                marginBottom: '1.5rem',
-                fontSize: '0.875rem'
-              }}>
-                {error}
-              </div>
-            )}
-
             <div className="form-group">
               <label className="form-label">Full Name *</label>
               <input
@@ -145,7 +127,6 @@ const EmployeeModal = ({ employee, onSave, onClose }) => {
                 type="button" 
                 className="btn btn-outline" 
                 onClick={onClose}
-                disabled={loading}
               >
                 Cancel
               </button>

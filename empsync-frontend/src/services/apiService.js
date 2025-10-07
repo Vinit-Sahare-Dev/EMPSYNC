@@ -28,7 +28,6 @@ class EmpSyncAPI {
     );
   }
 
-  // Employee Operations
   async syncEmployees() {
     const response = await this.client.get('/');
     return response.data;
@@ -58,7 +57,6 @@ class EmpSyncAPI {
     await this.client.delete(`/${id}`);
   }
 
-  // Department & Gender Filters
   async syncByDepartment(department) {
     const response = await this.client.get(`/department/${department}`);
     return response.data;
@@ -69,7 +67,6 @@ class EmpSyncAPI {
     return response.data;
   }
 
-  // Bulk Operations
   async bulkSync(employees) {
     const response = await this.client.post('/bulk', employees);
     return response.data;
