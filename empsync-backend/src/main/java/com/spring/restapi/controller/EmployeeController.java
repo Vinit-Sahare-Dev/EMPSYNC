@@ -143,7 +143,6 @@ public class EmployeeController {
         return ResponseEntity.ok(consoleInfo);
     }
 
-    // ... (rest of your existing controller methods remain exactly the same)
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
         logger.info("CREATE EMPLOYEE REQUEST - Name: {}, Department: {}, Gender: {}, Salary: {}", 
@@ -325,5 +324,4 @@ public class EmployeeController {
             @RequestParam Double maxSalary) {
         return employeeService.findBySalaryBetween(minSalary, maxSalary);
     }
-
 }

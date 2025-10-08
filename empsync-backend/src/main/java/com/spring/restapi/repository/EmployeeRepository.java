@@ -18,4 +18,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findBySalaryGreaterThan(Double minSalary);
     
     List<Employee> findBySalaryBetween(Double minSalary, Double maxSalary);
-} 
+}

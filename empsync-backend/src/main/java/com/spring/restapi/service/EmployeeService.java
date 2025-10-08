@@ -167,8 +167,6 @@ public class EmployeeService {
         return updated;
     }
     
-    
-    
     public Optional<Employee> findByEmail(String email) {
         return employeeRepository.findByEmail(email);
     }
