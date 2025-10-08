@@ -299,4 +299,31 @@ public class EmployeeController {
         logger.info("ALL EMPLOYEES DELETED - Total Deleted: {}", count);
         return ResponseEntity.noContent().build();
     }
+    
+    @GetMapping("/search")
+    public ResponseEntity<Employee> getEmployeeByEmail(@RequestParam("email") String email) {
+        return employeeService.findByEmail(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+    
+    @GetMapping("/department-gender")
+    public List<Employee> getEmployeesByDepartmentAndGender(
+            @RequestParam String department, 
+            @RequestParam String gender) {
+        return employeeService.findByDepartmentAndGender(department, gender);
+    }
+
+    @GetMapping("/salary-greater-than")
+    public List<Employee> getEmployeesBySalaryGreaterThan(@RequestParam Double minSalary) {
+        return employeeService.findBySalaryGreaterThan(minSalary);
+    }
+
+    @GetMapping("/salary-between")
+    public List<Employee> getEmployeesBySalaryBetween(
+            @RequestParam Double minSalary, 
+            @RequestParam Double maxSalary) {
+        return employeeService.findBySalaryBetween(minSalary, maxSalary);
+    }
+
 }

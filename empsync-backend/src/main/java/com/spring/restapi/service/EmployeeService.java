@@ -166,6 +166,25 @@ public class EmployeeService {
                    updated.getSalary(), updated.getBonus(), updated.getPf(), updated.getTax());
         return updated;
     }
+    
+    
+    
+    public Optional<Employee> findByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
+    
+
+    public List<Employee> findByDepartmentAndGender(String department, String gender) {
+        return employeeRepository.findByDepartmentAndGender(department, gender);
+    }
+    
+    public List<Employee> findBySalaryGreaterThan(Double minSalary) {
+        return employeeRepository.findBySalaryGreaterThan(minSalary);
+    }
+    
+    public List<Employee> findBySalaryBetween(Double minSalary, Double maxSalary) {
+        return employeeRepository.findBySalaryBetween(minSalary, maxSalary);
+    }
 
     public List<Employee> saveAllEmployees(List<@Valid Employee> employees) {
         logger.info("BULK SAVING {} EMPLOYEES:", employees.size());
