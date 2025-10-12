@@ -1,209 +1,190 @@
+// src/components/employees/EmployeeGrid.jsx
 import React, { useState, useEffect } from 'react';
-import EmployeeCard from './EmployeeCard';
 import EmployeeModal from './EmployeeModal';
-import EmployeeFilters from './EmployeeFilters';
-import SearchBar from '../common/SearchBar';
-import LoadingSpinner from '../layout/LoadingSpinner';
-import EmptyState from '../common/EmptyState';
+import EmployeeCard from './EmployeeCard';
+import EmployeeTable from './EmployeeTable';
+import { useToast } from '../ui/Toast';
 
-// Local storage functions
-const employeeStorage = {
-  // Get all employees from localStorage
-  getEmployees: () => {
-    try {
-      const stored = localStorage.getItem('employees');
-      return stored ? JSON.parse(stored) : [];
-    } catch (error) {
-      console.error('Error loading employees from storage:', error);
-      return [];
-    }
-  },
-
-  // Save employees to localStorage
-  saveEmployees: (employees) => {
-    try {
-      localStorage.setItem('employees', JSON.stringify(employees));
-      return true;
-    } catch (error) {
-      console.error('Error saving employees to storage:', error);
-      return false;
-    }
-  },
-
-  // Generate unique ID
-  generateId: () => {
-    return Date.now().toString() + Math.random().toString(36).substr(2, 9);
-  }
-};
-
-const EmployeeGrid = () => {
+const EmployeeGrid = ({ view = "grid" }) => {
   const [employees, setEmployees] = useState([]);
-  const [loading, setLoading] = useState(false); // No loading for local storage
-  const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
-  const [filters, setFilters] = useState({
-    department: '',
-    gender: '',
-    search: ''
-  });
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
+  const { showToast } = useToast();
 
+  // Load employees from localStorage
   useEffect(() => {
     loadEmployees();
   }, []);
 
-  // Load employees from localStorage
   const loadEmployees = () => {
-    const data = employeeStorage.getEmployees();
-    setEmployees(data);
-  };
-
-  const handleCreate = () => {
-    setEditingEmployee(null);
-    setShowModal(true);
-  };
-
-  const handleEdit = (employee) => {
-    setEditingEmployee(employee);
-    setShowModal(true);
-  };
-
-  const handleSave = async (employeeData) => {
     try {
-      let updatedEmployees;
-      
-      if (editingEmployee) {
-        // Update existing employee
-        updatedEmployees = employees.map(emp =>
-          emp.id === editingEmployee.id 
-            ? { ...employeeData, id: editingEmployee.id }
-            : emp
-        );
-      } else {
-        // Create new employee
-        const newEmployee = {
-          ...employeeData,
-          id: employeeStorage.generateId(),
-          bonus: employeeData.salary * 0.10,
-          pf: employeeData.salary * 0.12,
-          tax: calculateTax(employeeData.salary)
-        };
-        updatedEmployees = [...employees, newEmployee];
-      }
-
-      // Save to localStorage
-      const success = employeeStorage.saveEmployees(updatedEmployees);
-      
-      if (success) {
-        setEmployees(updatedEmployees);
-        setShowModal(false);
-        alert(editingEmployee ? 'Employee updated successfully!' : 'Employee added successfully!');
-      } else {
-        throw new Error('Failed to save to storage');
+      const savedEmployees = localStorage.getItem('employees');
+      if (savedEmployees) {
+        setEmployees(JSON.parse(savedEmployees));
       }
     } catch (error) {
-      console.error('🔴 Save failed:', error);
-      alert('Failed to save employee. Please try again.');
-      throw error;
+      console.error('Error loading employees:', error);
     }
   };
 
-  const handleDelete = async (id) => {
+  const saveEmployees = (updatedEmployees) => {
+    localStorage.setItem('employees', JSON.stringify(updatedEmployees));
+    setEmployees(updatedEmployees);
+  };
+
+  // Handle adding new employee
+  const handleAddEmployee = (employeeData) => {
+    const newEmployee = {
+      id: Date.now(),
+      ...employeeData,
+      createdAt: new Date().toISOString(),
+    };
+
+    const updatedEmployees = [...employees, newEmployee];
+    saveEmployees(updatedEmployees);
+    showToast('success', 'Employee added successfully!');
+    setIsModalOpen(false);
+  };
+
+  // Handle editing employee
+  const handleEditEmployee = (employeeData) => {
+    const updatedEmployees = employees.map(emp =>
+      emp.id === editingEmployee.id ? { ...emp, ...employeeData, updatedAt: new Date().toISOString() } : emp
+    );
+    saveEmployees(updatedEmployees);
+    showToast('success', 'Employee updated successfully!');
+    setIsModalOpen(false);
+    setEditingEmployee(null);
+  };
+
+  // Handle deleting employee
+  const handleDeleteEmployee = (employeeId) => {
     if (window.confirm('Are you sure you want to delete this employee?')) {
-      try {
-        const updatedEmployees = employees.filter(emp => emp.id !== id);
-        const success = employeeStorage.saveEmployees(updatedEmployees);
-        
-        if (success) {
-          setEmployees(updatedEmployees);
-          alert('Employee deleted successfully!');
-        } else {
-          throw new Error('Failed to delete from storage');
-        }
-      } catch (error) {
-        console.error('🔴 Delete failed:', error);
-        alert('Failed to delete employee. Please try again.');
-      }
+      const updatedEmployees = employees.filter(emp => emp.id !== employeeId);
+      saveEmployees(updatedEmployees);
+      showToast('success', 'Employee deleted successfully!');
     }
   };
 
-  const handleFilterChange = (newFilters) => {
-    setFilters(newFilters);
+  // Handle viewing employee
+  const handleViewEmployee = (employee) => {
+    setEditingEmployee(employee);
+    setIsModalOpen(true);
   };
 
-  // Tax calculation function
-  const calculateTax = (salary) => {
-    if (salary <= 250000) {
-      return 0.0;
-    } else if (salary <= 500000) {
-      return (salary - 250000) * 0.05;
-    } else if (salary <= 1000000) {
-      return 12500 + (salary - 500000) * 0.20;
-    } else {
-      return 112500 + (salary - 1000000) * 0.30;
-    }
+  // Open modal for adding new employee
+  const openAddModal = () => {
+    setEditingEmployee(null);
+    setIsModalOpen(true);
   };
 
-  const filteredEmployees = employees.filter(emp => {
-    const matchesDept = !filters.department || emp.department === filters.department;
-    const matchesGender = !filters.gender || emp.gender === filters.gender;
-    const matchesSearch = !filters.search || 
-      emp.name.toLowerCase().includes(filters.search.toLowerCase());
+  // Open modal for editing employee
+  const openEditModal = (employee) => {
+    setEditingEmployee(employee);
+    setIsModalOpen(true);
+  };
+
+  // Bulk delete
+  const handleBulkDelete = () => {
+    if (selectedEmployees.length === 0) return;
     
-    return matchesDept && matchesGender && matchesSearch;
-  });
+    if (window.confirm(`Are you sure you want to delete ${selectedEmployees.length} employees?`)) {
+      const updatedEmployees = employees.filter(
+        emp => !selectedEmployees.includes(emp.id)
+      );
+      saveEmployees(updatedEmployees);
+      setSelectedEmployees([]);
+      showToast('success', `${selectedEmployees.length} employees deleted successfully`);
+    }
+  };
 
   return (
-    <div className="employee-grid-page fade-in">
-      <div className="page-header">
+    <div className="employee-grid-container">
+      {/* Header with Add Button */}
+      <div className="employee-header">
         <div>
-          <h1>Employee Sync</h1>
-          <p>Manage and synchronize your workforce</p>
-          <small style={{color: '#666', fontStyle: 'italic'}}>
-            Data saved locally in browser storage
-          </small>
+          <h1>Employee Management</h1>
+          <p>Manage your workforce efficiently</p>
         </div>
-        <button className="btn btn-primary" onClick={handleCreate}>
-          + New Employee
-        </button>
+        <div className="employee-actions">
+          <button className="btn btn-primary" onClick={openAddModal}>
+            + Add Employee
+          </button>
+          <div className="search-bar">
+            <input 
+              type="text" 
+              placeholder="Search employees..." 
+              className="search-input"
+            />
+          </div>
+          <button className="btn btn-outline">
+            Export Data
+          </button>
+        </div>
       </div>
 
-      <div className="controls">
-        <SearchBar 
-          value={filters.search}
-          onChange={(value) => setFilters(prev => ({ ...prev, search: value }))}
-          placeholder="Search employees..."
-        />
-        <EmployeeFilters 
-          filters={filters}
-          onChange={handleFilterChange}
-        />
-      </div>
-
-      <div className="employee-grid">
-        {filteredEmployees.map(employee => (
-          <EmployeeCard
-            key={employee.id}
-            employee={employee}
-            onEdit={() => handleEdit(employee)}
-            onDelete={() => handleDelete(employee.id)}
-          />
-        ))}
-      </div>
-
-      {filteredEmployees.length === 0 && (
-        <EmptyState 
-          message="No employees found"
-          subtitle={employees.length === 0 ? "Get started by adding your first employee" : "Try adjusting your filters"}
-        />
+      {/* Bulk Actions */}
+      {selectedEmployees.length > 0 && (
+        <div className="bulk-actions">
+          <div className="bulk-selection">
+            {selectedEmployees.length} employees selected
+          </div>
+          <div className="bulk-buttons">
+            <button className="btn btn-danger" onClick={handleBulkDelete}>
+              Delete Selected
+            </button>
+          </div>
+        </div>
       )}
 
-      {showModal && (
-        <EmployeeModal
-          employee={editingEmployee}
-          onSave={handleSave}
-          onClose={() => setShowModal(false)}
-        />
-      )}
+      {/* Employee List */}
+      <div style={{ marginTop: '20px' }}>
+        {employees.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-state__icon">👥</div>
+            <h3>No employees found</h3>
+            <p>Add your first employee to get started!</p>
+            <button className="btn btn-primary" onClick={openAddModal}>
+              Add First Employee
+            </button>
+          </div>
+        ) : (
+          <div className={`employee-view ${view}`}>
+            {view === "grid" ? (
+              <EmployeeCard 
+                employees={employees}
+                onView={handleViewEmployee}
+                onEdit={openEditModal}
+                onDelete={handleDeleteEmployee}
+                selectedEmployees={selectedEmployees}
+                onSelectionChange={setSelectedEmployees}
+              />
+            ) : (
+              <EmployeeTable 
+                employees={employees}
+                onView={handleViewEmployee}
+                onEdit={openEditModal}
+                onDelete={handleDeleteEmployee}
+                selectedEmployees={selectedEmployees}
+                onSelectionChange={setSelectedEmployees}
+              />
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Add/Edit Employee Modal */}
+      <EmployeeModal 
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingEmployee(null);
+        }}
+        onSave={editingEmployee ? handleEditEmployee : handleAddEmployee}
+        employee={editingEmployee}
+        mode={editingEmployee ? (editingEmployee.id ? 'edit' : 'view') : 'add'}
+      />
     </div>
   );
 };

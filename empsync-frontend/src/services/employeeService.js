@@ -1,98 +1,169 @@
-// services/employeeService.js
-import { localStorageService } from './localStorageService';
-import { empSyncAPI } from './apiService';
+// src/services/employeeService.js
+const API_BASE_URL = 'http://localhost:8888/api'; // Your backend port
 
-export const employeeService = {
-  // Create employee in both localStorage and backend
-  createEmployee: async (employeeData) => {
+class EmployeeService {
+  // Get all employees
+  async getAllEmployees() {
     try {
-      // 1. Save to localStorage immediately
-      const localSuccess = localStorageService.addEmployee(employeeData);
-      
-      // 2. Try to sync with backend
-      let backendSuccess = false;
-      try {
-        await empSyncAPI.createSync(employeeData);
-        backendSuccess = true;
-        console.log('✅ Employee synced with backend');
-      } catch (error) {
-        console.warn('⚠️ Backend sync failed, data saved locally only', error);
+      const response = await fetch(`${API_BASE_URL}/employees`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch employees');
       }
-      
-      return { localSuccess, backendSuccess };
+      return await response.json();
     } catch (error) {
-      console.error('🔴 Create failed:', error);
-      throw error;
-    }
-  },
-
-  // Update employee in both places
-  updateEmployee: async (id, employeeData) => {
-    try {
-      // 1. Update localStorage
-      const localSuccess = localStorageService.updateEmployee(id, employeeData);
-      
-      // 2. Try to sync with backend
-      let backendSuccess = false;
-      try {
-        await empSyncAPI.updateSync(id, employeeData);
-        backendSuccess = true;
-        console.log('✅ Employee updated in backend');
-      } catch (error) {
-        console.warn('⚠️ Backend update failed, data updated locally only', error);
-      }
-      
-      return { localSuccess, backendSuccess };
-    } catch (error) {
-      console.error('🔴 Update failed:', error);
-      throw error;
-    }
-  },
-
-  // Delete from both places
-  deleteEmployee: async (id) => {
-    try {
-      // 1. Delete from localStorage
-      const localSuccess = localStorageService.deleteEmployee(id);
-      
-      // 2. Try to delete from backend
-      let backendSuccess = false;
-      try {
-        await empSyncAPI.deleteSync(id);
-        backendSuccess = true;
-        console.log('✅ Employee deleted from backend');
-      } catch (error) {
-        console.warn('⚠️ Backend delete failed, data deleted locally only', error);
-      }
-      
-      return { localSuccess, backendSuccess };
-    } catch (error) {
-      console.error('🔴 Delete failed:', error);
-      throw error;
-    }
-  },
-
-  // Sync all local data with backend
-  syncAllWithBackend: async () => {
-    try {
-      const localEmployees = localStorageService.getEmployees();
-      let syncedCount = 0;
-      
-      for (const employee of localEmployees) {
-        try {
-          // Check if employee exists in backend, if not create it
-          await empSyncAPI.createSync(employee);
-          syncedCount++;
-        } catch (error) {
-          console.warn(`⚠️ Failed to sync employee ${employee.id}:`, error);
-        }
-      }
-      
-      console.log(`✅ Synced ${syncedCount}/${localEmployees.length} employees with backend`);
-      return syncedCount;
-    } catch (error) {
-      console.error('🔴 Bulk sync failed:', error);
+      console.error('Error fetching employees:', error);
       throw error;
     }
   }
-};
+
+  // Get employee by ID
+  async getEmployeeById(id) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/employees/${id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch employee');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching employee:', error);
+      throw error;
+    }
+  }
+
+  // Create new employee
+  async createEmployee(employeeData) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/employees`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(employeeData),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create employee');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error creating employee:', error);
+      throw error;
+    }
+  }
+
+  // Update employee
+  async updateEmployee(id, employeeData) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/employees/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(employeeData),
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update employee');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error updating employee:', error);
+      throw error;
+    }
+  }
+
+  // Delete employee
+  async deleteEmployee(id) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/employees/${id}`, {
+        method: 'DELETE',
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete employee');
+      }
+      
+      return await response.text(); // Your backend returns string message
+    } catch (error) {
+      console.error('Error deleting employee:', error);
+      throw error;
+    }
+  }
+
+  // Get employees by department
+  async getEmployeesByDepartment(department) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/employees/department/${department}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch employees by department');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching employees by department:', error);
+      throw error;
+    }
+  }
+
+  // Get employees by gender
+  async getEmployeesByGender(gender) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/employees/gender/${gender}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch employees by gender');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching employees by gender:', error);
+      throw error;
+    }
+  }
+
+  // Get employee count
+  async getEmployeeCount() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/employees/count`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch employee count');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching employee count:', error);
+      throw error;
+    }
+  }
+
+  // Search employee by email
+  async searchEmployeeByEmail(email) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/employees/search?email=${encodeURIComponent(email)}`);
+      if (!response.ok) {
+        throw new Error('Employee not found');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error searching employee:', error);
+      throw error;
+    }
+  }
+
+  // Health check
+  async healthCheck() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/employees/health`);
+      if (!response.ok) {
+        throw new Error('Backend health check failed');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Health check failed:', error);
+      throw error;
+    }
+  }
+}
+
+export default new EmployeeService();

@@ -1,82 +1,161 @@
+// src/components/dashboard/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
-import { empSyncAPI } from '../../services/apiService';
 import StatsCard from './StatsCard';
 import QuickActions from './QuickActions';
+import AnalyticsCharts from './AnalyticsCharts';
+import RecentActivity from './RecentActivity';
 import LoadingSpinner from '../layout/LoadingSpinner';
+import { useToast } from '../ui/Toast';
 
 const Dashboard = () => {
-  const [stats, setStats] = useState({
-    total: 0,
-    byDepartment: {},
-    loading: true
-  });
+  const [dashboardData, setDashboardData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { showToast } = useToast();
 
   useEffect(() => {
-    syncDashboardData();
+    loadDashboardData();
   }, []);
 
-  const syncDashboardData = async () => {
+  const loadDashboardData = () => {
+    setLoading(true);
     try {
-      setStats(prev => ({ ...prev, loading: true }));
-      const [count, allEmployees] = await Promise.all([
-        empSyncAPI.getSyncCount(),
-        empSyncAPI.syncEmployees()
-      ]);
+      // Load employees from localStorage
+      const savedEmployees = localStorage.getItem('employees');
+      const employees = savedEmployees ? JSON.parse(savedEmployees) : [];
 
-      const byDepartment = allEmployees.reduce((acc, emp) => {
-        acc[emp.department] = (acc[emp.department] || 0) + 1;
-        return acc;
-      }, {});
+      // Calculate dashboard stats
+      const totalEmployees = employees.length;
+      const activeEmployees = employees.filter(emp => emp.status === 'Active').length;
+      const departments = [...new Set(employees.map(emp => emp.department).filter(Boolean))];
+      const newHires = employees.filter(emp => {
+        const joinDate = new Date(emp.joinDate);
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        return joinDate > thirtyDaysAgo;
+      }).length;
 
-      setStats({
-        total: count,
-        byDepartment,
-        loading: false
+      // Department distribution
+      const departmentStats = departments.map(dept => ({
+        name: dept,
+        count: employees.filter(emp => emp.department === dept).length
+      }));
+
+      // Recent activity (last 5 activities)
+      const recentActivity = employees
+        .sort((a, b) => new Date(b.createdAt || b.joinDate) - new Date(a.createdAt || a.joinDate))
+        .slice(0, 5)
+        .map(emp => ({
+          id: emp.id,
+          type: 'new_employee',
+          message: `${emp.name} joined ${emp.department}`,
+          time: new Date(emp.createdAt || emp.joinDate).toLocaleDateString(),
+          icon: '👤'
+        }));
+
+      setDashboardData({
+        stats: {
+          totalEmployees,
+          activeEmployees,
+          departments: departments.length,
+          newHires
+        },
+        departmentStats,
+        recentActivity,
+        employees
       });
     } catch (error) {
-      console.error('🔴 Dashboard sync failed:', error);
-      setStats(prev => ({ ...prev, loading: false }));
+      console.error('Error loading dashboard data:', error);
+      showToast('error', 'Failed to load dashboard data');
+    } finally {
+      setLoading(false);
     }
   };
 
-  if (stats.loading) return <LoadingSpinner message="Syncing dashboard..." />;
+  const handleQuickAction = (action) => {
+    switch (action) {
+      case 'add_employee':
+        showToast('info', 'Redirecting to add employee...');
+        // In a real app, you would navigate to employees page with modal open
+        window.location.href = '/employees';
+        break;
+      case 'export_data':
+        showToast('success', 'Preparing data export...');
+        // Export logic would go here
+        break;
+      case 'generate_report':
+        showToast('info', 'Generating report...');
+        break;
+      case 'team_overview':
+        showToast('info', 'Showing team overview...');
+        break;
+      default:
+        showToast('info', `Action: ${action}`);
+    }
+  };
+
+  if (loading) {
+    return <LoadingSpinner size="large" text="Loading dashboard..." />;
+  }
 
   return (
-    <div className="dashboard fade-in">
+    <div className="dashboard">
       <div className="dashboard-header">
-        <h1>EmpSync Dashboard</h1>
-        <p>Real-time workforce synchronization</p>
+        <div>
+          <h1>Employee Workforce Management</h1>
+          <p>Welcome to your dashboard - Overview of your team and operations</p>
+        </div>
+        <div className="dashboard-actions">
+          <button className="btn btn-primary" onClick={() => handleQuickAction('generate_report')}>
+            📊 Generate Report
+          </button>
+        </div>
       </div>
 
+      {/* Stats Grid */}
       <div className="stats-grid">
-        <StatsCard 
-          title="Total Employees" 
-          value={stats.total} 
+        <StatsCard
+          title="Total Employees"
+          value={dashboardData?.stats.totalEmployees || 0}
           icon="👥"
           theme="primary"
         />
-        
-        {Object.entries(stats.byDepartment).map(([dept, count]) => (
-          <StatsCard
-            key={dept}
-            title={dept}
-            value={count}
-            icon="🏢"
-            theme="secondary"
-          />
-        ))}
-        
-        {Object.keys(stats.byDepartment).length === 0 && stats.total > 0 && (
-          <StatsCard
-            title="All Employees"
-            value={stats.total}
-            icon="👨‍💼"
-            theme="info"
-          />
-        )}
+        <StatsCard
+          title="Active Employees"
+          value={dashboardData?.stats.activeEmployees || 0}
+          icon="✅"
+          theme="success"
+        />
+        <StatsCard
+          title="Departments"
+          value={dashboardData?.stats.departments || 0}
+          icon="🏢"
+          theme="info"
+        />
+        <StatsCard
+          title="New Hires (30 days)"
+          value={dashboardData?.stats.newHires || 0}
+          icon="🆕"
+          theme="warning"
+        />
       </div>
 
-      <QuickActions onDataChange={syncDashboardData} />
+      {/* Quick Actions */}
+      <QuickActions onActionClick={handleQuickAction} />
+
+      <div className="dashboard-content">
+        {/* Analytics Charts */}
+        <div className="dashboard-charts">
+          <AnalyticsCharts 
+            departmentStats={dashboardData?.departmentStats || []}
+            employees={dashboardData?.employees || []}
+          />
+        </div>
+
+        {/* Recent Activity */}
+        <div className="dashboard-activity">
+          <RecentActivity activities={dashboardData?.recentActivity || []} />
+        </div>
+      </div>
     </div>
   );
 };

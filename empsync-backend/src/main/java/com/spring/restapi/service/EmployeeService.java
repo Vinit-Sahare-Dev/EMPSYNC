@@ -1,3 +1,4 @@
+// src/main/java/com/spring/restapi/service/EmployeeService.java
 package com.spring.restapi.service;
 
 import com.spring.restapi.models.Employee;
@@ -27,46 +28,52 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     public Employee saveEmployee(@Valid Employee employee) {
-        logger.info("SAVING EMPLOYEE - Name: {}, Department: {}, Gender: {}, Salary: {}", 
-                   employee.getName(), employee.getDepartment(), employee.getGender(), employee.getSalary());
+        logger.info("SAVING EMPLOYEE - Name: {}, Email: {}, Department: {}, Position: {}, Salary: {}", 
+                   employee.getName(), employee.getEmail(), employee.getDepartment(), 
+                   employee.getPosition(), employee.getSalary());
+        
+        if (employeeRepository.findByEmail(employee.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Employee with email " + employee.getEmail() + " already exists");
+        }
         
         calculateEmployeeDeductions(employee);
         Employee saved = employeeRepository.save(employee);
         
-        logger.info("EMPLOYEE SAVED SUCCESSFULLY - ID: {}, Name: {}, Department: {}, Gender: {}, Salary: {}, Bonus: {}, PF: {}, Tax: {}", 
-                   saved.getId(), saved.getName(), saved.getDepartment(), saved.getGender(), 
-                   saved.getSalary(), saved.getBonus(), saved.getPf(), saved.getTax());
+        logger.info("EMPLOYEE SAVED SUCCESSFULLY - ID: {}, Name: {}, Email: {}", 
+                   saved.getId(), saved.getName(), saved.getEmail());
         return saved;
     }
 
     public void deleteEmployeeById(Long id) {
-        // First get employee details before deleting
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("EMPLOYEE NOT FOUND FOR DELETION - ID: {}", id);
                     return new EmployeeNotFoundException("Employee not found with id: " + id);
                 });
         
-        logger.info("DELETING EMPLOYEE - ID: {}, Name: {}, Department: {}, Gender: {}, Salary: {}", 
-                   id, employee.getName(), employee.getDepartment(), employee.getGender(), employee.getSalary());
+        logger.info("DELETING EMPLOYEE - ID: {}, Name: {}, Email: {}", 
+                   id, employee.getName(), employee.getEmail());
         
         employeeRepository.delete(employee);
         
-        logger.info("EMPLOYEE DELETED SUCCESSFULLY - ID: {}, Name: {}, Department: {}", 
-                   id, employee.getName(), employee.getDepartment());
+        logger.info("EMPLOYEE DELETED SUCCESSFULLY - ID: {}, Name: {}", id, employee.getName());
     }
 
     private void calculateEmployeeDeductions(Employee employee) {
         logger.debug("CALCULATING DEDUCTIONS - Employee: {} (ID: {})", employee.getName(), employee.getId());
         Double salary = employee.getSalary();
+        
         Double bonus = salary * 0.10;
         employee.setBonus(bonus);
+        
         Double pf = salary * 0.12;
         employee.setPf(pf);
+        
         Double tax = calculateTax(salary);
         employee.setTax(tax);
-        logger.debug("DEDUCTIONS CALCULATED - Employee: {}, Bonus: {}, PF: {}, Tax: {}, Net Salary: {}", 
-                   employee.getName(), bonus, pf, tax, (salary + bonus - pf - tax));
+        
+        logger.debug("DEDUCTIONS CALCULATED - Employee: {}, Bonus: {}, PF: {}, Tax: {}", 
+                   employee.getName(), bonus, pf, tax);
     }
 
     private Double calculateTax(Double salary) {
@@ -85,27 +92,20 @@ public class EmployeeService {
         logger.info("FETCHING ALL EMPLOYEES");
         List<Employee> employees = employeeRepository.findAll();
         employees.forEach(this::calculateEmployeeDeductions);
-        
-        logger.info("FETCHED {} EMPLOYEES:", employees.size());
-        for (Employee emp : employees) {
-            logger.info("  - ID: {}, Name: {}, Department: {}, Gender: {}, Salary: {}, Bonus: {}, PF: {}, Tax: {}", 
-                       emp.getId(), emp.getName(), emp.getDepartment(), emp.getGender(), 
-                       emp.getSalary(), emp.getBonus(), emp.getPf(), emp.getTax());
-        }
+        logger.info("FETCHED {} EMPLOYEES", employees.size());
         return employees;
     }
 
     public Optional<Employee> getEmployeeById(Long id) {
         logger.info("FETCHING EMPLOYEE BY ID: {}", id);
         Optional<Employee> employeeOpt = employeeRepository.findById(id);
-        if (employeeOpt.isEmpty()) {
-            logger.warn("EMPLOYEE NOT FOUND - ID: {}", id);
-        } else {
+        if (employeeOpt.isPresent()) {
             Employee employee = employeeOpt.get();
             calculateEmployeeDeductions(employee);
-            logger.info("EMPLOYEE FOUND - ID: {}, Name: {}, Department: {}, Gender: {}, Salary: {}, Bonus: {}, PF: {}, Tax: {}", 
-                       employee.getId(), employee.getName(), employee.getDepartment(), employee.getGender(), 
-                       employee.getSalary(), employee.getBonus(), employee.getPf(), employee.getTax());
+            logger.info("EMPLOYEE FOUND - ID: {}, Name: {}, Email: {}", 
+                       employee.getId(), employee.getName(), employee.getEmail());
+        } else {
+            logger.warn("EMPLOYEE NOT FOUND - ID: {}", id);
         }
         return employeeOpt;
     }
@@ -114,13 +114,7 @@ public class EmployeeService {
         logger.info("FETCHING EMPLOYEES BY DEPARTMENT: {}", department);
         List<Employee> employees = employeeRepository.findByDepartment(department);
         employees.forEach(this::calculateEmployeeDeductions);
-        
-        logger.info("FETCHED {} EMPLOYEES FROM DEPARTMENT {}:", employees.size(), department);
-        for (Employee emp : employees) {
-            logger.info("  - ID: {}, Name: {}, Gender: {}, Salary: {}, Bonus: {}, PF: {}, Tax: {}", 
-                       emp.getId(), emp.getName(), emp.getGender(), emp.getSalary(), 
-                       emp.getBonus(), emp.getPf(), emp.getTax());
-        }
+        logger.info("FETCHED {} EMPLOYEES FROM DEPARTMENT {}", employees.size(), department);
         return employees;
     }
 
@@ -128,20 +122,14 @@ public class EmployeeService {
         logger.info("FETCHING EMPLOYEES BY GENDER: {}", gender);
         List<Employee> employees = employeeRepository.findByGender(gender);
         employees.forEach(this::calculateEmployeeDeductions);
-        
-        logger.info("FETCHED {} EMPLOYEES WITH GENDER {}:", employees.size(), gender);
-        for (Employee emp : employees) {
-            logger.info("  - ID: {}, Name: {}, Department: {}, Salary: {}, Bonus: {}, PF: {}, Tax: {}", 
-                       emp.getId(), emp.getName(), emp.getDepartment(), emp.getSalary(), 
-                       emp.getBonus(), emp.getPf(), emp.getTax());
-        }
+        logger.info("FETCHED {} EMPLOYEES WITH GENDER {}", employees.size(), gender);
         return employees;
     }
 
     public Employee updateEmployee(Long id, @Valid Employee employeeDetails) {
-        logger.info("UPDATING EMPLOYEE - ID: {}, New Details - Name: {}, Department: {}, Gender: {}, Salary: {}", 
-                   id, employeeDetails.getName(), employeeDetails.getDepartment(), 
-                   employeeDetails.getGender(), employeeDetails.getSalary());
+        logger.info("UPDATING EMPLOYEE - ID: {}, New Details - Name: {}, Email: {}, Department: {}, Position: {}", 
+                   id, employeeDetails.getName(), employeeDetails.getEmail(), 
+                   employeeDetails.getDepartment(), employeeDetails.getPosition());
         
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> {
@@ -149,29 +137,55 @@ public class EmployeeService {
                     return new EmployeeNotFoundException("Employee not found with id: " + id);
                 });
         
-        // Log old values
-        logger.info("BEFORE UPDATE - ID: {}, Old Details - Name: {}, Department: {}, Gender: {}, Salary: {}", 
-                   id, employee.getName(), employee.getDepartment(), employee.getGender(), employee.getSalary());
+        if (!employee.getEmail().equals(employeeDetails.getEmail()) && 
+            employeeRepository.findByEmail(employeeDetails.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Employee with email " + employeeDetails.getEmail() + " already exists");
+        }
         
         employee.setName(employeeDetails.getName());
+        employee.setEmail(employeeDetails.getEmail());
+        employee.setPhone(employeeDetails.getPhone());
         employee.setSalary(employeeDetails.getSalary());
         employee.setDepartment(employeeDetails.getDepartment());
+        employee.setPosition(employeeDetails.getPosition());
         employee.setGender(employeeDetails.getGender());
+        employee.setJoinDate(employeeDetails.getJoinDate());
+        employee.setAddress(employeeDetails.getAddress());
+        employee.setStatus(employeeDetails.getStatus());
+        
         calculateEmployeeDeductions(employee);
         
         Employee updated = employeeRepository.save(employee);
         
-        logger.info("EMPLOYEE UPDATED SUCCESSFULLY - ID: {}, Name: {}, Department: {}, Gender: {}, Salary: {}, Bonus: {}, PF: {}, Tax: {}", 
-                   updated.getId(), updated.getName(), updated.getDepartment(), updated.getGender(), 
-                   updated.getSalary(), updated.getBonus(), updated.getPf(), updated.getTax());
+        logger.info("EMPLOYEE UPDATED SUCCESSFULLY - ID: {}, Name: {}, Email: {}", 
+                   updated.getId(), updated.getName(), updated.getEmail());
         return updated;
     }
     
+    public List<Employee> getEmployeesByStatus(String status) {
+        return employeeRepository.findByStatus(status);
+    }
+    
+    public List<Employee> searchEmployeesByName(String name) {
+        return employeeRepository.findByNameContainingIgnoreCase(name);
+    }
+    
+    public List<String> getAllDepartments() {
+        return employeeRepository.findDistinctDepartments();
+    }
+    
+    public List<String> getAllPositions() {
+        return employeeRepository.findDistinctPositions();
+    }
+    
+    public List<Employee> getActiveEmployees() {
+        return employeeRepository.findActiveEmployees();
+    }
+
     public Optional<Employee> findByEmail(String email) {
         return employeeRepository.findByEmail(email);
     }
     
-
     public List<Employee> findByDepartmentAndGender(String department, String gender) {
         return employeeRepository.findByDepartmentAndGender(department, gender);
     }
@@ -185,16 +199,9 @@ public class EmployeeService {
     }
 
     public List<Employee> saveAllEmployees(List<@Valid Employee> employees) {
-        logger.info("BULK SAVING {} EMPLOYEES:", employees.size());
-        for (int i = 0; i < employees.size(); i++) {
-            Employee emp = employees.get(i);
-            logger.info("  EMPLOYEE {} - Name: {}, Department: {}, Gender: {}, Salary: {}", 
-                       i + 1, emp.getName(), emp.getDepartment(), emp.getGender(), emp.getSalary());
-        }
-        
+        logger.info("BULK SAVING {} EMPLOYEES", employees.size());
         employees.forEach(this::calculateEmployeeDeductions);
         List<Employee> saved = employeeRepository.saveAll(employees);
-        
         logger.info("BULK SAVE COMPLETED - {} EMPLOYEES SAVED SUCCESSFULLY", saved.size());
         return saved;
     }
@@ -222,29 +229,27 @@ public class EmployeeService {
                     return new EmployeeNotFoundException("Employee not found with id: " + id);
                 });
         
-        // Log current state before update
-        logger.info("BEFORE PARTIAL UPDATE - ID: {}, Current - Name: {}, Department: {}, Gender: {}, Salary: {}", 
-                   id, employee.getName(), employee.getDepartment(), employee.getGender(), employee.getSalary());
-        
         updates.forEach((key, value) -> {
             switch (key) {
-                case "name" -> {
-                    employee.setName((String) value);
-                    logger.info("UPDATING NAME TO: {}", value);
+                case "name" -> employee.setName((String) value);
+                case "email" -> {
+                    if (!employee.getEmail().equals(value) && 
+                        employeeRepository.findByEmail((String) value).isPresent()) {
+                        throw new IllegalArgumentException("Employee with email " + value + " already exists");
+                    }
+                    employee.setEmail((String) value);
                 }
                 case "salary" -> {
                     employee.setSalary(Double.valueOf(value.toString()));
-                    logger.info("UPDATING SALARY TO: {}", value);
                     calculateEmployeeDeductions(employee);
                 }
-                case "department" -> {
-                    employee.setDepartment((String) value);
-                    logger.info("UPDATING DEPARTMENT TO: {}", value);
-                }
-                case "gender" -> {
-                    employee.setGender((String) value);
-                    logger.info("UPDATING GENDER TO: {}", value);
-                }
+                case "department" -> employee.setDepartment((String) value);
+                case "position" -> employee.setPosition((String) value);
+                case "gender" -> employee.setGender((String) value);
+                case "phone" -> employee.setPhone((String) value);
+                case "joinDate" -> employee.setJoinDate((String) value);
+                case "address" -> employee.setAddress((String) value);
+                case "status" -> employee.setStatus((String) value);
                 default -> {
                     logger.error("INVALID FIELD UPDATE ATTEMPT - Field: '{}', Value: {}, Employee ID: {}", key, value, id);
                     throw new IllegalArgumentException("Field '" + key + "' is not updatable.");
@@ -253,10 +258,8 @@ public class EmployeeService {
         });
         
         Employee saved = employeeRepository.save(employee);
-        
-        logger.info("PARTIAL UPDATE SUCCESSFUL - ID: {}, Final - Name: {}, Department: {}, Gender: {}, Salary: {}, Bonus: {}, PF: {}, Tax: {}", 
-                   saved.getId(), saved.getName(), saved.getDepartment(), saved.getGender(), 
-                   saved.getSalary(), saved.getBonus(), saved.getPf(), saved.getTax());
+        logger.info("PARTIAL UPDATE SUCCESSFUL - ID: {}, Name: {}, Email: {}", 
+                   saved.getId(), saved.getName(), saved.getEmail());
         return saved;
     }
 }

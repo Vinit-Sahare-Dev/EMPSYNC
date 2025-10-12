@@ -1,75 +1,53 @@
-import React, { useState } from 'react';
-import { empSyncAPI } from '../../services/apiService';
+// src/components/dashboard/QuickActions.jsx
+import React from 'react';
 
-const QuickActions = ({ onDataChange }) => {
-  const [loading, setLoading] = useState('');
-
-  const handleQuickAction = async (action) => {
-    setLoading(action);
-    try {
-      switch (action) {
-        case 'refresh':
-          await onDataChange();
-          break;
-        case 'clearAll':
-          if (window.confirm('Are you sure you want to delete ALL employees? This cannot be undone.')) {
-            await empSyncAPI.clearAllSync();
-            await onDataChange();
-          }
-          break;
-        default:
-          break;
-      }
-    } catch (error) {
-      console.error('🔴 Quick action failed:', error);
-      alert(`Failed to ${action}. Please try again.`);
-    } finally {
-      setLoading('');
+const QuickActions = ({ onActionClick }) => {
+  const actions = [
+    {
+      id: 'add_employee',
+      title: 'Add Employee',
+      description: 'Add new team member',
+      icon: '👤',
+      color: 'primary'
+    },
+    {
+      id: 'export_data',
+      title: 'Export Data',
+      description: 'Export employee data',
+      icon: '📤',
+      color: 'success'
+    },
+    {
+      id: 'generate_report',
+      title: 'Generate Report',
+      description: 'Create workforce report',
+      icon: '📊',
+      color: 'info'
+    },
+    {
+      id: 'team_overview',
+      title: 'Team Overview',
+      description: 'View team structure',
+      icon: '👨‍💼',
+      color: 'warning'
     }
-  };
+  ];
 
   return (
-    <div className="quick-actions fade-in">
-      <h3>Quick Actions</h3>
+    <div className="quick-actions">
+      <h2>Quick Actions</h2>
       <div className="actions-grid">
-        <button 
-          className="action-btn"
-          onClick={() => handleQuickAction('refresh')}
-          disabled={loading === 'refresh'}
-        >
-          <div className="action-icon">🔄</div>
-          <div className="action-text">
-            {loading === 'refresh' ? 'Refreshing...' : 'Refresh Data'}
+        {actions.map(action => (
+          <div
+            key={action.id}
+            className={`action-card ${action.color}`}
+            onClick={() => onActionClick(action.id)}
+          >
+            <div className="action-icon">{action.icon}</div>
+            <h3>{action.title}</h3>
+            <p>{action.description}</p>
           </div>
-        </button>
-
-        <button 
-          className="action-btn"
-          onClick={() => window.open('/employees', '_self')}
-        >
-          <div className="action-icon">👥</div>
-          <div className="action-text">View All Employees</div>
-        </button>
-
-        <button 
-          className="action-btn"
-          onClick={() => handleQuickAction('clearAll')}
-          disabled={loading === 'clearAll'}
-          style={{borderColor: '#fecaca'}}
-        >
-          <div className="action-icon">🗑️</div>
-          <div className="action-text">
-            {loading === 'clearAll' ? 'Clearing...' : 'Clear All Data'}
-          </div>
-        </button>
-
-        <button 
-          className="action-btn"
-          onClick={() => window.open('/analytics', '_self')}
-        >
-          <div className="action-icon">📊</div>
-          <div className="action-text">View Analytics</div>
-        </button>
+        ))}
       </div>
     </div>
   );

@@ -1,22 +1,17 @@
+// src/components/layout/Navbar.jsx
 import React from 'react';
 
 const Navbar = ({ onMenuToggle }) => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <button className="menu-toggle" onClick={onMenuToggle}>
+        <button onClick={onMenuToggle} className="btn btn-outline">
           ☰
         </button>
-        <div>
-          <div className="brand-logo">EmpSync</div>
-          <div className="brand-tagline">Workforce Synchronization</div>
-        </div>
+        <h1>Employee Management</h1>
       </div>
-      
       <div className="navbar-actions">
-        <div style={{color: 'var(--text-light)', fontSize: '0.875rem'}}>
-          Real-time Employee Management
-        </div>
+        <button className="btn btn-outline">Profile</button>
       </div>
     </nav>
   );

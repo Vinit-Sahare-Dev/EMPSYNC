@@ -1,6 +1,7 @@
+// src/services/apiService.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api/employees';
+const API_BASE_URL = 'http://localhost:8888/api/employees';
 
 class EmpSyncAPI {
   constructor() {
@@ -16,25 +17,46 @@ class EmpSyncAPI {
   }
 
   setupInterceptors() {
-    this.client.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        console.error('🔴 EmpSync API Error:', error.response?.data);
-        return Promise.reject({
-          message: error.response?.data?.message || 'Sync failed. Please try again.',
-          status: error.response?.status
+    // Log all requests
+    this.client.interceptors.request.use(
+      (config) => {
+        console.log('🚀 API Request:', {
+          method: config.method?.toUpperCase(),
+          url: config.baseURL + config.url,
+          data: config.data
         });
+        return config;
+      },
+      (error) => {
+        console.error('❌ Request Error:', error);
+        return Promise.reject(error);
+      }
+    );
+
+    // Log all responses
+    this.client.interceptors.response.use(
+      (response) => {
+        console.log('✅ API Response Success:', {
+          status: response.status,
+          url: response.config.url,
+          data: response.data
+        });
+        return response;
+      },
+      (error) => {
+        console.error('🔴 API Response Error:', {
+          status: error.response?.status,
+          message: error.response?.data?.message,
+          url: error.config?.url,
+          fullError: error
+        });
+        return Promise.reject(error);
       }
     );
   }
 
   async syncEmployees() {
     const response = await this.client.get('/');
-    return response.data;
-  }
-
-  async syncEmployeeById(id) {
-    const response = await this.client.get(`/${id}`);
     return response.data;
   }
 
@@ -45,11 +67,6 @@ class EmpSyncAPI {
 
   async updateSync(id, employeeData) {
     const response = await this.client.put(`/${id}`, employeeData);
-    return response.data;
-  }
-
-  async partialSync(id, updates) {
-    const response = await this.client.patch(`/${id}`, updates);
     return response.data;
   }
 
