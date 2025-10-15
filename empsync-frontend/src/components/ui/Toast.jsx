@@ -1,4 +1,4 @@
-// src/components/ui/Toast.jsx
+// src/components/ui/Toast.jsx (if it doesn't exist or is broken)
 import React, { createContext, useContext, useState } from 'react';
 
 const ToastContext = createContext();
@@ -6,57 +6,47 @@ const ToastContext = createContext();
 export const useToast = () => {
   const context = useContext(ToastContext);
   if (!context) {
-    throw new Error('useToast must be used within ToastProvider');
+    // Fallback if ToastProvider is not available
+    return {
+      showToast: (type, message) => {
+        console.log(`Toast (${type}): ${message}`);
+        // You can use browser notifications or alerts as fallback
+        if (type === 'error') {
+          alert(`Error: ${message}`);
+        } else {
+          alert(message);
+        }
+      }
+    };
   }
   return context;
 };
 
-export const ToastProvider = ({ children }) => {
+const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
-  const showToast = (type, message, duration = 5000) => {
+  const showToast = (type, message, duration = 3000) => {
     const id = Date.now();
-    setToasts(prev => [...prev, { id, type, message }]);
+    const newToast = { id, type, message };
+    setToasts(prev => [...prev, newToast]);
     
     setTimeout(() => {
       setToasts(prev => prev.filter(toast => toast.id !== id));
     }, duration);
   };
 
-  const removeToast = (id) => {
-    setToasts(prev => prev.filter(toast => toast.id !== id));
-  };
-
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <ToastContainer toasts={toasts} onRemove={removeToast} />
+      <div className="toast-container">
+        {toasts.map(toast => (
+          <div key={toast.id} className={`toast toast-${toast.type}`}>
+            {toast.message}
+          </div>
+        ))}
+      </div>
     </ToastContext.Provider>
   );
 };
 
-const ToastContainer = ({ toasts, onRemove }) => {
-  return (
-    <div className="toast-container">
-      {toasts.map(toast => (
-        <div
-          key={toast.id}
-          className={`toast toast-${toast.type}`}
-          onClick={() => onRemove(toast.id)}
-        >
-          <div className="toast-icon">
-            {toast.type === 'success' && '☐'}
-            {toast.type === 'error' && '✕'}
-            {toast.type === 'warning' && '⚠'}
-            {toast.type === 'info' && 'ℹ'}
-          </div>
-          <div className="toast-message">{toast.message}</div>
-          <button className="toast-close"></button>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export { ToastContainer };
 export default ToastProvider;

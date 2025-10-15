@@ -1,5 +1,6 @@
 // src/components/dashboard/Dashboard.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Add this import
 import StatsCard from './StatsCard';
 import QuickActions from './QuickActions';
 import AnalyticsCharts from './AnalyticsCharts';
@@ -11,6 +12,7 @@ const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const { showToast } = useToast();
+  const navigate = useNavigate(); // Add this hook
 
   useEffect(() => {
     loadDashboardData();
@@ -74,9 +76,9 @@ const Dashboard = () => {
   const handleQuickAction = (action) => {
     switch (action) {
       case 'add_employee':
-        showToast('info', 'Redirecting to add employee...');
-        // In a real app, you would navigate to employees page with modal open
-        window.location.href = '/employees';
+        showToast('info', 'Redirecting to employees...');
+        // Use React Router navigation
+        navigate('/employees');
         break;
       case 'export_data':
         showToast('success', 'Preparing data export...');
