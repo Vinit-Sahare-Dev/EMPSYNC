@@ -1,7 +1,8 @@
 // src/services/apiService.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8888/api/employees';
+// FIX: Remove /employees from the base URL since your controller already has it
+const API_BASE_URL = 'http://localhost:8888/api';
 
 class EmpSyncAPI {
   constructor() {
@@ -11,20 +12,16 @@ class EmpSyncAPI {
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
     });
 
     this.setupInterceptors();
   }
 
   setupInterceptors() {
-    // Log all requests
     this.client.interceptors.request.use(
       (config) => {
-        console.log('🚀 API Request:', {
-          method: config.method?.toUpperCase(),
-          url: config.baseURL + config.url,
-          data: config.data
-        });
+        console.log('🚀 Making request to:', config.baseURL + config.url);
         return config;
       },
       (error) => {
@@ -33,70 +30,155 @@ class EmpSyncAPI {
       }
     );
 
-    // Log all responses
     this.client.interceptors.response.use(
       (response) => {
-        console.log('✅ API Response Success:', {
-          status: response.status,
-          url: response.config.url,
-          data: response.data
-        });
+        console.log('✅ Received response:', response.status, response.data);
         return response;
       },
       (error) => {
-        console.error('🔴 API Response Error:', {
+        console.error('🔴 API Error:', {
           status: error.response?.status,
-          message: error.response?.data?.message,
-          url: error.config?.url,
-          fullError: error
+          message: error.message,
+          url: error.config?.baseURL + error.config?.url,
+          data: error.response?.data
         });
         return Promise.reject(error);
       }
     );
   }
 
+  async healthCheck() {
+    try {
+      const response = await this.client.get('/employees');
+      return {
+        success: true,
+        message: 'Backend is connected and responding',
+        status: response.status,
+        data: response.data
+      };
+    } catch (error) {
+      const errorInfo = {
+        success: false,
+        message: error.message,
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        url: error.config?.baseURL + error.config?.url,
+        errorCode: error.code,
+        isNetworkError: !error.response,
+      };
+      
+      console.error('🔴 Health Check Failed:', errorInfo);
+      return errorInfo;
+    }
+  }
+
+  async getAllEmployees() {
+    const response = await this.client.get('/employees');
+    return response.data;
+  }
+
+  async createEmployee(employeeData) {
+    const response = await this.client.post('/employees', employeeData);
+    return response.data;
+  }
+
+  async updateEmployee(id, employeeData) {
+    const response = await this.client.put(`/employees/${id}`, employeeData);
+    return response.data;
+  }
+
+  async deleteEmployee(id) {
+    const response = await this.client.delete(`/employees/${id}`);
+    return response.data;
+  }
+
+  async getEmployeesByDepartment(department) {
+    const response = await this.client.get(`/employees/department/${department}`);
+    return response.data;
+  }
+
+  async searchEmployeesByName(name) {
+    const response = await this.client.get(`/employees/search/name?name=${encodeURIComponent(name)}`);
+    return response.data;
+  }
+
+  async getEmployeesByGender(gender) {
+    const response = await this.client.get(`/employees/gender/${gender}`);
+    return response.data;
+  }
+
+  async getEmployeesByStatus(status) {
+    const response = await this.client.get(`/employees/status/${status}`);
+    return response.data;
+  }
+
+  async getActiveEmployees() {
+    const response = await this.client.get('/employees/active');
+    return response.data;
+  }
+
+  async getAllDepartments() {
+    const response = await this.client.get('/employees/departments');
+    return response.data;
+  }
+
+  async getAllPositions() {
+    const response = await this.client.get('/employees/positions');
+    return response.data;
+  }
+
+  async getEmployeeCount() {
+    const response = await this.client.get('/employees/count');
+    return response.data;
+  }
+
+  // Test connection directly
+  async testConnection() {
+    try {
+      const response = await axios.get('http://localhost:8888/api/employees', {
+        withCredentials: true,
+        timeout: 5000
+      });
+      return {
+        success: true,
+        status: response.status,
+        data: response.data
+      };
+    } catch (error) {
+      return {
+        success: false,
+        status: error.response?.status,
+        message: error.message,
+        error: error.toString()
+      };
+    }
+  }
+
+  // Legacy sync methods
   async syncEmployees() {
-    const response = await this.client.get('/');
-    return response.data;
-  }
-
-  async createSync(employeeData) {
-    const response = await this.client.post('/', employeeData);
-    return response.data;
-  }
-
-  async updateSync(id, employeeData) {
-    const response = await this.client.put(`/${id}`, employeeData);
-    return response.data;
-  }
-
-  async deleteSync(id) {
-    await this.client.delete(`/${id}`);
+    return this.getAllEmployees();
   }
 
   async syncByDepartment(department) {
-    const response = await this.client.get(`/department/${department}`);
-    return response.data;
+    return this.getEmployeesByDepartment(department);
   }
 
   async syncByGender(gender) {
-    const response = await this.client.get(`/gender/${gender}`);
-    return response.data;
+    return this.getEmployeesByGender(gender);
   }
 
-  async bulkSync(employees) {
-    const response = await this.client.post('/bulk', employees);
-    return response.data;
+  async createSync(employeeData) {
+    return this.createEmployee(employeeData);
   }
 
-  async getSyncCount() {
-    const response = await this.client.get('/count');
-    return response.data;
+  async updateSync(id, employeeData) {
+    return this.updateEmployee(id, employeeData);
   }
 
-  async clearAllSync() {
-    await this.client.delete('/all');
+  async deleteSync(id) {
+    return this.deleteEmployee(id);
   }
 }
 
 export const empSyncAPI = new EmpSyncAPI();
+export default empSyncAPI;
