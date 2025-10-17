@@ -8,7 +8,7 @@ const Navbar = ({ onMenuToggle }) => {
         <button onClick={onMenuToggle} className="btn btn-outline">
           ☰
         </button>
-        <h1>Employee Management</h1>
+        <h1>EMPSYNC</h1>
       </div>
       <div className="navbar-actions">
         <button className="btn btn-outline">Profile</button>
