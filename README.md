@@ -1,6 +1,6 @@
-# Employee Management System 🏢
+# EMPSYNC 🏢
 
-A comprehensive full-stack Employee Management System built with modern technologies. Features a React + Vite frontend with a robust Spring Boot backend, connected to a MySQL database for efficient employee data management.
+A comprehensive full-stack Employee Management System EMPSYNC built with modern technologies. Features a React + Vite frontend with a robust Spring Boot backend, connected to a MySQL database for efficient employee data management.
 
 ![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-green?style=for-the-badge&logo=springboot)
