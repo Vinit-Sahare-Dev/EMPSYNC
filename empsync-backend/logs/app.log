@@ -5895,3 +5895,204 @@ Caused by: java.sql.SQLSyntaxErrorException: Table 'employee_management_system.e
 2025-10-17 16:14:04.605 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
 2025-10-17 16:14:04.605 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 2 EMPLOYEES
 2025-10-17 16:14:04.605 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 2 EMPLOYEES
+2025-10-17 16:18:39.103 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 32892 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-17 16:18:39.105 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-17 16:18:39.105 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-17 16:18:40.837 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-17 16:18:40.858 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-17 16:18:41.445 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-10-17 16:18:41.766 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1d6f97ca
+2025-10-17 16:18:41.768 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-17 16:18:41.815 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-17 16:18:44.258 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-17 16:18:45.101 [restartedMain] WARN  o.s.b.d.a.OptionalLiveReloadServer - Unable to start LiveReload server
+2025-10-17 16:18:45.144 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-17 16:18:45.154 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
+2025-10-17 16:18:45.165 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2025-10-17 16:18:45.211 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2025-10-17 16:18:45.293 [restartedMain] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-17 16:18:45.299 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-10-17 16:18:45.305 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-10-17 16:18:45.311 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-10-17 16:18:45.341 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8888 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8888 or configure this application to listen on another port.
+
+2025-10-17 16:19:05.167 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-17 16:19:05.167 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-17 16:19:05.167 [XNIO-9 task-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-17 16:19:05.167 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-17 16:19:05.167 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-17 16:19:05.167 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-17 16:19:05.167 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-17 16:19:05.167 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 2 EMPLOYEES
+2025-10-17 16:19:05.167 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 2 EMPLOYEES
+2025-10-17 16:19:05.167 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-17 16:19:05.167 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-17 16:19:05.167 [XNIO-9 task-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-17 16:19:05.183 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-17 16:19:05.183 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-17 16:19:05.183 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-17 16:19:05.183 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-17 16:19:05.183 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 2 EMPLOYEES
+2025-10-17 16:19:05.184 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 2 EMPLOYEES
+2025-10-17 16:19:13.789 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-17 16:19:13.789 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-17 16:19:13.793 [XNIO-9 task-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-17 16:19:13.793 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-17 16:19:13.793 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-17 16:19:13.793 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-17 16:19:13.793 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-17 16:19:13.793 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 2 EMPLOYEES
+2025-10-17 16:19:13.793 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 2 EMPLOYEES
+2025-10-17 16:19:13.801 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-17 16:19:13.801 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-17 16:19:13.801 [XNIO-9 task-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-17 16:19:13.801 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-17 16:19:13.801 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-17 16:19:13.801 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-17 16:19:13.801 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-17 16:19:13.801 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 2 EMPLOYEES
+2025-10-17 16:19:13.801 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 2 EMPLOYEES
+2025-10-17 16:19:13.801 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-17 16:19:13.801 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-17 16:19:13.801 [XNIO-9 task-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-17 16:19:13.817 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-17 16:19:13.818 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-17 16:19:13.818 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-17 16:19:13.818 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-17 16:19:13.818 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 2 EMPLOYEES
+2025-10-17 16:19:13.818 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 2 EMPLOYEES
+2025-10-17 16:19:13.821 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-17 16:19:13.821 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-17 16:19:13.824 [XNIO-9 task-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-17 16:19:13.828 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-17 16:19:13.828 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-17 16:19:13.828 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-17 16:19:13.828 [XNIO-9 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-17 16:19:13.828 [XNIO-9 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 2 EMPLOYEES
+2025-10-17 16:19:13.828 [XNIO-9 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 2 EMPLOYEES
