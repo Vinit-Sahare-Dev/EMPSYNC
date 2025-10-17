@@ -3,6 +3,8 @@ package com.spring.restapi.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,66 +16,65 @@ public class Employee {
     private Long id;
     
     @NotBlank(message = "Name is required")
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
     
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
     
-    @Column(name = "phone")
+    @Column(name = "phone", length = 15)
     private String phone;
     
     @NotBlank(message = "Department is required")
-    @Column(nullable = false)
+    @Column(name = "department", nullable = false, length = 50)
     private String department;
     
     @NotBlank(message = "Position is required")
-    @Column(nullable = false)
+    @Column(name = "position", nullable = false, length = 50)
     private String position;
     
     @NotNull(message = "Salary is required")
     @Positive(message = "Salary must be positive")
-    @Column(nullable = false)
-    private Double salary;
+    @Column(name = "salary", nullable = false, precision = 10, scale = 2)
+    private BigDecimal salary;
     
-    @Column(name = "gender")
+    @Column(name = "gender", length = 10)
     private String gender;
     
-    @Column(name = "join_date")
-    private String joinDate;
+    @NotNull(message = "Join date is required")
+    @Column(name = "join_date", nullable = false)
+    private LocalDate joinDate;
     
-    @Column(name = "address", length = 500)
+    @Column(name = "address", length = 500) // CHANGED: Remove columnDefinition
     private String address;
     
-    @Column(name = "status")
+    @Column(name = "status", length = 10)
     private String status = "Active";
     
-    @Column(name = "bonus")
-    private Double bonus = 0.0;
+    @Column(name = "bonus", precision = 10, scale = 2)
+    private BigDecimal bonus = BigDecimal.ZERO;
     
-    @Column(name = "pf")
-    private Double pf = 0.0;
+    @Column(name = "pf", precision = 10, scale = 2)
+    private BigDecimal pf = BigDecimal.ZERO;
     
-    @Column(name = "tax")
-    private Double tax = 0.0;
+    @Column(name = "tax", precision = 10, scale = 2)
+    private BigDecimal tax = BigDecimal.ZERO;
     
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
     
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    public Employee() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
+    // Default constructor
+    public Employee() {}
     
+    // Parameterized constructor
     public Employee(String name, String email, String phone, String department, 
-                   String position, Double salary, String gender, String joinDate, 
+                   String position, BigDecimal salary, String gender, LocalDate joinDate, 
                    String address, String status) {
-        this();
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -84,6 +85,20 @@ public class Employee {
         this.joinDate = joinDate;
         this.address = address;
         this.status = status;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+    
+    // PrePersist and PreUpdate methods
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+    
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
     }
     
     // Getters and Setters
@@ -105,14 +120,14 @@ public class Employee {
     public String getPosition() { return position; }
     public void setPosition(String position) { this.position = position; }
     
-    public Double getSalary() { return salary; }
-    public void setSalary(Double salary) { this.salary = salary; }
+    public BigDecimal getSalary() { return salary; }
+    public void setSalary(BigDecimal salary) { this.salary = salary; }
     
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
     
-    public String getJoinDate() { return joinDate; }
-    public void setJoinDate(String joinDate) { this.joinDate = joinDate; }
+    public LocalDate getJoinDate() { return joinDate; }
+    public void setJoinDate(LocalDate joinDate) { this.joinDate = joinDate; }
     
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
@@ -120,14 +135,14 @@ public class Employee {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
     
-    public Double getBonus() { return bonus; }
-    public void setBonus(Double bonus) { this.bonus = bonus; }
+    public BigDecimal getBonus() { return bonus; }
+    public void setBonus(BigDecimal bonus) { this.bonus = bonus; }
     
-    public Double getPf() { return pf; }
-    public void setPf(Double pf) { this.pf = pf; }
+    public BigDecimal getPf() { return pf; }
+    public void setPf(BigDecimal pf) { this.pf = pf; }
     
-    public Double getTax() { return tax; }
-    public void setTax(Double tax) { this.tax = tax; }
+    public BigDecimal getTax() { return tax; }
+    public void setTax(BigDecimal tax) { this.tax = tax; }
     
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
@@ -135,8 +150,15 @@ public class Employee {
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
     
-    @PreUpdate
-    public void preUpdate() {
-        this.updatedAt = LocalDateTime.now();
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", department='" + department + '\'' +
+                ", position='" + position + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 }

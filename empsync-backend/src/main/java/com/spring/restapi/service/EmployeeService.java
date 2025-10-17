@@ -14,6 +14,10 @@ import org.springframework.validation.annotation.Validated;
 
 import jakarta.validation.Valid;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,7 +36,7 @@ public class EmployeeService {
                    employee.getName(), employee.getEmail(), employee.getDepartment(), 
                    employee.getPosition(), employee.getSalary());
         
-        if (employeeRepository.findByEmail(employee.getEmail()).isPresent()) {
+        if (employeeRepository.existsByEmail(employee.getEmail())) {
             throw new IllegalArgumentException("Employee with email " + employee.getEmail() + " already exists");
         }
         
@@ -61,31 +65,43 @@ public class EmployeeService {
 
     private void calculateEmployeeDeductions(Employee employee) {
         logger.debug("CALCULATING DEDUCTIONS - Employee: {} (ID: {})", employee.getName(), employee.getId());
-        Double salary = employee.getSalary();
+        BigDecimal salary = employee.getSalary();
         
-        Double bonus = salary * 0.10;
+        // Calculate bonus (10% of salary)
+        BigDecimal bonus = salary.multiply(BigDecimal.valueOf(0.10));
         employee.setBonus(bonus);
         
-        Double pf = salary * 0.12;
+        // Calculate PF (12% of salary)
+        BigDecimal pf = salary.multiply(BigDecimal.valueOf(0.12));
         employee.setPf(pf);
         
-        Double tax = calculateTax(salary);
+        // Calculate tax
+        BigDecimal tax = calculateTax(salary);
         employee.setTax(tax);
         
         logger.debug("DEDUCTIONS CALCULATED - Employee: {}, Bonus: {}, PF: {}, Tax: {}", 
                    employee.getName(), bonus, pf, tax);
     }
 
-    private Double calculateTax(Double salary) {
-        if (salary <= 250000) {
-            return 0.0;
-        } else if (salary <= 500000) {
-            return (salary - 250000) * 0.05;
-        } else if (salary <= 1000000) {
-            return 12500 + (salary - 500000) * 0.20;
+    private BigDecimal calculateTax(BigDecimal salary) {
+        BigDecimal tax = BigDecimal.ZERO;
+        
+        if (salary.compareTo(BigDecimal.valueOf(250000)) <= 0) {
+            tax = BigDecimal.ZERO;
+        } else if (salary.compareTo(BigDecimal.valueOf(500000)) <= 0) {
+            tax = salary.subtract(BigDecimal.valueOf(250000))
+                      .multiply(BigDecimal.valueOf(0.05));
+        } else if (salary.compareTo(BigDecimal.valueOf(1000000)) <= 0) {
+            tax = BigDecimal.valueOf(12500)
+                      .add(salary.subtract(BigDecimal.valueOf(500000))
+                      .multiply(BigDecimal.valueOf(0.20)));
         } else {
-            return 112500 + (salary - 1000000) * 0.30;
+            tax = BigDecimal.valueOf(112500)
+                      .add(salary.subtract(BigDecimal.valueOf(1000000))
+                      .multiply(BigDecimal.valueOf(0.30)));
         }
+        
+        return tax;
     }
 
     public List<Employee> getAllEmployees() {
@@ -138,7 +154,7 @@ public class EmployeeService {
                 });
         
         if (!employee.getEmail().equals(employeeDetails.getEmail()) && 
-            employeeRepository.findByEmail(employeeDetails.getEmail()).isPresent()) {
+            employeeRepository.existsByEmail(employeeDetails.getEmail())) {
             throw new IllegalArgumentException("Employee with email " + employeeDetails.getEmail() + " already exists");
         }
         
@@ -191,19 +207,14 @@ public class EmployeeService {
     }
     
     public List<Employee> findBySalaryGreaterThan(Double minSalary) {
-        return employeeRepository.findBySalaryGreaterThan(minSalary);
+        BigDecimal minSalaryBD = BigDecimal.valueOf(minSalary);
+        return employeeRepository.findBySalaryGreaterThan(minSalaryBD);
     }
     
     public List<Employee> findBySalaryBetween(Double minSalary, Double maxSalary) {
-        return employeeRepository.findBySalaryBetween(minSalary, maxSalary);
-    }
-
-    public List<Employee> saveAllEmployees(List<@Valid Employee> employees) {
-        logger.info("BULK SAVING {} EMPLOYEES", employees.size());
-        employees.forEach(this::calculateEmployeeDeductions);
-        List<Employee> saved = employeeRepository.saveAll(employees);
-        logger.info("BULK SAVE COMPLETED - {} EMPLOYEES SAVED SUCCESSFULLY", saved.size());
-        return saved;
+        BigDecimal minSalaryBD = BigDecimal.valueOf(minSalary);
+        BigDecimal maxSalaryBD = BigDecimal.valueOf(maxSalary);
+        return employeeRepository.findBySalaryBetween(minSalaryBD, maxSalaryBD);
     }
 
     public int getEmployeeCount() {
@@ -213,53 +224,95 @@ public class EmployeeService {
         return count;
     }
 
-    public void deleteAllEmployees() {
-        logger.info("DELETING ALL EMPLOYEES");
-        long count = employeeRepository.count();
-        employeeRepository.deleteAll();
-        logger.info("ALL {} EMPLOYEES DELETED SUCCESSFULLY", count);
-    }
-
-    public Employee partialUpdateEmployee(Long id, Map<String, Object> updates) {
-        logger.info("PARTIAL UPDATE EMPLOYEE - ID: {}, Updates: {}", id, updates);
+    // Helper method to convert Map to Employee (for API requests)
+    public Employee convertMapToEmployee(Map<String, Object> employeeData) {
+        Employee employee = new Employee();
         
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> {
-                    logger.error("EMPLOYEE NOT FOUND FOR PARTIAL UPDATE - ID: {}", id);
-                    return new EmployeeNotFoundException("Employee not found with id: " + id);
-                });
-        
-        updates.forEach((key, value) -> {
-            switch (key) {
-                case "name" -> employee.setName((String) value);
-                case "email" -> {
-                    if (!employee.getEmail().equals(value) && 
-                        employeeRepository.findByEmail((String) value).isPresent()) {
-                        throw new IllegalArgumentException("Employee with email " + value + " already exists");
-                    }
-                    employee.setEmail((String) value);
-                }
-                case "salary" -> {
-                    employee.setSalary(Double.valueOf(value.toString()));
-                    calculateEmployeeDeductions(employee);
-                }
-                case "department" -> employee.setDepartment((String) value);
-                case "position" -> employee.setPosition((String) value);
-                case "gender" -> employee.setGender((String) value);
-                case "phone" -> employee.setPhone((String) value);
-                case "joinDate" -> employee.setJoinDate((String) value);
-                case "address" -> employee.setAddress((String) value);
-                case "status" -> employee.setStatus((String) value);
-                default -> {
-                    logger.error("INVALID FIELD UPDATE ATTEMPT - Field: '{}', Value: {}, Employee ID: {}", key, value, id);
-                    throw new IllegalArgumentException("Field '" + key + "' is not updatable.");
+        if (employeeData.containsKey("name")) {
+            employee.setName((String) employeeData.get("name"));
+        }
+        if (employeeData.containsKey("email")) {
+            employee.setEmail((String) employeeData.get("email"));
+        }
+        if (employeeData.containsKey("phone")) {
+            employee.setPhone((String) employeeData.get("phone"));
+        }
+        if (employeeData.containsKey("department")) {
+            employee.setDepartment((String) employeeData.get("department"));
+        }
+        if (employeeData.containsKey("position")) {
+            employee.setPosition((String) employeeData.get("position"));
+        }
+        if (employeeData.containsKey("salary")) {
+            Object salaryObj = employeeData.get("salary");
+            if (salaryObj instanceof Number) {
+                employee.setSalary(BigDecimal.valueOf(((Number) salaryObj).doubleValue()));
+            } else if (salaryObj instanceof String) {
+                employee.setSalary(new BigDecimal((String) salaryObj));
+            }
+        }
+        if (employeeData.containsKey("gender")) {
+            employee.setGender((String) employeeData.get("gender"));
+        }
+        if (employeeData.containsKey("joinDate")) {
+            Object joinDateObj = employeeData.get("joinDate");
+            if (joinDateObj instanceof String) {
+                try {
+                    employee.setJoinDate(LocalDate.parse((String) joinDateObj));
+                } catch (DateTimeParseException e) {
+                    throw new IllegalArgumentException("Invalid date format. Use YYYY-MM-DD");
                 }
             }
-        });
+        }
+        if (employeeData.containsKey("address")) {
+            employee.setAddress((String) employeeData.get("address"));
+        }
+        if (employeeData.containsKey("status")) {
+            employee.setStatus((String) employeeData.get("status"));
+        }
         
-        Employee saved = employeeRepository.save(employee);
-        logger.info("PARTIAL UPDATE SUCCESSFUL - ID: {}, Name: {}, Email: {}", 
-                   saved.getId(), saved.getName(), saved.getEmail());
+        return employee;
+    }
+    
+    // Create employee from Map (for API requests)
+    public Employee createEmployeeFromMap(Map<String, Object> employeeData) {
+        Employee employee = convertMapToEmployee(employeeData);
+        return saveEmployee(employee);
+    }
+    
+    // Additional utility methods
+    public Long getDepartmentCount(String department) {
+        return employeeRepository.countByDepartment(department);
+    }
+    
+    public BigDecimal getAverageSalaryByDepartment(String department) {
+        BigDecimal avgSalary = employeeRepository.findAverageSalaryByDepartment(department);
+        return avgSalary != null ? avgSalary : BigDecimal.ZERO;
+    }
+    
+    // Database connection test method
+    public String testDatabaseConnection() {
+        try {
+            long count = employeeRepository.count();
+            List<String> departments = employeeRepository.findDistinctDepartments();
+            return String.format("✅ Database connected successfully! Total employees: %d, Departments: %s", 
+                               count, departments);
+        } catch (Exception e) {
+            return "❌ Database connection failed: " + e.getMessage();
+        }
+    }
+    
+    // Bulk operations
+    public List<Employee> saveAllEmployees(List<Employee> employees) {
+        logger.info("BULK SAVING {} EMPLOYEES", employees.size());
+        employees.forEach(emp -> {
+            if (employeeRepository.existsByEmail(emp.getEmail())) {
+                throw new IllegalArgumentException("Employee with email " + emp.getEmail() + " already exists");
+            }
+            calculateEmployeeDeductions(emp);
+        });
+        List<Employee> saved = employeeRepository.saveAll(employees);
+        logger.info("BULK SAVE COMPLETED - {} EMPLOYEES SAVED SUCCESSFULLY", saved.size());
         return saved;
     }
 }
