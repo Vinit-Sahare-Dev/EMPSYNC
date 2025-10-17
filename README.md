@@ -50,8 +50,5 @@ graph TB
         E
     end
     
-    %% Styling for better visual separation
-    style Frontend_Layer fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
-    style Backend_Layer fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
-    style Data_Layer fill:#fce4ec,stroke:#e91e63,stroke-width:2px
+
 
