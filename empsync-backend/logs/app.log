@@ -3714,3 +3714,987 @@
 2025-10-18 10:26:54.043 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
 2025-10-18 10:26:54.043 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
 2025-10-18 10:26:54.043 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 10:41:16.283 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 24556 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 10:41:16.287 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 10:41:16.288 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 10:41:17.984 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 10:41:18.019 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 10:41:18.776 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-10-18 10:41:19.184 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@49ead699
+2025-10-18 10:41:19.187 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-18 10:41:19.244 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 10:41:21.532 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 10:41:22.115 [restartedMain] WARN  o.s.b.d.a.OptionalLiveReloadServer - Unable to start LiveReload server
+2025-10-18 10:41:22.159 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 10:41:22.168 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
+2025-10-18 10:41:22.177 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2025-10-18 10:41:22.216 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2025-10-18 10:41:22.289 [restartedMain] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 10:41:22.296 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-10-18 10:41:22.300 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-10-18 10:41:22.307 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-10-18 10:41:22.342 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8888 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8888 or configure this application to listen on another port.
+
+2025-10-18 11:01:00.061 [Thread-8] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:01:00.074 [Thread-8] INFO  c.z.h.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2025-10-18 11:01:00.079 [Thread-8] INFO  c.z.h.HikariDataSource - HikariPool-2 - Shutdown completed.
+2025-10-18 11:01:00.233 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:01:00.233 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:01:00.233 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:01:00.692 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:01:00.694 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:01:00.745 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-3 - Starting...
+2025-10-18 11:01:00.760 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@39c74d90
+2025-10-18 11:01:00.760 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-3 - Start completed.
+2025-10-18 11:01:00.762 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:01:00.957 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:01:01.140 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:01:01.181 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.988 seconds (process running for 9286.068)
+2025-10-18 11:01:01.183 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:01:01.183 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:01:01.183 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:01:01.183 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:01:01.183 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:01:01.183 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:01:01.183 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:01:01.183 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:01:01.183 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:01:01.183 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:01:34.168 [Thread-21] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:01:34.171 [Thread-21] INFO  c.z.h.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2025-10-18 11:01:34.173 [Thread-21] INFO  c.z.h.HikariDataSource - HikariPool-3 - Shutdown completed.
+2025-10-18 11:01:34.263 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:01:34.263 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:01:34.264 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:01:34.643 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:01:34.644 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:01:34.685 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-4 - Starting...
+2025-10-18 11:01:34.697 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@667efe27
+2025-10-18 11:01:34.697 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-4 - Start completed.
+2025-10-18 11:01:34.698 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:01:34.865 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:01:35.025 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:01:35.061 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.827 seconds (process running for 9319.947)
+2025-10-18 11:01:35.063 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:01:35.063 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:01:35.063 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:01:35.063 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:01:35.063 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:01:35.063 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:01:35.063 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:01:35.063 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:01:35.063 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:01:35.063 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:05:32.748 [Thread-26] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:05:32.752 [Thread-26] INFO  c.z.h.HikariDataSource - HikariPool-4 - Shutdown initiated...
+2025-10-18 11:05:32.754 [Thread-26] INFO  c.z.h.HikariDataSource - HikariPool-4 - Shutdown completed.
+2025-10-18 11:05:32.829 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:05:32.829 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:05:32.829 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:05:33.206 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:05:33.207 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:05:33.250 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-5 - Starting...
+2025-10-18 11:05:33.263 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@45f5b1b0
+2025-10-18 11:05:33.263 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-5 - Start completed.
+2025-10-18 11:05:33.264 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:05:33.420 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:05:33.567 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:05:33.602 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.801 seconds (process running for 9558.49)
+2025-10-18 11:05:33.604 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:05:33.605 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:05:33.605 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:05:33.605 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:05:33.605 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:05:33.605 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:05:33.605 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:05:33.605 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:05:33.605 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:05:33.605 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:05:48.347 [Thread-31] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:05:48.350 [Thread-31] INFO  c.z.h.HikariDataSource - HikariPool-5 - Shutdown initiated...
+2025-10-18 11:05:48.357 [Thread-31] INFO  c.z.h.HikariDataSource - HikariPool-5 - Shutdown completed.
+2025-10-18 11:05:48.439 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:05:48.439 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:05:48.439 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:05:48.824 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:05:48.826 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:05:48.869 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-6 - Starting...
+2025-10-18 11:05:48.880 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-6 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2b89b45e
+2025-10-18 11:05:48.880 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-6 - Start completed.
+2025-10-18 11:05:48.881 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:05:49.039 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:05:49.183 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:05:49.215 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.802 seconds (process running for 9574.103)
+2025-10-18 11:05:49.217 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:05:49.217 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:05:49.217 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:05:49.217 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:05:49.217 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:05:49.218 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:05:49.218 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:05:49.218 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:05:49.218 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:05:49.218 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:06:04.990 [Thread-36] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:06:04.993 [Thread-36] INFO  c.z.h.HikariDataSource - HikariPool-6 - Shutdown initiated...
+2025-10-18 11:06:04.996 [Thread-36] INFO  c.z.h.HikariDataSource - HikariPool-6 - Shutdown completed.
+2025-10-18 11:06:05.069 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:06:05.069 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:06:05.069 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:06:05.425 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:06:05.427 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:06:05.471 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-7 - Starting...
+2025-10-18 11:06:05.484 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@33ca5e2c
+2025-10-18 11:06:05.485 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-7 - Start completed.
+2025-10-18 11:06:05.486 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:06:05.662 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:06:05.825 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:06:05.865 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.823 seconds (process running for 9590.752)
+2025-10-18 11:06:05.867 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:06:05.867 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:06:05.867 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:06:05.867 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:06:05.867 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:06:05.867 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:06:05.867 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:06:05.867 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:06:05.867 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:06:05.867 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:06:32.923 [Thread-41] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:06:32.927 [Thread-41] INFO  c.z.h.HikariDataSource - HikariPool-7 - Shutdown initiated...
+2025-10-18 11:06:32.932 [Thread-41] INFO  c.z.h.HikariDataSource - HikariPool-7 - Shutdown completed.
+2025-10-18 11:06:33.013 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:06:33.013 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:06:33.013 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:06:33.442 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:06:33.444 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:06:33.495 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-8 - Starting...
+2025-10-18 11:06:33.504 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@9feae0f
+2025-10-18 11:06:33.511 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-8 - Start completed.
+2025-10-18 11:06:33.512 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:06:33.706 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:06:33.905 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:06:33.944 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.958 seconds (process running for 9618.831)
+2025-10-18 11:06:33.944 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:06:33.944 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:06:33.944 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:06:33.944 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:06:33.944 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:06:33.944 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:06:33.944 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:06:33.944 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:06:33.944 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:06:33.944 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:09:43.262 [Thread-46] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:09:43.265 [Thread-46] INFO  c.z.h.HikariDataSource - HikariPool-8 - Shutdown initiated...
+2025-10-18 11:09:43.269 [Thread-46] INFO  c.z.h.HikariDataSource - HikariPool-8 - Shutdown completed.
+2025-10-18 11:09:43.354 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:09:43.354 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:09:43.354 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:09:43.744 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:09:43.745 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:09:43.790 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-9 - Starting...
+2025-10-18 11:09:43.803 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-9 - Added connection com.mysql.cj.jdbc.ConnectionImpl@68c8d440
+2025-10-18 11:09:43.803 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-9 - Start completed.
+2025-10-18 11:09:43.804 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:09:43.949 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:09:44.100 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:09:44.138 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.816 seconds (process running for 9809.025)
+2025-10-18 11:09:44.140 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:09:44.140 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:09:44.140 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:09:44.140 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:09:44.141 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:09:44.141 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:09:44.141 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:09:44.141 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:09:44.141 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:09:44.141 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:09:52.723 [Thread-51] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:09:52.726 [Thread-51] INFO  c.z.h.HikariDataSource - HikariPool-9 - Shutdown initiated...
+2025-10-18 11:09:52.731 [Thread-51] INFO  c.z.h.HikariDataSource - HikariPool-9 - Shutdown completed.
+2025-10-18 11:09:52.810 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:09:52.810 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:09:52.810 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:09:53.194 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:09:53.196 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:09:53.240 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-10 - Starting...
+2025-10-18 11:09:53.252 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-10 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57df7ce5
+2025-10-18 11:09:53.252 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-10 - Start completed.
+2025-10-18 11:09:53.253 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:09:53.418 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:09:53.572 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:09:53.611 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.83 seconds (process running for 9818.498)
+2025-10-18 11:09:53.613 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:09:53.613 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:09:53.613 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:09:53.613 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:09:53.613 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:09:53.613 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:09:53.613 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:09:53.613 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:09:53.613 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:09:53.613 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:09:59.153 [Thread-56] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:09:59.157 [Thread-56] INFO  c.z.h.HikariDataSource - HikariPool-10 - Shutdown initiated...
+2025-10-18 11:09:59.160 [Thread-56] INFO  c.z.h.HikariDataSource - HikariPool-10 - Shutdown completed.
+2025-10-18 11:09:59.250 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:09:59.251 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:09:59.251 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:09:59.727 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:09:59.728 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:09:59.779 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-11 - Starting...
+2025-10-18 11:09:59.791 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-11 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6c918989
+2025-10-18 11:09:59.791 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-11 - Start completed.
+2025-10-18 11:09:59.793 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:09:59.929 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:10:00.077 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:10:00.115 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.897 seconds (process running for 9825.002)
+2025-10-18 11:10:00.117 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:10:00.117 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:10:00.117 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:10:00.117 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:10:00.117 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:10:00.117 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:10:00.117 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:10:00.117 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:10:00.117 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:10:00.117 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:10:12.836 [Thread-61] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:10:12.840 [Thread-61] INFO  c.z.h.HikariDataSource - HikariPool-11 - Shutdown initiated...
+2025-10-18 11:10:12.844 [Thread-61] INFO  c.z.h.HikariDataSource - HikariPool-11 - Shutdown completed.
+2025-10-18 11:10:12.925 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:10:12.925 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:10:12.925 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:10:13.300 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:10:13.301 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:10:13.349 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-12 - Starting...
+2025-10-18 11:10:13.363 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-12 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5642ab07
+2025-10-18 11:10:13.365 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-12 - Start completed.
+2025-10-18 11:10:13.366 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:10:13.510 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:10:13.674 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:10:13.705 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 0.808 seconds (process running for 9838.592)
+2025-10-18 11:10:13.707 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:10:13.707 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:10:13.707 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:10:13.707 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:10:13.707 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:10:13.707 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:10:13.707 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:10:13.707 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:10:13.707 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:10:13.707 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:11:45.601 [RMI TCP Connection(186)-127.0.0.1] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 11:11:45.603 [Thread-70] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.603 [Thread-30] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.603 [Thread-7] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.603 [Thread-50] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.603 [Thread-25] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.603 [Thread-60] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.603 [Thread-35] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.603 [Thread-20] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.604 [Thread-45] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.604 [Thread-55] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.604 [Thread-65] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.604 [Thread-40] INFO  c.s.r.RestApiApplication - 🛑 EMPSYNC is shutting down gracefully...
+2025-10-18 11:11:45.605 [RMI TCP Connection(186)-127.0.0.1] INFO  c.z.h.HikariDataSource - HikariPool-12 - Shutdown initiated...
+2025-10-18 11:11:45.607 [RMI TCP Connection(186)-127.0.0.1] INFO  c.z.h.HikariDataSource - HikariPool-12 - Shutdown completed.
+2025-10-18 11:11:49.725 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 23576 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 11:11:49.728 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 11:11:49.728 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 11:11:52.055 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 11:11:52.086 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 11:11:52.707 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-10-18 11:11:53.003 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6eac9bd1
+2025-10-18 11:11:53.006 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-10-18 11:11:53.058 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 11:11:55.138 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 11:11:55.790 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 11:11:55.798 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
+2025-10-18 11:11:55.807 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2025-10-18 11:11:55.843 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2025-10-18 11:11:55.924 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 6.838 seconds (process running for 7.719)
+2025-10-18 11:11:55.928 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 11:11:55.928 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 11:11:55.928 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 11:11:55.929 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 11:11:55.929 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 11:11:55.929 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 11:11:55.929 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 11:11:55.929 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 11:11:55.929 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 11:11:55.929 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
+2025-10-18 11:17:52.243 [XNIO-1 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-18 11:17:52.314 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:17:52.332 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:17:52.430 [XNIO-1 task-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:17:52.482 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:17:52.482 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:17:52.482 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:17:52.482 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:17:52.482 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:17:52.482 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:17:52.482 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:17:52.482 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:17:52.636 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:17:52.637 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:17:52.641 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:17:52.648 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:17:52.648 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:17:52.648 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:17:52.648 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:17:52.648 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:17:52.648 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:17:52.648 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:17:52.648 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:17:52.653 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:17:52.654 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:17:52.659 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:17:52.665 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:17:52.666 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:17:52.666 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:17:52.666 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:17:52.666 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:17:52.666 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:17:52.666 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:17:52.666 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:17:52.671 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:17:52.671 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:17:52.675 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:17:52.682 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:17:52.682 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:17:52.682 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:17:52.682 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:17:52.682 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:17:52.682 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:17:52.682 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:17:52.682 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:03.404 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:03.404 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:03.407 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:03.412 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:03.412 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:03.412 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:03.412 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:03.413 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:03.413 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:03.413 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:03.413 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:03.418 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:03.418 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:03.421 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:03.427 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:03.427 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:03.427 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:03.428 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:03.428 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:03.428 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:03.428 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:03.428 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:12.585 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:12.586 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:12.592 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:12.598 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:12.598 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:12.598 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:12.598 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:12.598 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:12.598 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:12.598 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:12.599 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:12.603 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:12.603 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:12.609 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:12.613 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:12.613 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:12.613 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:12.613 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:12.613 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:12.613 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:12.613 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:12.614 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:21.022 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:21.023 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:21.026 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:21.030 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:21.031 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:21.031 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:21.031 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:21.031 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:21.031 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:21.031 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:21.032 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:21.037 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:21.037 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:21.041 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:21.045 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:21.045 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:21.045 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:21.045 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:21.045 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:21.045 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:21.045 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:21.045 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:21.051 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:21.052 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:21.055 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:21.061 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:21.061 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:21.061 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:21.061 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:21.061 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:21.061 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:21.061 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:21.061 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:21.067 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:21.068 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:21.070 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:21.074 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:21.074 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:21.074 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:21.074 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:21.074 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:21.074 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:21.074 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:21.075 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:27.926 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:27.927 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:27.930 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:27.937 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:27.937 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:27.938 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:27.938 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:27.938 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:27.938 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:27.938 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:27.938 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:18:27.942 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:18:27.942 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:18:27.944 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:18:27.949 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:18:27.949 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:18:27.949 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:18:27.949 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:18:27.949 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:18:27.949 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:18:27.949 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:18:27.950 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:21:05.324 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:21:05.324 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:21:05.324 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:21:05.324 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:21:05.324 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:21:05.324 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:21:05.324 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:21:05.324 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:21:05.324 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:21:05.324 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:21:05.324 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:21:05.324 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:21:05.324 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:21:05.339 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:21:05.346 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:21:05.346 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:21:05.346 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:21:05.346 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:21:05.347 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:21:05.347 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:21:05.347 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:21:05.347 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:21:23.746 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:21:23.747 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:21:23.752 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:21:23.758 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:21:23.758 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:21:23.758 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:21:23.758 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:21:23.758 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:21:23.758 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:21:23.758 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:21:23.760 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:21:23.763 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:21:23.764 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:21:23.767 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:21:23.771 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:21:23.771 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:21:23.771 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:21:23.771 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:21:23.771 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:21:23.771 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:21:23.771 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:21:23.772 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:21:23.777 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:21:23.778 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:21:23.782 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:21:23.786 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:21:23.786 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:21:23.786 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:21:23.786 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:21:23.786 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:21:23.786 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:21:23.787 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:21:23.787 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:21:23.791 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:21:23.791 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:21:23.795 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:21:23.795 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:21:23.795 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:21:23.795 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:21:23.795 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:21:23.795 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:21:23.795 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:21:23.795 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:21:23.795 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:29:11.251 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:29:11.251 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:29:11.253 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:29:11.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:29:11.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:29:11.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:29:11.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:29:11.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:29:11.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:29:11.256 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:29:11.256 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 11:29:11.260 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-10-18 11:29:11.260 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-10-18 11:29:11.260 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-10-18 11:29:11.265 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 1)
+2025-10-18 11:29:11.265 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4000.000, PF: 4800.0000, Tax: 0
+2025-10-18 11:29:11.265 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vinit sahare (ID: 2)
+2025-10-18 11:29:11.265 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vinit sahare, Bonus: 4500.000, PF: 5400.0000, Tax: 0
+2025-10-18 11:29:11.265 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Virat Kohli (ID: 3)
+2025-10-18 11:29:11.265 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
+2025-10-18 11:29:11.265 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
+2025-10-18 11:29:11.265 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES

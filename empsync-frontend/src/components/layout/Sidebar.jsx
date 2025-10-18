@@ -3,10 +3,16 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../../styles/Sidebar.css';
 
-const Sidebar = ({ isOpen, onClose }) => {
+const Sidebar = ({ isOpen, onClose, userRole }) => {
   const location = useLocation();
 
-  const menuItems = [
+  // Get current user from localStorage
+  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  const isAdmin = currentUser.role === 'ADMIN';
+  const isEmployee = currentUser.role === 'EMPLOYEE';
+
+  // Admin menu items
+  const adminMenuItems = [
     { path: '/dashboard', label: 'Dashboard', icon: '📊' },
     { path: '/employees', label: 'Employees', icon: '👥' },
     { path: '/departments', label: 'Departments', icon: '🏢' },
@@ -14,10 +20,37 @@ const Sidebar = ({ isOpen, onClose }) => {
     { path: '/settings', label: 'Settings', icon: '⚙️' },
   ];
 
+  // Employee menu items (limited access)
+  const employeeMenuItems = [
+    { path: '/employee-dashboard', label: 'My Dashboard', icon: '📊' },
+    { path: '/departments', label: 'Departments', icon: '🏢' },
+    { path: '/profile', label: 'My Profile', icon: '👤' },
+  ];
+
+  // Use appropriate menu based on user role
+  const menuItems = isAdmin ? adminMenuItems : employeeMenuItems;
+
   return (
     <>
       {isOpen && <div className="sidebar-overlay" onClick={onClose}></div>}
       <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+        <div className="sidebar-header">
+          <div className="sidebar-user-info">
+            <div className="user-avatar">
+              {isAdmin ? '👑' : '👤'}
+            </div>
+            <div className="user-details">
+              <div className="user-name">
+                {currentUser.name || currentUser.username || 'User'}
+              </div>
+              <div className="user-role">
+                {isAdmin ? 'Administrator' : 'Employee'}
+              </div>
+            </div>
+          </div>
+          <button className="sidebar-close" onClick={onClose}>×</button>
+        </div>
+        
         <div className="sidebar-menu">
           {menuItems.map(item => (
             <Link
@@ -26,11 +59,20 @@ const Sidebar = ({ isOpen, onClose }) => {
               className={`sidebar-link ${location.pathname === item.path ? 'active' : ''}`}
               onClick={onClose}
             >
-              <span>{item.icon}</span>
-              <span>{item.label}</span>
+              <span className="sidebar-icon">{item.icon}</span>
+              <span className="sidebar-label">{item.label}</span>
             </Link>
           ))}
         </div>
+
+        {/* Additional info for employees */}
+        {isEmployee && (
+          <div className="sidebar-footer">
+            <div className="access-info">
+              <small>Limited Access Mode</small>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

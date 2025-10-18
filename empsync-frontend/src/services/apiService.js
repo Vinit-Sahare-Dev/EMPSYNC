@@ -1,7 +1,6 @@
 // src/services/apiService.js
 import axios from 'axios';
 
-// FIX: Remove /employees from the base URL since your controller already has it
 const API_BASE_URL = 'http://localhost:8888/api';
 
 class EmpSyncAPI {
@@ -47,6 +46,40 @@ class EmpSyncAPI {
     );
   }
 
+  // ==================== AUTHENTICATION METHODS ====================
+  async login(credentials) {
+    try {
+      console.log('🔐 Attempting login for:', credentials.username);
+      const response = await this.client.post('/auth/login', credentials);
+      console.log('✅ Login response:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Login failed:', error.response?.data || error.message);
+      throw error;
+    }
+  }
+
+  async checkAuthStatus() {
+    try {
+      const response = await this.client.get('/auth/status');
+      return response.data;
+    } catch (error) {
+      console.error('Auth status check failed:', error);
+      throw error;
+    }
+  }
+
+  async logout() {
+    try {
+      const response = await this.client.post('/auth/logout');
+      return response.data;
+    } catch (error) {
+      console.error('Logout failed:', error);
+      throw error;
+    }
+  }
+
+  // ==================== HEALTH CHECK METHODS ====================
   async healthCheck() {
     try {
       const response = await this.client.get('/employees');
@@ -72,6 +105,7 @@ class EmpSyncAPI {
     }
   }
 
+  // ==================== EMPLOYEE MANAGEMENT METHODS ====================
   async getAllEmployees() {
     const response = await this.client.get('/employees');
     return response.data;
@@ -132,7 +166,7 @@ class EmpSyncAPI {
     return response.data;
   }
 
-  // Test connection directly
+  // ==================== CONNECTION TESTING ====================
   async testConnection() {
     try {
       const response = await axios.get('http://localhost:8888/api/employees', {
@@ -154,7 +188,7 @@ class EmpSyncAPI {
     }
   }
 
-  // Legacy sync methods
+  // ==================== LEGACY SYNC METHODS (for compatibility) ====================
   async syncEmployees() {
     return this.getAllEmployees();
   }
@@ -177,6 +211,37 @@ class EmpSyncAPI {
 
   async deleteSync(id) {
     return this.deleteEmployee(id);
+  }
+
+  // ==================== UTILITY METHODS ====================
+  async testAllEndpoints() {
+    const endpoints = [
+      { name: 'Auth Status', method: this.checkAuthStatus() },
+      { name: 'Employees', method: this.getAllEmployees() },
+      { name: 'Departments', method: this.getAllDepartments() },
+      { name: 'Health Check', method: this.healthCheck() }
+    ];
+
+    const results = [];
+    
+    for (const endpoint of endpoints) {
+      try {
+        const result = await endpoint.method;
+        results.push({
+          name: endpoint.name,
+          status: '✅ Connected',
+          data: result
+        });
+      } catch (error) {
+        results.push({
+          name: endpoint.name,
+          status: '❌ Failed',
+          error: error.message
+        });
+      }
+    }
+
+    return results;
   }
 }
 

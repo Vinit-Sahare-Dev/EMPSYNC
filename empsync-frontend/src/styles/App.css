@@ -1740,3 +1740,415 @@ body {
     margin-left: 0 !important;
   }
 }
+
+/* Employee Dashboard Styles */
+.employee-dashboard {
+  padding: 20px;
+}
+
+.employee-welcome {
+  max-width: 600px;
+  margin: 40px auto;
+}
+
+.welcome-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.employee-features {
+  display: grid;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+}
+
+/* Access Denied Styles */
+.access-denied {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.access-denied h2 {
+  color: #e74c3c;
+  margin-bottom: 15px;
+}
+
+.access-denied p {
+  color: #7f8c8d;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+/* Navbar.css or add to your existing App.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 0 20px;
+  height: 60px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #e9ecef;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.menu-toggle:hover {
+  background: #f8f9fa;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-brand h1 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.user-role-badge {
+  background: #3498db;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.9rem;
+}
+
+.user-role {
+  color: #7f8c8d;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+.navbar-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.profile-btn {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.logout-btn {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  background: #e74c3c;
+  border: 1px solid #e74c3c;
+}
+
+.logout-btn:hover {
+  background: #c0392b;
+  border-color: #c0392b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 15px;
+  }
+  
+  .user-details {
+    display: none;
+  }
+  
+  .navbar-brand h1 {
+    font-size: 1.2rem;
+  }
+  
+  .profile-btn span,
+  .logout-btn span {
+    display: none;
+  }
+  
+  .profile-btn::before {
+    content: "👤";
+  }
+  
+  .logout-btn::before {
+    content: "🚪";
+  }
+  
+  .profile-btn,
+  .logout-btn {
+    padding: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-brand h1 {
+    font-size: 1rem;
+  }
+  
+  .user-role-badge {
+    display: none;
+  }
+}
+
+/* src/styles/Sidebar.css */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 280px;
+  height: 100vh;
+  background: white;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  transition: left 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  border-bottom: 1px solid #ecf0f1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.sidebar-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.user-role {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  text-transform: capitalize;
+}
+
+.sidebar-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.sidebar-close:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.sidebar-menu {
+  flex: 1;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: #2c3e50;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.sidebar-link:hover {
+  background: #f8f9fa;
+  color: #3498db;
+}
+
+.sidebar-link.active {
+  background: #e3f2fd;
+  color: #3498db;
+  border-left-color: #3498db;
+  font-weight: 600;
+}
+
+.sidebar-icon {
+  font-size: 1.2rem;
+  margin-right: 12px;
+  width: 24px;
+  text-align: center;
+}
+
+.sidebar-label {
+  font-size: 0.9rem;
+}
+
+.sidebar-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #ecf0f1;
+  background: #f8f9fa;
+}
+
+.access-info {
+  text-align: center;
+  color: #7f8c8d;
+}
+
+.access-info small {
+  font-size: 0.75rem;
+}
+
+/* Role-specific styling */
+.sidebar-link.employee-only {
+  background: #fff3cd;
+  border-left-color: #ffc107;
+}
+
+.sidebar-link.employee-only .sidebar-icon {
+  color: #856404;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 260px;
+    left: -260px;
+  }
+  
+  .sidebar-header {
+    padding: 15px;
+  }
+  
+  .user-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .user-name {
+    font-size: 0.9rem;
+  }
+  
+  .user-role {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+    left: -100%;
+  }
+  
+  .sidebar-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .sidebar-user-info {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .user-details {
+    text-align: center;
+  }
+}

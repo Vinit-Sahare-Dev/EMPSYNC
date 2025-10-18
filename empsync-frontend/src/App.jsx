@@ -1,6 +1,6 @@
 // src/App.jsx
-import React, { useState, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState, Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ToastProvider from './components/ui/Toast';
 import Navbar from './components/layout/Navbar';
@@ -48,6 +48,7 @@ const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
 const EmployeeGrid = lazy(() => import('./components/employees/EmployeeGrid'));
 const Analytics = lazy(() => import('./components/dashboard/Analytics'));
 const Settings = lazy(() => import('./components/settings/Settings'));
+const LandingPage = lazy(() => import('./components/auth/LandingPage')); // Changed from Login to LandingPage
 
 // Coming Soon Component for Departments (since it's not implemented yet)
 const ComingSoon = ({ feature }) => (
@@ -60,8 +61,90 @@ const ComingSoon = ({ feature }) => (
   </div>
 );
 
+// Employee Dashboard (Limited Access)
+const EmployeeDashboard = () => (
+  <div className="employee-dashboard">
+    <div className="dashboard-header">
+      <h1>Employee Dashboard</h1>
+      <p>Welcome to your employee portal</p>
+    </div>
+    <div className="employee-welcome">
+      <div className="welcome-card">
+        <h3>👋 Welcome, Employee!</h3>
+        <p>This is your personalized dashboard with limited access.</p>
+        <div className="employee-features">
+          <div className="feature-item">
+            <span className="feature-icon">📊</span>
+            <span>View Basic Analytics</span>
+          </div>
+          <div className="feature-item">
+            <span className="feature-icon">👥</span>
+            <span>View Employee Directory</span>
+          </div>
+          <div className="feature-item">
+            <span className="feature-icon">👤</span>
+            <span>Access Your Profile</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Protected Route Component
+const ProtectedRoute = ({ children, allowedRoles = [] }) => {
+  const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  
+  console.log('🔒 ProtectedRoute - User:', user.username, 'Role:', user.role, 'Allowed:', allowedRoles);
+  
+  if (!user.username) {
+    console.log('❌ No user, redirecting to login');
+    return <Navigate to="/" replace />; // Changed to redirect to "/" instead of "/login"
+  }
+
+  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
+    console.log('❌ Role not allowed');
+    return (
+      <div className="access-denied">
+        <h2>Access Denied</h2>
+        <p>You don't have permission to access this page.</p>
+        <button 
+          onClick={() => window.history.back()} 
+          className="btn btn-primary"
+        >
+          Go Back
+        </button>
+      </div>
+    );
+  }
+
+  console.log('✅ Access granted');
+  return children;
+};
+
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user is logged in on app start
+    const savedUser = localStorage.getItem('currentUser');
+    console.log('🔍 App.jsx - Checking saved user:', savedUser);
+    
+    if (savedUser) {
+      try {
+        const userData = JSON.parse(savedUser);
+        setUser(userData);
+        console.log('✅ App.jsx - User loaded from localStorage:', userData);
+      } catch (error) {
+        console.error('❌ Error parsing saved user:', error);
+        localStorage.removeItem('currentUser');
+      }
+    }
+    
+    setIsLoading(false);
+  }, []);
 
   const toggleSidebar = () => {
     setSidebarOpen(prev => !prev);
@@ -71,52 +154,158 @@ function App() {
     setSidebarOpen(false);
   };
 
+  const handleLogin = (userData) => {
+    console.log('✅ App.jsx - handleLogin called with:', userData);
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    console.log('🚪 App.jsx - Logging out');
+    localStorage.removeItem('currentUser');
+    setUser(null);
+  };
+
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <ThemeProvider>
+        <ToastProvider>
+          <div className="empsync-app">
+            <LoadingSpinner size="large" text="Checking authentication..." />
+          </div>
+        </ToastProvider>
+      </ThemeProvider>
+    );
+  }
+
+  console.log('🎯 App.jsx - Current user state:', user);
+
   return (
     <ThemeProvider>
       <ToastProvider>
         <Router>
           <div className="empsync-app">
-            <Navbar onMenuToggle={toggleSidebar} />
-            <div className="empsync-container">
-              <Sidebar 
-                isOpen={sidebarOpen} 
-                onClose={closeSidebar} 
-              />
-              <main className={`empsync-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
-                <ErrorBoundary>
-                  <Suspense fallback={<LoadingSpinner size="large" text="Loading page..." />}>
-                    <Routes>
-                      <Route path="/" element={<Dashboard />} />
-                      <Route path="/dashboard" element={<Dashboard />} />
-                      <Route path="/employees" element={<EmployeeGrid />} />
-                      <Route path="/employees-table" element={<EmployeeGrid view="table" />} />
-                      <Route path="/employees-grid" element={<EmployeeGrid view="grid" />} />
-                      <Route 
-                        path="/departments" 
-                        element={<ComingSoon feature="Department Management" />} 
-                      />
-                      <Route 
-                        path="/analytics" 
-                        element={<Analytics />} 
-                      />
-                      <Route 
-                        path="/settings" 
-                        element={<Settings />} 
-                      />
-                      <Route 
-                        path="*" 
-                        element={
-                          <div className="not-found">
-                            <h2>Page Not Found - 404</h2>
-                            <p>The page you're looking for doesn't exist.</p>
-                          </div>
-                        } 
-                      />
-                    </Routes>
-                  </Suspense>
-                </ErrorBoundary>
-              </main>
-            </div>
+            {/* Always render the same Router structure */}
+            {!user ? (
+              // Show landing page when no user
+              <ErrorBoundary>
+                <Suspense fallback={<LoadingSpinner size="large" text="Loading..." />}>
+                  <Routes>
+                    {/* Landing page routes - both root and /login show the same component */}
+                    <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
+                    <Route path="/login" element={<LandingPage onLogin={handleLogin} />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
+            ) : (
+              // Show main app when user is logged in
+              <>
+                <Navbar 
+                  onMenuToggle={toggleSidebar} 
+                  user={user}
+                  onLogout={handleLogout}
+                />
+                <div className="empsync-container">
+                  <Sidebar 
+                    isOpen={sidebarOpen} 
+                    onClose={closeSidebar}
+                    userRole={user.role}
+                  />
+                  <main className={`empsync-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
+                    <ErrorBoundary>
+                      <Suspense fallback={<LoadingSpinner size="large" text="Loading page..." />}>
+                        <Routes>
+                          {/* Public routes */}
+                          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                          <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+                          
+                          {/* Admin-only routes */}
+                          <Route 
+                            path="/dashboard" 
+                            element={
+                              <ProtectedRoute allowedRoles={['ADMIN']}>
+                                <Dashboard />
+                              </ProtectedRoute>
+                            } 
+                          />
+                          <Route 
+                            path="/employees" 
+                            element={
+                              <ProtectedRoute allowedRoles={['ADMIN']}>
+                                <EmployeeGrid />
+                              </ProtectedRoute>
+                            } 
+                          />
+                          <Route 
+                            path="/employees-table" 
+                            element={
+                              <ProtectedRoute allowedRoles={['ADMIN']}>
+                                <EmployeeGrid view="table" />
+                              </ProtectedRoute>
+                            } 
+                          />
+                          <Route 
+                            path="/employees-grid" 
+                            element={
+                              <ProtectedRoute allowedRoles={['ADMIN']}>
+                                <EmployeeGrid view="grid" />
+                              </ProtectedRoute>
+                            } 
+                          />
+                          <Route 
+                            path="/analytics" 
+                            element={
+                              <ProtectedRoute allowedRoles={['ADMIN']}>
+                                <Analytics />
+                              </ProtectedRoute>
+                            } 
+                          />
+                          <Route 
+                            path="/settings" 
+                            element={
+                              <ProtectedRoute allowedRoles={['ADMIN']}>
+                                <Settings />
+                              </ProtectedRoute>
+                            } 
+                          />
+                          
+                          {/* Employee routes */}
+                          <Route 
+                            path="/employee-dashboard" 
+                            element={
+                              <ProtectedRoute allowedRoles={['EMPLOYEE']}>
+                                <EmployeeDashboard />
+                              </ProtectedRoute>
+                            } 
+                          />
+                          
+                          {/* Shared routes */}
+                          <Route 
+                            path="/departments" 
+                            element={
+                              <ProtectedRoute>
+                                <ComingSoon feature="Department Management" />
+                              </ProtectedRoute>
+                            } 
+                          />
+                          
+                          {/* Redirect based on role */}
+                          <Route 
+                            path="*" 
+                            element={
+                              user.role === 'EMPLOYEE' ? 
+                                <Navigate to="/employee-dashboard" replace /> : 
+                                <Navigate to="/dashboard" replace />
+                            } 
+                          />
+                        </Routes>
+                      </Suspense>
+                    </ErrorBoundary>
+                  </main>
+                </div>
+              </>
+            )}
           </div>
         </Router>
       </ToastProvider>
