@@ -1,0 +1,45 @@
+# Eclipse
+
+.classpath
+
+.project
+
+.settings/
+
+
+
+# Maven
+
+/target/
+
+
+
+# Build outputs
+
+/bin/
+
+*.class
+
+
+
+# Node / React
+
+/empsync-frontend/node_modules/
+
+/empsync-frontend/build/
+
+
+
+# Logs
+
+*.log
+
+
+
+# OS files
+
+.DS_Store
+
+Thumbs.db
+
+
