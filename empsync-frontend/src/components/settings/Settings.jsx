@@ -1,353 +1,506 @@
 // src/components/settings/Settings.jsx
-import React, { useState, useContext, useEffect } from 'react';
-import { ThemeContext } from '../../contexts/ThemeContext';
+import React, { useState, useEffect } from 'react';
+import { useToast } from '../ui/Toast';
 import { empSyncAPI } from '../../services/apiService';
 import '../../styles/Settings.css';
 
 const Settings = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
-  const [activeTab, setActiveTab] = useState('general');
   const [settings, setSettings] = useState({
-    companyName: 'EMPSYNC',
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-    dateFormat: 'MM/DD/YYYY',
+    // Application Settings
+    appName: 'EMPSYNC',
+    companyName: 'Your Company',
+    currency: 'INR',
+    dateFormat: 'DD/MM/YYYY',
+    timezone: 'Asia/Kolkata',
+    
+    // Notification Settings
+    emailNotifications: true,
+    pushNotifications: false,
+    salaryUpdateAlerts: true,
+    newEmployeeAlerts: true,
+    
+    // Data & Sync Settings
+    autoSync: true,
+    syncInterval: 30,
+    backupEnabled: true,
+    backupFrequency: 'daily',
+    
+    // Security Settings
+    sessionTimeout: 60,
+    twoFactorAuth: false,
+    passwordPolicy: 'medium',
+    
+    // API Settings
+    apiUrl: 'http://localhost:8888/api',
+    apiTimeout: 10000,
+    
+    // Display Settings
+    theme: 'light',
     language: 'en',
-    currency: 'USD',
-    notifications: {
-      email: true,
-      push: true,
-      sms: false,
-      newEmployee: true,
-      employeeUpdate: true,
-      reportReady: false
-    },
-    security: {
-      twoFactor: false,
-      sessionTimeout: 30,
-      passwordExpiry: 90,
-      loginAlerts: true
-    },
-    appearance: {
-      theme: 'light',
-      density: 'comfortable',
-      fontSize: 'medium'
-    },
-    data: {
-      autoBackup: true,
-      backupFrequency: 'weekly',
-      exportFormat: 'json',
-      retentionPeriod: 365
-    }
+    itemsPerPage: 10,
   });
 
-  const [isSaving, setIsSaving] = useState(false);
-  const [saveStatus, setSaveStatus] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('general');
+  const [connectionStatus, setConnectionStatus] = useState('unknown');
+  const { showToast } = useToast();
 
-  // Load settings from localStorage on component mount
   useEffect(() => {
-    const savedSettings = localStorage.getItem('empsync-settings');
-    if (savedSettings) {
-      setSettings(prev => ({ ...prev, ...JSON.parse(savedSettings) }));
-    }
+    loadSavedSettings();
+    testBackendConnection();
   }, []);
 
-  const handleSettingChange = (category, key, value) => {
-    setSettings(prev => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [key]: value
+  const loadSavedSettings = () => {
+    try {
+      const savedSettings = localStorage.getItem('empsync-settings');
+      if (savedSettings) {
+        const parsedSettings = JSON.parse(savedSettings);
+        setSettings(prev => ({ ...prev, ...parsedSettings }));
       }
-    }));
+    } catch (error) {
+      console.error('Error loading saved settings:', error);
+    }
   };
 
-  const handleNestedSettingChange = (category, subCategory, key, value) => {
+  const testBackendConnection = async () => {
+    try {
+      setConnectionStatus('testing');
+      const result = await empSyncAPI.healthCheck();
+      setConnectionStatus(result.success ? 'connected' : 'failed');
+    } catch (error) {
+      setConnectionStatus('failed');
+    }
+  };
+
+  const handleSettingChange = (key, value) => {
     setSettings(prev => ({
       ...prev,
-      [category]: {
-        ...prev[category],
-        [subCategory]: {
-          ...prev[category][subCategory],
-          [key]: value
-        }
-      }
+      [key]: value
     }));
   };
 
   const saveSettings = async () => {
-    setIsSaving(true);
-    setSaveStatus('saving');
-    
+    setLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
       // Save to localStorage
       localStorage.setItem('empsync-settings', JSON.stringify(settings));
       
-      setSaveStatus('success');
-      setTimeout(() => setSaveStatus(''), 3000);
+      // If API URL changed, update the API client
+      if (settings.apiUrl !== empSyncAPI.client.defaults.baseURL) {
+        empSyncAPI.client.defaults.baseURL = settings.apiUrl;
+        showToast('info', 'API URL updated. Testing connection...');
+        await testBackendConnection();
+      }
+      
+      showToast('success', 'Settings saved successfully!');
     } catch (error) {
-      console.error('Error saving settings:', error);
-      setSaveStatus('error');
-      setTimeout(() => setSaveStatus(''), 3000);
+      showToast('error', 'Failed to save settings');
     } finally {
-      setIsSaving(false);
+      setLoading(false);
     }
   };
 
-  const resetToDefaults = () => {
-    if (window.confirm('Are you sure you want to reset all settings to default? This action cannot be undone.')) {
-      const defaultSettings = {
-        companyName: 'EMPSYNC',
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        dateFormat: 'MM/DD/YYYY',
+  const resetSettings = () => {
+    if (window.confirm('Are you sure you want to reset all settings to default?')) {
+      localStorage.removeItem('empsync-settings');
+      setSettings({
+        appName: 'EMPSYNC',
+        companyName: 'Your Company',
+        currency: 'INR',
+        dateFormat: 'DD/MM/YYYY',
+        timezone: 'Asia/Kolkata',
+        emailNotifications: true,
+        pushNotifications: false,
+        salaryUpdateAlerts: true,
+        newEmployeeAlerts: true,
+        autoSync: true,
+        syncInterval: 30,
+        backupEnabled: true,
+        backupFrequency: 'daily',
+        sessionTimeout: 60,
+        twoFactorAuth: false,
+        passwordPolicy: 'medium',
+        apiUrl: 'http://localhost:8888/api',
+        apiTimeout: 10000,
+        theme: 'light',
         language: 'en',
-        currency: 'USD',
-        notifications: {
-          email: true,
-          push: true,
-          sms: false,
-          newEmployee: true,
-          employeeUpdate: true,
-          reportReady: false
-        },
-        security: {
-          twoFactor: false,
-          sessionTimeout: 30,
-          passwordExpiry: 90,
-          loginAlerts: true
-        },
-        appearance: {
-          theme: 'light',
-          density: 'comfortable',
-          fontSize: 'medium'
-        },
-        data: {
-          autoBackup: true,
-          backupFrequency: 'weekly',
-          exportFormat: 'json',
-          retentionPeriod: 365
-        }
-      };
-      setSettings(defaultSettings);
-      localStorage.setItem('empsync-settings', JSON.stringify(defaultSettings));
+        itemsPerPage: 10,
+      });
+      showToast('info', 'Settings reset to defaults');
     }
   };
 
-  const exportSettings = () => {
-    const data = {
-      settings,
-      exportDate: new Date().toISOString(),
-      version: '1.0',
-      exportedBy: 'EMPSYNC Admin'
-    };
-    
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `empsync-settings-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+  const exportData = () => {
+    try {
+      const employees = localStorage.getItem('employees');
+      const settings = localStorage.getItem('empsync-settings');
+      
+      const exportData = {
+        employees: employees ? JSON.parse(employees) : [],
+        settings: settings ? JSON.parse(settings) : {},
+        exportDate: new Date().toISOString()
+      };
+      
+      const dataStr = JSON.stringify(exportData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `empsync-backup-${new Date().toISOString().split('T')[0]}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+      
+      showToast('success', 'Data exported successfully!');
+    } catch (error) {
+      showToast('error', 'Failed to export data');
+    }
   };
 
-  const importSettings = (event) => {
+  const importData = (event) => {
     const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const importedSettings = JSON.parse(e.target.result);
-          if (importedSettings.settings) {
-            setSettings(importedSettings.settings);
-            localStorage.setItem('empsync-settings', JSON.stringify(importedSettings.settings));
-            alert('Settings imported successfully!');
-          }
-        } catch (error) {
-          alert('Error importing settings. Please check the file format.');
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        
+        if (data.employees) {
+          localStorage.setItem('employees', JSON.stringify(data.employees));
         }
-      };
-      reader.readAsText(file);
+        if (data.settings) {
+          localStorage.setItem('empsync-settings', JSON.stringify(data.settings));
+          setSettings(prev => ({ ...prev, ...data.settings }));
+        }
+        
+        showToast('success', 'Data imported successfully!');
+        // Reset file input
+        event.target.value = '';
+      } catch (error) {
+        showToast('error', 'Invalid backup file');
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const clearAllData = () => {
+    if (window.confirm('⚠️ DANGER: This will delete ALL employee data and cannot be undone. Are you sure?')) {
+      localStorage.removeItem('employees');
+      showToast('warning', 'All employee data has been cleared');
+      // Refresh the page to reflect changes
+      setTimeout(() => window.location.reload(), 2000);
     }
   };
 
-  const tabs = [
-    { id: 'general', label: 'General', icon: '⚙️', description: 'Basic application settings' },
-    { id: 'notifications', label: 'Notifications', icon: '🔔', description: 'Manage your notification preferences' },
-    { id: 'security', label: 'Security', icon: '🔒', description: 'Security and privacy settings' },
-    { id: 'appearance', label: 'Appearance', icon: '🎨', description: 'Customize the look and feel' },
-    { id: 'data', label: 'Data Management', icon: '💾', description: 'Backup and data settings' },
-    { id: 'about', label: 'About', icon: 'ℹ️', description: 'System information' }
-  ];
+  const getConnectionStatusColor = () => {
+    switch (connectionStatus) {
+      case 'connected': return '#27ae60';
+      case 'failed': return '#e74c3c';
+      case 'testing': return '#f39c12';
+      default: return '#95a5a6';
+    }
+  };
+
+  const getConnectionStatusText = () => {
+    switch (connectionStatus) {
+      case 'connected': return 'Connected to Backend';
+      case 'failed': return 'Connection Failed';
+      case 'testing': return 'Testing Connection...';
+      default: return 'Unknown Status';
+    }
+  };
 
   return (
     <div className="settings-container">
       <div className="settings-header">
-        <div className="header-content">
-          <h1>System Settings</h1>
-          <p>Customize your EMPSYNC experience</p>
-        </div>
-        <div className="save-status">
-          {saveStatus === 'saving' && <span className="status-saving">Saving...</span>}
-          {saveStatus === 'success' && <span className="status-success">✓ Settings saved</span>}
-          {saveStatus === 'error' && <span className="status-error">✗ Save failed</span>}
-        </div>
+        <h1>Settings & Configuration</h1>
+        <p>Manage your EMPSYNC application preferences and system configuration</p>
       </div>
 
       <div className="settings-layout">
-        {/* Navigation Sidebar */}
+        {/* Sidebar Navigation */}
         <div className="settings-sidebar">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              className={`sidebar-tab ${activeTab === tab.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
+          <div className="sidebar-section">
+            <h3>Application</h3>
+            <button 
+              className={`sidebar-tab ${activeTab === 'general' ? 'active' : ''}`}
+              onClick={() => setActiveTab('general')}
             >
-              <span className="tab-icon">{tab.icon}</span>
-              <div className="tab-content">
-                <span className="tab-label">{tab.label}</span>
-                <span className="tab-description">{tab.description}</span>
-              </div>
+              ⚙️ General Settings
             </button>
-          ))}
+            <button 
+              className={`sidebar-tab ${activeTab === 'notifications' ? 'active' : ''}`}
+              onClick={() => setActiveTab('notifications')}
+            >
+              🔔 Notifications
+            </button>
+            <button 
+              className={`sidebar-tab ${activeTab === 'display' ? 'active' : ''}`}
+              onClick={() => setActiveTab('display')}
+            >
+              🎨 Display
+            </button>
+          </div>
+
+          <div className="sidebar-section">
+            <h3>System</h3>
+            <button 
+              className={`sidebar-tab ${activeTab === 'api' ? 'active' : ''}`}
+              onClick={() => setActiveTab('api')}
+            >
+              🔌 API & Integration
+            </button>
+            <button 
+              className={`sidebar-tab ${activeTab === 'security' ? 'active' : ''}`}
+              onClick={() => setActiveTab('security')}
+            >
+              🔒 Security
+            </button>
+            <button 
+              className={`sidebar-tab ${activeTab === 'data' ? 'active' : ''}`}
+              onClick={() => setActiveTab('data')}
+            >
+              💾 Data Management
+            </button>
+          </div>
+
+          <div className="sidebar-section">
+            <h3>Actions</h3>
+            <button className="sidebar-action" onClick={saveSettings} disabled={loading}>
+              💾 {loading ? 'Saving...' : 'Save Settings'}
+            </button>
+            <button className="sidebar-action secondary" onClick={resetSettings}>
+              🔄 Reset to Defaults
+            </button>
+          </div>
         </div>
 
-        {/* Settings Content */}
+        {/* Main Content */}
         <div className="settings-content">
           {/* General Settings */}
           {activeTab === 'general' && (
             <div className="settings-section">
               <h2>General Settings</h2>
-              
-              <div className="setting-group">
-                <label className="setting-label">Company Name</label>
-                <input
-                  type="text"
-                  value={settings.companyName}
-                  onChange={(e) => handleSettingChange('companyName', e.target.value)}
-                  className="setting-input"
-                  placeholder="Enter your company name"
-                />
-                <p className="setting-description">This name will be displayed throughout the application</p>
-              </div>
-
-              <div className="setting-row">
-                <div className="setting-group">
-                  <label className="setting-label">Timezone</label>
-                  <select
-                    value={settings.timezone}
-                    onChange={(e) => handleSettingChange('timezone', e.target.value)}
-                    className="setting-input"
-                  >
-                    <option value="America/New_York">Eastern Time (ET)</option>
-                    <option value="America/Chicago">Central Time (CT)</option>
-                    <option value="America/Denver">Mountain Time (MT)</option>
-                    <option value="America/Los_Angeles">Pacific Time (PT)</option>
-                    <option value="UTC">UTC</option>
-                    <option value="Europe/London">Greenwich Mean Time (GMT)</option>
-                    <option value="Asia/Kolkata">Indian Standard Time (IST)</option>
-                  </select>
+              <div className="settings-grid">
+                <div className="setting-item">
+                  <label>Application Name</label>
+                  <input
+                    type="text"
+                    value={settings.appName}
+                    onChange={(e) => handleSettingChange('appName', e.target.value)}
+                    placeholder="EMPSYNC"
+                  />
                 </div>
 
-                <div className="setting-group">
-                  <label className="setting-label">Date Format</label>
-                  <select
-                    value={settings.dateFormat}
-                    onChange={(e) => handleSettingChange('dateFormat', e.target.value)}
-                    className="setting-input"
-                  >
-                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="setting-row">
-                <div className="setting-group">
-                  <label className="setting-label">Language</label>
-                  <select
-                    value={settings.language}
-                    onChange={(e) => handleSettingChange('language', e.target.value)}
-                    className="setting-input"
-                  >
-                    <option value="en">English</option>
-                    <option value="es">Spanish</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                  </select>
+                <div className="setting-item">
+                  <label>Company Name</label>
+                  <input
+                    type="text"
+                    value={settings.companyName}
+                    onChange={(e) => handleSettingChange('companyName', e.target.value)}
+                    placeholder="Your Company"
+                  />
                 </div>
 
-                <div className="setting-group">
-                  <label className="setting-label">Currency</label>
+                <div className="setting-item">
+                  <label>Currency</label>
                   <select
                     value={settings.currency}
                     onChange={(e) => handleSettingChange('currency', e.target.value)}
-                    className="setting-input"
                   >
+                    <option value="INR">Indian Rupee (₹)</option>
                     <option value="USD">US Dollar ($)</option>
                     <option value="EUR">Euro (€)</option>
                     <option value="GBP">British Pound (£)</option>
-                    <option value="INR">Indian Rupee (₹)</option>
+                  </select>
+                </div>
+
+                <div className="setting-item">
+                  <label>Date Format</label>
+                  <select
+                    value={settings.dateFormat}
+                    onChange={(e) => handleSettingChange('dateFormat', e.target.value)}
+                  >
+                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                  </select>
+                </div>
+
+                <div className="setting-item">
+                  <label>Timezone</label>
+                  <select
+                    value={settings.timezone}
+                    onChange={(e) => handleSettingChange('timezone', e.target.value)}
+                  >
+                    <option value="Asia/Kolkata">India (IST)</option>
+                    <option value="America/New_York">Eastern Time (ET)</option>
+                    <option value="Europe/London">London (GMT)</option>
+                    <option value="Asia/Tokyo">Tokyo (JST)</option>
                   </select>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Notifications Settings */}
+          {/* Notification Settings */}
           {activeTab === 'notifications' && (
             <div className="settings-section">
               <h2>Notification Settings</h2>
-              <p className="section-description">Choose how you want to be notified about important events</p>
+              <div className="settings-grid">
+                <div className="setting-toggle">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={settings.emailNotifications}
+                      onChange={(e) => handleSettingChange('emailNotifications', e.target.checked)}
+                    />
+                    <span className="toggle-label">Email Notifications</span>
+                  </label>
+                  <p className="setting-description">Receive important updates via email</p>
+                </div>
 
-              <div className="notification-category">
-                <h3>Notification Channels</h3>
-                <div className="toggle-group">
-                  <ToggleSetting
-                    label="Email Notifications"
-                    checked={settings.notifications.email}
-                    onChange={(checked) => handleNestedSettingChange('notifications', 'email', checked)}
-                    description="Receive notifications via email"
-                  />
-                  <ToggleSetting
-                    label="Push Notifications"
-                    checked={settings.notifications.push}
-                    onChange={(checked) => handleNestedSettingChange('notifications', 'push', checked)}
-                    description="Receive browser push notifications"
-                  />
-                  <ToggleSetting
-                    label="SMS Notifications"
-                    checked={settings.notifications.sms}
-                    onChange={(checked) => handleNestedSettingChange('notifications', 'sms', checked)}
-                    description="Receive SMS alerts (premium feature)"
-                  />
+                <div className="setting-toggle">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={settings.pushNotifications}
+                      onChange={(e) => handleSettingChange('pushNotifications', e.target.checked)}
+                    />
+                    <span className="toggle-label">Push Notifications</span>
+                  </label>
+                  <p className="setting-description">Browser push notifications</p>
+                </div>
+
+                <div className="setting-toggle">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={settings.salaryUpdateAlerts}
+                      onChange={(e) => handleSettingChange('salaryUpdateAlerts', e.target.checked)}
+                    />
+                    <span className="toggle-label">Salary Update Alerts</span>
+                  </label>
+                  <p className="setting-description">Get notified when salaries are updated</p>
+                </div>
+
+                <div className="setting-toggle">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={settings.newEmployeeAlerts}
+                      onChange={(e) => handleSettingChange('newEmployeeAlerts', e.target.checked)}
+                    />
+                    <span className="toggle-label">New Employee Alerts</span>
+                  </label>
+                  <p className="setting-description">Notifications when new employees are added</p>
                 </div>
               </div>
+            </div>
+          )}
 
-              <div className="notification-category">
-                <h3>Notification Types</h3>
-                <div className="toggle-group">
-                  <ToggleSetting
-                    label="New Employee Alerts"
-                    checked={settings.notifications.newEmployee}
-                    onChange={(checked) => handleNestedSettingChange('notifications', 'newEmployee', checked)}
-                    description="Get notified when new employees are added"
+          {/* Display Settings */}
+          {activeTab === 'display' && (
+            <div className="settings-section">
+              <h2>Display Settings</h2>
+              <div className="settings-grid">
+                <div className="setting-item">
+                  <label>Theme</label>
+                  <select
+                    value={settings.theme}
+                    onChange={(e) => handleSettingChange('theme', e.target.value)}
+                  >
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="auto">Auto (System)</option>
+                  </select>
+                </div>
+
+                <div className="setting-item">
+                  <label>Language</label>
+                  <select
+                    value={settings.language}
+                    onChange={(e) => handleSettingChange('language', e.target.value)}
+                  >
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                  </select>
+                </div>
+
+                <div className="setting-item">
+                  <label>Items Per Page</label>
+                  <select
+                    value={settings.itemsPerPage}
+                    onChange={(e) => handleSettingChange('itemsPerPage', parseInt(e.target.value))}
+                  >
+                    <option value={10}>10 items</option>
+                    <option value={25}>25 items</option>
+                    <option value={50}>50 items</option>
+                    <option value={100}>100 items</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* API & Integration Settings */}
+          {activeTab === 'api' && (
+            <div className="settings-section">
+              <h2>API & Integration Settings</h2>
+              
+              <div className="connection-status">
+                <div className="status-indicator" style={{ backgroundColor: getConnectionStatusColor() }}></div>
+                <span>{getConnectionStatusText()}</span>
+                <button onClick={testBackendConnection} className="test-connection-btn">
+                  Test Connection
+                </button>
+              </div>
+
+              <div className="settings-grid">
+                <div className="setting-item">
+                  <label>API Base URL</label>
+                  <input
+                    type="url"
+                    value={settings.apiUrl}
+                    onChange={(e) => handleSettingChange('apiUrl', e.target.value)}
+                    placeholder="http://localhost:8888/api"
                   />
-                  <ToggleSetting
-                    label="Employee Updates"
-                    checked={settings.notifications.employeeUpdate}
-                    onChange={(checked) => handleNestedSettingChange('notifications', 'employeeUpdate', checked)}
-                    description="Notifications for employee profile changes"
+                </div>
+
+                <div className="setting-item">
+                  <label>API Timeout (ms)</label>
+                  <input
+                    type="number"
+                    value={settings.apiTimeout}
+                    onChange={(e) => handleSettingChange('apiTimeout', parseInt(e.target.value))}
+                    min="1000"
+                    max="30000"
                   />
-                  <ToggleSetting
-                    label="Report Generation"
-                    checked={settings.notifications.reportReady}
-                    onChange={(checked) => handleNestedSettingChange('notifications', 'reportReady', checked)}
-                    description="Alert when analytics reports are ready"
+                </div>
+
+                <div className="setting-toggle">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={settings.autoSync}
+                      onChange={(e) => handleSettingChange('autoSync', e.target.checked)}
+                    />
+                    <span className="toggle-label">Auto Sync</span>
+                  </label>
+                  <p className="setting-description">Automatically sync data with backend</p>
+                </div>
+
+                <div className="setting-item">
+                  <label>Sync Interval (seconds)</label>
+                  <input
+                    type="number"
+                    value={settings.syncInterval}
+                    onChange={(e) => handleSettingChange('syncInterval', parseInt(e.target.value))}
+                    min="10"
+                    max="3600"
+                    disabled={!settings.autoSync}
                   />
                 </div>
               </div>
@@ -358,277 +511,114 @@ const Settings = () => {
           {activeTab === 'security' && (
             <div className="settings-section">
               <h2>Security Settings</h2>
-              <p className="section-description">Manage your account security and privacy preferences</p>
-
-              <div className="toggle-group">
-                <ToggleSetting
-                  label="Two-Factor Authentication"
-                  checked={settings.security.twoFactor}
-                  onChange={(checked) => handleNestedSettingChange('security', 'twoFactor', checked)}
-                  description="Add an extra layer of security to your account"
-                />
-                <ToggleSetting
-                  label="Login Alerts"
-                  checked={settings.security.loginAlerts}
-                  onChange={(checked) => handleNestedSettingChange('security', 'loginAlerts', checked)}
-                  description="Get notified of new sign-ins to your account"
-                />
-              </div>
-
-              <div className="setting-row">
-                <div className="setting-group">
-                  <label className="setting-label">Session Timeout (minutes)</label>
+              <div className="settings-grid">
+                <div className="setting-item">
+                  <label>Session Timeout (minutes)</label>
                   <input
                     type="number"
+                    value={settings.sessionTimeout}
+                    onChange={(e) => handleSettingChange('sessionTimeout', parseInt(e.target.value))}
                     min="5"
-                    max="240"
-                    value={settings.security.sessionTimeout}
-                    onChange={(e) => handleNestedSettingChange('security', 'sessionTimeout', parseInt(e.target.value))}
-                    className="setting-input"
+                    max="480"
                   />
-                  <p className="setting-description">Automatically log out after period of inactivity</p>
                 </div>
 
-                <div className="setting-group">
-                  <label className="setting-label">Password Expiry (days)</label>
-                  <input
-                    type="number"
-                    min="30"
-                    max="365"
-                    value={settings.security.passwordExpiry}
-                    onChange={(e) => handleNestedSettingChange('security', 'passwordExpiry', parseInt(e.target.value))}
-                    className="setting-input"
-                  />
-                  <p className="setting-description">How often passwords must be changed</p>
+                <div className="setting-toggle">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={settings.twoFactorAuth}
+                      onChange={(e) => handleSettingChange('twoFactorAuth', e.target.checked)}
+                    />
+                    <span className="toggle-label">Two-Factor Authentication</span>
+                  </label>
+                  <p className="setting-description">Add an extra layer of security to your account</p>
                 </div>
-              </div>
-            </div>
-          )}
 
-          {/* Appearance Settings */}
-          {activeTab === 'appearance' && (
-            <div className="settings-section">
-              <h2>Appearance Settings</h2>
-              <p className="section-description">Customize how EMPSYNC looks and feels</p>
-
-              <div className="setting-group">
-                <label className="setting-label">Theme</label>
-                <div className="theme-options">
-                  <button 
-                    className={`theme-option light ${theme === 'light' ? 'active' : ''}`}
-                    onClick={() => toggleTheme('light')}
-                  >
-                    <div className="theme-preview light"></div>
-                    <span>Light</span>
-                  </button>
-                  <button 
-                    className={`theme-option dark ${theme === 'dark' ? 'active' : ''}`}
-                    onClick={() => toggleTheme('dark')}
-                  >
-                    <div className="theme-preview dark"></div>
-                    <span>Dark</span>
-                  </button>
-                  <button 
-                    className={`theme-option auto ${theme === 'auto' ? 'active' : ''}`}
-                    onClick={() => toggleTheme('auto')}
-                  >
-                    <div className="theme-preview auto"></div>
-                    <span>Auto</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="setting-row">
-                <div className="setting-group">
-                  <label className="setting-label">Font Size</label>
+                <div className="setting-item">
+                  <label>Password Policy</label>
                   <select
-                    value={settings.appearance.fontSize}
-                    onChange={(e) => handleNestedSettingChange('appearance', 'fontSize', e.target.value)}
-                    className="setting-input"
+                    value={settings.passwordPolicy}
+                    onChange={(e) => handleSettingChange('passwordPolicy', e.target.value)}
                   >
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                  </select>
-                </div>
-
-                <div className="setting-group">
-                  <label className="setting-label">Density</label>
-                  <select
-                    value={settings.appearance.density}
-                    onChange={(e) => handleNestedSettingChange('appearance', 'density', e.target.value)}
-                    className="setting-input"
-                  >
-                    <option value="compact">Compact</option>
-                    <option value="comfortable">Comfortable</option>
-                    <option value="spacious">Spacious</option>
+                    <option value="low">Low (6+ characters)</option>
+                    <option value="medium">Medium (8+ characters, mixed case)</option>
+                    <option value="high">High (12+ characters, special characters)</option>
                   </select>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Data Management Settings */}
+          {/* Data Management */}
           {activeTab === 'data' && (
             <div className="settings-section">
               <h2>Data Management</h2>
-              <p className="section-description">Manage your data backup and retention settings</p>
+              
+              <div className="data-actions">
+                <div className="data-action-card">
+                  <h3>📤 Export Data</h3>
+                  <p>Download all your employee data as a backup file</p>
+                  <button onClick={exportData} className="btn btn-primary">
+                    Export Data
+                  </button>
+                </div>
 
-              <div className="toggle-group">
-                <ToggleSetting
-                  label="Automatic Backups"
-                  checked={settings.data.autoBackup}
-                  onChange={(checked) => handleNestedSettingChange('data', 'autoBackup', checked)}
-                  description="Automatically backup your data regularly"
-                />
+                <div className="data-action-card">
+                  <h3>📥 Import Data</h3>
+                  <p>Restore employee data from a backup file</p>
+                  <label className="file-upload-btn">
+                    Choose File
+                    <input
+                      type="file"
+                      accept=".json"
+                      onChange={importData}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                </div>
+
+                <div className="data-action-card danger">
+                  <h3>🗑️ Clear All Data</h3>
+                  <p>Permanently delete all employee data</p>
+                  <button onClick={clearAllData} className="btn btn-danger">
+                    Clear Data
+                  </button>
+                </div>
               </div>
 
-              <div className="setting-row">
-                <div className="setting-group">
-                  <label className="setting-label">Backup Frequency</label>
+              <div className="settings-grid" style={{ marginTop: '2rem' }}>
+                <div className="setting-toggle">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={settings.backupEnabled}
+                      onChange={(e) => handleSettingChange('backupEnabled', e.target.checked)}
+                    />
+                    <span className="toggle-label">Automatic Backups</span>
+                  </label>
+                  <p className="setting-description">Automatically create backups of your data</p>
+                </div>
+
+                <div className="setting-item">
+                  <label>Backup Frequency</label>
                   <select
-                    value={settings.data.backupFrequency}
-                    onChange={(e) => handleNestedSettingChange('data', 'backupFrequency', e.target.value)}
-                    className="setting-input"
+                    value={settings.backupFrequency}
+                    onChange={(e) => handleSettingChange('backupFrequency', e.target.value)}
+                    disabled={!settings.backupEnabled}
                   >
                     <option value="daily">Daily</option>
                     <option value="weekly">Weekly</option>
                     <option value="monthly">Monthly</option>
                   </select>
                 </div>
-
-                <div className="setting-group">
-                  <label className="setting-label">Export Format</label>
-                  <select
-                    value={settings.data.exportFormat}
-                    onChange={(e) => handleNestedSettingChange('data', 'exportFormat', e.target.value)}
-                    className="setting-input"
-                  >
-                    <option value="json">JSON</option>
-                    <option value="csv">CSV</option>
-                    <option value="excel">Excel</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="setting-group">
-                <label className="setting-label">Data Retention Period (days)</label>
-                <input
-                  type="number"
-                  min="30"
-                  max="730"
-                  value={settings.data.retentionPeriod}
-                  onChange={(e) => handleNestedSettingChange('data', 'retentionPeriod', parseInt(e.target.value))}
-                  className="setting-input"
-                />
-                <p className="setting-description">How long to keep backup data before automatic deletion</p>
-              </div>
-
-              <div className="action-buttons">
-                <button className="btn-secondary" onClick={exportSettings}>
-                  📥 Export All Data
-                </button>
-                <label className="btn-secondary file-upload">
-                  📤 Import Data
-                  <input type="file" accept=".json,.csv" onChange={importSettings} style={{ display: 'none' }} />
-                </label>
               </div>
             </div>
           )}
-
-          {/* About Settings */}
-          {activeTab === 'about' && (
-            <div className="settings-section">
-              <h2>About EMPSYNC</h2>
-              
-              <div className="about-content">
-                <div className="app-info">
-                  <div className="app-logo">EMPSYNC</div>
-                  <h3>Employee Management System</h3>
-                  <p className="version">Version 1.0.0</p>
-                </div>
-
-                <div className="system-info">
-                  <h4>System Information</h4>
-                  <div className="info-grid">
-                    <div className="info-item">
-                      <span className="info-label">Frontend</span>
-                      <span className="info-value">React 18 + Vite</span>
-                    </div>
-                    <div className="info-item">
-                      <span className="info-label">Backend</span>
-                      <span className="info-value">Spring Boot</span>
-                    </div>
-                    <div className="info-item">
-                      <span className="info-label">Database</span>
-                      <span className="info-value">MySQL</span>
-                    </div>
-                    <div className="info-item">
-                      <span className="info-label">Last Updated</span>
-                      <span className="info-value">{new Date().toLocaleDateString()}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="support-info">
-                  <h4>Support</h4>
-                  <p>For technical support or feature requests, please contact:</p>
-                  <ul>
-                    <li>📧 Email: support@empsync.com</li>
-                    <li>🌐 Website: https://empsync.com</li>
-                    <li>📚 Documentation: https://docs.empsync.com</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Action Buttons */}
-          <div className="settings-actions">
-            <button 
-              className="btn-primary" 
-              onClick={saveSettings}
-              disabled={isSaving}
-            >
-              {isSaving ? 'Saving...' : 'Save Changes'}
-            </button>
-            <button 
-              className="btn-secondary" 
-              onClick={resetToDefaults}
-            >
-              Reset to Defaults
-            </button>
-            <button 
-              className="btn-outline" 
-              onClick={exportSettings}
-            >
-              Export Settings
-            </button>
-          </div>
         </div>
       </div>
     </div>
   );
 };
-
-// Reusable Toggle Component
-const ToggleSetting = ({ label, checked, onChange, description }) => (
-  <div className="toggle-setting">
-    <div className="toggle-content">
-      <div className="toggle-label">
-        <span className="label-text">{label}</span>
-        <p className="label-description">{description}</p>
-      </div>
-      <label className="toggle-switch">
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={(e) => onChange(e.target.checked)}
-        />
-        <span className="slider"></span>
-      </label>
-    </div>
-  </div>
-);
 
 export default Settings;
