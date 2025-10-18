@@ -46,6 +46,19 @@ class ErrorBoundary extends React.Component {
 // Lazy load components
 const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
 const EmployeeGrid = lazy(() => import('./components/employees/EmployeeGrid'));
+const Analytics = lazy(() => import('./components/dashboard/Analytics'));
+const Settings = lazy(() => import('./components/settings/Settings'));
+
+// Coming Soon Component for Departments (since it's not implemented yet)
+const ComingSoon = ({ feature }) => (
+  <div className="coming-soon">
+    <div className="coming-soon-content">
+      <h2>{feature} Coming Soon</h2>
+      <div className="rocket">🚀</div>
+      <p>We're working hard to bring you this feature!</p>
+    </div>
+  </div>
+);
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -57,17 +70,6 @@ function App() {
   const closeSidebar = () => {
     setSidebarOpen(false);
   };
-
-  // Coming Soon Component
-  const ComingSoon = ({ feature }) => (
-    <div className="coming-soon">
-      <div className="coming-soon-content">
-        <h2>{feature} Coming Soon</h2>
-        <div className="rocket">🚀</div>
-        <p>We're working hard to bring you this feature!</p>
-      </div>
-    </div>
-  );
 
   return (
     <ThemeProvider>
@@ -95,11 +97,11 @@ function App() {
                       />
                       <Route 
                         path="/analytics" 
-                        element={<ComingSoon feature="Advanced Analytics" />} 
+                        element={<Analytics />} 
                       />
                       <Route 
                         path="/settings" 
-                        element={<ComingSoon feature="Settings" />} 
+                        element={<Settings />} 
                       />
                       <Route 
                         path="*" 

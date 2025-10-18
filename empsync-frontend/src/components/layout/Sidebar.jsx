@@ -1,6 +1,7 @@
 // src/components/layout/Sidebar.jsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import '../../styles/Sidebar.css';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
