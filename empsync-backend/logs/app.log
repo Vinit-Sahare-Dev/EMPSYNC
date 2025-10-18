@@ -3688,3 +3688,29 @@
 2025-10-18 09:58:49.975 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Virat Kohli, Bonus: 6000.000, PF: 7200.0000, Tax: 0
 2025-10-18 09:58:49.975 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 3 EMPLOYEES
 2025-10-18 09:58:49.975 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 3 EMPLOYEES
+2025-10-18 10:26:02.776 [Thread-5] INFO  io.undertow - stopping server: Undertow - 2.3.19.Final
+2025-10-18 10:26:02.794 [Thread-5] INFO  io.undertow.servlet - Destroying Spring FrameworkServlet 'dispatcherServlet'
+2025-10-18 10:26:02.847 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-10-18 10:26:02.852 [Thread-5] INFO  c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-10-18 10:26:53.044 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 17060 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-10-18 10:26:53.044 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-10-18 10:26:53.044 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-18 10:26:53.542 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-10-18 10:26:53.544 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-10-18 10:26:53.596 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Starting...
+2025-10-18 10:26:53.610 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6f42877c
+2025-10-18 10:26:53.610 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-2 - Start completed.
+2025-10-18 10:26:53.612 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-18 10:26:53.813 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-18 10:26:53.993 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-10-18 10:26:54.040 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 1.025 seconds (process running for 7238.927)
+2025-10-18 10:26:54.042 [restartedMain] TRACE c.s.r.RestApiApplication - 🔍 [TRACE] Application started in TRACE mode (if enabled).
+2025-10-18 10:26:54.042 [restartedMain] DEBUG c.s.r.RestApiApplication - 🐛 [DEBUG] Debugging startup sequence...
+2025-10-18 10:26:54.042 [restartedMain] INFO  c.s.r.RestApiApplication - 🎉 [INFO] EMPSYNC started successfully!
+2025-10-18 10:26:54.042 [restartedMain] INFO  c.s.r.RestApiApplication - 🌍 Active Profiles: default
+2025-10-18 10:26:54.042 [restartedMain] INFO  c.s.r.RestApiApplication - 🚀 Running on: http://localhost:8888
+2025-10-18 10:26:54.043 [restartedMain] INFO  c.s.r.RestApiApplication - 📊 Swagger UI: http://localhost:8888/swagger-ui.html
+2025-10-18 10:26:54.043 [restartedMain] INFO  c.s.r.RestApiApplication - 📚 API Docs: http://localhost:8888/v3/api-docs
+2025-10-18 10:26:54.043 [restartedMain] INFO  c.s.r.RestApiApplication - ✅ Health Check: http://localhost:8888/actuator/health
+2025-10-18 10:26:54.043 [restartedMain] INFO  c.s.r.RestApiApplication - 📈 Metrics: http://localhost:8888/actuator/metrics
+2025-10-18 10:26:54.043 [restartedMain] INFO  c.s.r.RestApiApplication - 🌟 Ready to handle requests!
