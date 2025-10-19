@@ -11,11 +11,20 @@ const LandingPage = ({ onLogin }) => {
   });
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { showToast } = useToast();
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsVisible(true);
+    
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleInputChange = (e) => {
@@ -80,6 +89,103 @@ const LandingPage = ({ onLogin }) => {
     });
   };
 
+  // Custom SVG Logo Component
+  const EmpSyncLogo = ({ size = 48, className = '' }) => (
+    <svg 
+      width={size} 
+      height={size} 
+      viewBox="0 0 32 32" 
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      role="img"
+      aria-labelledby="logoTitle"
+    >
+      <title id="logoTitle">EmpSync Logo</title>
+      <defs>
+        <linearGradient id="empsyncGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#0ea5e9"/>
+          <stop offset="100%" stopColor="#2563eb"/>
+        </linearGradient>
+      </defs>
+
+      {/* White background */}
+      <rect width="32" height="32" rx="8" fill="#ffffff"/>
+
+      {/* Sync arcs */}
+      <path 
+        d="M8 16 A8 8 0 0 1 16 8" 
+        fill="none" 
+        stroke="url(#empsyncGradient)" 
+        strokeWidth="3" 
+        strokeLinecap="round" 
+      />
+      <path 
+        d="M24 16 A8 8 0 0 1 16 24" 
+        fill="none" 
+        stroke="url(#empsyncGradient)" 
+        strokeWidth="3" 
+        strokeLinecap="round" 
+      />
+
+      {/* Central Bold "E" */}
+      <g transform="translate(10, 8)">
+        <rect 
+          x="0" 
+          y="0" 
+          width="12" 
+          height="3" 
+          fill="url(#empsyncGradient)" 
+          rx="1" 
+        />
+        <rect 
+          x="0" 
+          y="6" 
+          width="9" 
+          height="3" 
+          fill="url(#empsyncGradient)" 
+          rx="1" 
+        />
+        <rect 
+          x="0" 
+          y="12" 
+          width="12" 
+          height="3" 
+          fill="url(#empsyncGradient)" 
+          rx="1" 
+        />
+      </g>
+    </svg>
+  );
+
+  // Small Logo for footer and compact spaces
+  const SmallLogo = ({ size = 32 }) => (
+    <svg 
+      width={size} 
+      height={size} 
+      viewBox="0 0 32 32" 
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-labelledby="smallLogoTitle"
+    >
+      <title id="smallLogoTitle">EmpSync Logo</title>
+      <defs>
+        <linearGradient id="smallGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#0ea5e9"/>
+          <stop offset="100%" stopColor="#2563eb"/>
+        </linearGradient>
+      </defs>
+
+      <rect width="32" height="32" rx="6" fill="url(#smallGradient)"/>
+      
+      {/* White "E" in center */}
+      <g transform="translate(8, 8)">
+        <rect x="0" y="0" width="16" height="3" fill="white" rx="1"/>
+        <rect x="0" y="6.5" width="12" height="3" fill="white" rx="1"/>
+        <rect x="0" y="13" width="16" height="3" fill="white" rx="1"/>
+      </g>
+    </svg>
+  );
+
   return (
     <div className={`landing-container ${isVisible ? 'loaded' : ''}`}>
       {/* Animated Background */}
@@ -90,27 +196,30 @@ const LandingPage = ({ onLogin }) => {
       </div>
 
       {/* Navigation */}
-      <nav className="landing-nav">
+      <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-brand">
-          <div className="logo">
-            <div className="logo-icon">⚡</div>
-            <div>
-              <h1>EMPSYNC</h1>
-              <span>Admin Portal</span>
+        
+            <div className="logo-icon">
+              <EmpSyncLogo size={32} />
             </div>
-          </div>
+			            
+		 
         </div>
+		
         <div className="nav-actions">
           {!showLogin && (
             <button className="nav-features-btn" onClick={scrollToFeatures}>
-              Features
+              <span className="btn-text">Features</span>
             </button>
           )}
           <button 
             className="login-toggle-btn"
             onClick={() => setShowLogin(!showLogin)}
           >
-            {showLogin ? 'Back to Home' : 'Admin Login'}
+            <span className="btn-text">
+              {showLogin ? 'Back to Home' : 'Admin Login'}
+            </span>
+            
           </button>
         </div>
       </nav>
@@ -121,9 +230,8 @@ const LandingPage = ({ onLogin }) => {
           <section className="hero-section">
             <div className="hero-content">
               <div className="hero-text">
-                <div className="hero-badge">
-                  <span>🚀 Enterprise Ready</span>
-                </div>
+             
+               
                 <h1>
                   Streamline Your 
                   <span className="gradient-text"> Workforce</span> Management
@@ -135,7 +243,9 @@ const LandingPage = ({ onLogin }) => {
                 </p>
                 <div className="hero-features">
                   <div className="feature">
-                    <span className="feature-icon">👥</span>
+                    <span className="feature-icon">
+                      <SmallLogo size={20} />
+                    </span>
                     <span>Employee Management</span>
                   </div>
                   <div className="feature">
@@ -256,7 +366,9 @@ const LandingPage = ({ onLogin }) => {
               <div className="features-grid">
                 <div className="feature-card">
                   <div className="feature-icon-wrapper">
-                    <div className="feature-icon">📊</div>
+                    <div className="feature-icon">
+                      <SmallLogo size={24} />
+                    </div>
                   </div>
                   <h3>Dashboard Analytics</h3>
                   <p>Real-time insights into employee performance and attendance metrics with beautiful visualizations</p>
@@ -296,8 +408,10 @@ const LandingPage = ({ onLogin }) => {
               <div className="footer-content">
                 <div className="footer-brand">
                   <div className="logo">
-                    <div className="logo-icon">⚡</div>
-                    <div>
+                    <div className="logo-icon">
+                      <SmallLogo size={28} />
+                    </div>
+                    <div className="brand-text">
                       <h3>EMPSYNC</h3>
                       <span>Admin Portal</span>
                     </div>
@@ -390,7 +504,9 @@ const LandingPage = ({ onLogin }) => {
           <div className="login-container">
             <div className="login-card">
               <div className="login-header">
-                <div className="login-icon">🔐</div>
+                <div className="login-icon">
+                  <EmpSyncLogo size={48} />
+                </div>
                 <h2>Admin Portal Access</h2>
                 <p>Secure login for authorized personnel only</p>
               </div>

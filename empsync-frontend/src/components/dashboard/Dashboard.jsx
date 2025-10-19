@@ -48,17 +48,19 @@ const Dashboard = () => {
           color: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4'][index % 6]
         }));
 
-        // Recent activity
+        // Recent activity - Only get 3 for the 3-box layout
         const recentActivity = employees
           .sort((a, b) => new Date(b.createdAt || b.joinDate) - new Date(a.createdAt || a.joinDate))
-          .slice(0, 6)
+          .slice(0, 3) // Only take 3 for the 3-box layout
           .map(emp => ({
             id: emp.id,
             name: emp.name,
             department: emp.department,
             position: emp.position || 'Employee',
             time: new Date(emp.createdAt || emp.joinDate).toLocaleDateString(),
-            avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(emp.name)}&background=3B82F6&color=fff&size=64`
+            avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(emp.name)}&background=3B82F6&color=fff&size=64`,
+            status: 'active',
+            action: 'Joined team'
           }));
 
         setDashboardData({ stats, departmentStats, recentActivity, employees });
@@ -193,13 +195,21 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Horizontal Recent Activity */}
+      {/* Horizontal Recent Activity - 3 Boxes Layout */}
       <div className="recent-activity-horizontal">
         <div className="section-header">
-          <h3>Recent Team Members</h3>
-          <span className="section-subtitle">Latest additions to your team</span>
+          <div className="section-header-content">
+            <h3>Recent Team Members</h3>
+            <p className="section-subtitle">Latest additions to your team</p>
+          </div>
+          {dashboardData.employees.length > 3 && (
+            <a href="/employees" className="view-all-link">
+              View All
+              <span className="btn-icon">→</span>
+            </a>
+          )}
         </div>
-        <div className="activity-horizontal-grid">
+        <div className="activity-three-grid">
           {dashboardData.recentActivity.map(activity => (
             <div key={activity.id} className="activity-horizontal-card">
               <div className="activity-avatar-large">
@@ -209,9 +219,18 @@ const Dashboard = () => {
                 <h4 className="activity-name">{activity.name}</h4>
                 <p className="activity-position">{activity.position}</p>
                 <p className="activity-department">{activity.department}</p>
-                <span className="activity-time-horizontal">
-                  <span className="time-icon">🕒</span>
-                  Joined {activity.time}
+                <div className="activity-meta">
+                  <div className="activity-time-horizontal">
+                    <span className="time-icon">🕒</span>
+                    Joined {activity.time}
+                  </div>
+                  <div className="activity-action">
+                    <span className="action-icon">✓</span>
+                    {activity.action}
+                  </div>
+                </div>
+                <span className={`activity-status status-${activity.status}`}>
+                  {activity.status}
                 </span>
               </div>
             </div>
@@ -252,9 +271,9 @@ const Dashboard = () => {
         {/* Right Column - Pie Chart */}
         <div className="content-right">
           <div className="chart-card">
-            <div className="chart-header">
+            <div className="card-header">
               <h3>Department Distribution</h3>
-              <span className="chart-subtitle">Team composition overview</span>
+              <span className="card-subtitle">Team composition overview</span>
             </div>
             <div className="chart-content">
               <PieChart data={dashboardData.departmentStats} size={160} />
