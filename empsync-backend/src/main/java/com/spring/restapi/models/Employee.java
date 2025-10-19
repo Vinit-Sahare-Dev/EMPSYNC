@@ -1,4 +1,4 @@
-// src/main/java/com/spring/restapi/models/Employee.java
+
 package com.spring.restapi.models;
 
 import jakarta.persistence.*;

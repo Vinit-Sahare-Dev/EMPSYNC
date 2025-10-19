@@ -298,7 +298,7 @@ public class EmployeeController {
         return ResponseEntity.ok(response);
     }
 
-    // New endpoints for salary filtering
+    
     @GetMapping("/salary/greater-than")
     public ResponseEntity<Map<String, Object>> getEmployeesByMinSalary(@RequestParam Double minSalary) {
         logger.info("GET EMPLOYEES BY MIN SALARY - Min Salary: {}", minSalary);
