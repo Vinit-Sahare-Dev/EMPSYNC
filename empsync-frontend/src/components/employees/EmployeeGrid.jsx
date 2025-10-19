@@ -300,7 +300,7 @@ const EmployeeGrid = ({ view = "grid" }) => {
       {/* Header with Backend Status */}
       <div className="employee-header">
         <div>
-          <h1>Employee Management</h1>
+          <h1>Employee Navigator</h1>
           <p>Manage your workforce efficiently</p>
           {/* ✅ BACKEND STATUS INDICATOR */}
           <div style={{ 

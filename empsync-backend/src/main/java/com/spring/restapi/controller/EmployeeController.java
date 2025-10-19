@@ -1,7 +1,8 @@
-// src/main/java/com/spring/restapi/controller/EmployeeController.java
+
 package com.spring.restapi.controller;
 
 import com.spring.restapi.models.Employee;
+
 import com.spring.restapi.service.EmployeeService;
 import com.spring.restapi.exception.EmployeeNotFoundException;
 
@@ -31,7 +32,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    // Test database connection
+   
     @GetMapping("/test-db")
     public ResponseEntity<Map<String, Object>> testDatabase() {
         String result = employeeService.testDatabaseConnection();
@@ -44,7 +45,7 @@ public class EmployeeController {
         return ResponseEntity.ok(response);
     }
 
-    // Create employee with Map support for flexible input
+ 
     @PostMapping
     public ResponseEntity<?> createEmployee(@RequestBody Map<String, Object> employeeData) {
         logger.info("CREATE EMPLOYEE REQUEST - Data: {}", employeeData);
@@ -84,7 +85,6 @@ public class EmployeeController {
         }
     }
 
-    // Alternative create endpoint for direct Employee object
     @PostMapping("/direct")
     public ResponseEntity<?> createEmployeeDirect(@Valid @RequestBody Employee employee) {
         logger.info("CREATE EMPLOYEE DIRECT - Name: {}, Email: {}, Department: {}", 

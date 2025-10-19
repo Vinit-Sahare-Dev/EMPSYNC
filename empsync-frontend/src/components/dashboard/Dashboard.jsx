@@ -140,7 +140,7 @@ const Dashboard = () => {
       <div className="dashboard-header">
         <div className="header-content">
           <div className="welcome-section">
-            <h1>Employee Dashboard</h1>
+            <h1>EmpSync Dashboard</h1>
             <p>Welcome back! Here's your team overview</p>
           </div>
           <div className="connection-status">

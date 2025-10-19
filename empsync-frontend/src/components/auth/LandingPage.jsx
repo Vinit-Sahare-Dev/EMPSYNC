@@ -198,12 +198,13 @@ const LandingPage = ({ onLogin }) => {
       {/* Navigation */}
       <nav className={`landing-nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="nav-brand">
-        
-            <div className="logo-icon">
-              <EmpSyncLogo size={32} />
-            </div>
-			            
-		 
+          <div className="logo-icon">
+            <EmpSyncLogo size={32} />
+          </div>
+          <div className="nav-brand-text">
+            <span className="project-name">EMPSYNC</span>
+            <span className="project-tagline">Admin Portal</span>
+          </div>
         </div>
 		
         <div className="nav-actions">
@@ -219,7 +220,6 @@ const LandingPage = ({ onLogin }) => {
             <span className="btn-text">
               {showLogin ? 'Back to Home' : 'Admin Login'}
             </span>
-            
           </button>
         </div>
       </nav>
@@ -230,8 +230,6 @@ const LandingPage = ({ onLogin }) => {
           <section className="hero-section">
             <div className="hero-content">
               <div className="hero-text">
-             
-               
                 <h1>
                   Streamline Your 
                   <span className="gradient-text"> Workforce</span> Management

@@ -15,7 +15,7 @@ const EmployeeModal = ({ isOpen, onClose, onSave, employee, mode = 'add' }) => {
     status: 'Active'
   });
 
-  const departments = ['Engineering', 'Marketing', 'Sales', 'HR', 'Finance', 'Operations', 'Design', 'Support'];
+  const departments = ['IT', 'Marketing', 'Sales', 'HR', 'Finance', 'Operations', 'Design', 'Support'];
   const positions = ['Software Engineer', 'Senior Developer', 'Team Lead', 'Manager', 'Director', 'Analyst', 'Specialist', 'Coordinator'];
   const genders = ['Male', 'Female', 'Other'];
 
