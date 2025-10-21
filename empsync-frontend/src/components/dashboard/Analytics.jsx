@@ -153,11 +153,11 @@ const Analytics = () => {
     };
   };
 
-  // Format currency in Indian Rupees with proper formatting
+
   const formatRupees = (amount) => {
     if (amount === 0) return '0';
     
-    // For larger amounts, use Indian numbering system (Lakhs, Crores)
+ 
     if (amount >= 10000000) { // 1 Crore
       return `₹${(amount / 10000000).toFixed(2)}Cr`;
     } else if (amount >= 100000) { // 1 Lakh
@@ -169,7 +169,7 @@ const Analytics = () => {
     }
   };
 
-  // Format large numbers with Indian comma system
+
   const formatNumber = (num) => {
     return num.toLocaleString('en-IN');
   };
@@ -332,7 +332,7 @@ const Analytics = () => {
         )}
       </div>
 
-      {/* Auto-refresh notice */}
+
       <div className="auto-update-notice">
         <p>💡 <strong>Live Data:</strong> Analytics update automatically every 30 seconds</p>
       </div>
