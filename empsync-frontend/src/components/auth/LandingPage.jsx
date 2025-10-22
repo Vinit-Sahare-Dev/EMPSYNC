@@ -558,15 +558,15 @@ const LandingPage = ({ onLogin }) => {
 
               <div className="demo-credentials">
                 <div className="demo-header">
-                  <h3>🚀 Quick Demo Access</h3>
-                  <p>Try the admin dashboard instantly</p>
+                  <h3> Quick Demo Access</h3>
+                 
                 </div>
                 <button 
                   className="demo-btn"
                   onClick={fillDemoCredentials}
                 >
                   <span>Use Demo Credentials</span>
-                  <span className="demo-arrow">↓</span>
+                
                 </button>
               </div>
             </div>
