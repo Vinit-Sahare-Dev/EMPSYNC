@@ -298,7 +298,7 @@
   margin-bottom: 25px;
 }
 
-/* Bulk Actions */
+
 .bulk-actions {
   background: #fff3cd;
   border: 1px solid #ffeaa7;
@@ -320,7 +320,7 @@
   gap: 10px;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .department-header {
     flex-direction: column;
@@ -344,7 +344,7 @@
   }
 }
 
-/* Loading State */
+
 .loading-container {
   display: flex;
   justify-content: center;

@@ -1,14 +1,14 @@
-2025-10-31 09:26:28.283 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 5436 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
-2025-10-31 09:26:28.296 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
-2025-10-31 09:26:28.298 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-31 09:26:31.242 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
-2025-10-31 09:26:31.285 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
-2025-10-31 09:26:32.510 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
-2025-10-31 09:26:33.694 [restartedMain] WARN  o.h.e.j.s.SqlExceptionHelper - SQL Error: 0, SQLState: 08S01
-2025-10-31 09:26:33.694 [restartedMain] ERROR o.h.e.j.s.SqlExceptionHelper - Communications link failure
+2025-11-04 23:40:48.543 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 1896 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-11-04 23:40:48.552 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-11-04 23:40:48.553 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-04 23:40:50.797 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-11-04 23:40:50.827 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-11-04 23:40:51.754 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-11-04 23:40:52.903 [restartedMain] WARN  o.h.e.j.s.SqlExceptionHelper - SQL Error: 0, SQLState: 08S01
+2025-11-04 23:40:52.904 [restartedMain] ERROR o.h.e.j.s.SqlExceptionHelper - Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-10-31 09:26:33.695 [restartedMain] WARN  o.h.e.j.e.i.JdbcEnvironmentInitiator - HHH000342: Could not obtain connection to query metadata
+2025-11-04 23:40:52.905 [restartedMain] WARN  o.h.e.j.e.i.JdbcEnvironmentInitiator - HHH000342: Could not obtain connection to query metadata
 org.hibernate.exception.JDBCConnectionException: unable to obtain isolated JDBC connection [Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
@@ -104,19 +104,19 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:144)
 	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:53)
 	... 56 common frames omitted
-2025-10-31 09:26:33.754 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-10-31 09:26:35.415 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
-2025-10-31 09:26:36.464 [restartedMain] WARN  o.h.e.j.s.SqlExceptionHelper - SQL Error: 0, SQLState: 08S01
-2025-10-31 09:26:36.464 [restartedMain] ERROR o.h.e.j.s.SqlExceptionHelper - Communications link failure
+2025-11-04 23:40:52.947 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-04 23:40:54.112 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-11-04 23:40:55.116 [restartedMain] WARN  o.h.e.j.s.SqlExceptionHelper - SQL Error: 0, SQLState: 08S01
+2025-11-04 23:40:55.116 [restartedMain] ERROR o.h.e.j.s.SqlExceptionHelper - Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
-2025-10-31 09:26:36.474 [restartedMain] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+2025-11-04 23:40:55.124 [restartedMain] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
-2025-10-31 09:26:36.475 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+2025-11-04 23:40:55.125 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
-2025-10-31 09:26:36.535 [restartedMain] ERROR o.s.b.SpringApplication - Application run failed
+2025-11-04 23:40:55.164 [restartedMain] ERROR o.s.b.SpringApplication - Application run failed
 org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
