@@ -174,30 +174,31 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loginRedirect, setLoginRedirect] = useState(false);
 
   useEffect(() => {
     const initializeApp = async () => {
       console.log('🔍 App.jsx - Starting app, checking for existing session...');
       
       const savedUser = localStorage.getItem('currentUser');
-      const hasVisited = sessionStorage.getItem('hasVisitedLanding');
+      const token = localStorage.getItem('token');
       
-      // Only auto-login if user has explicitly visited landing page in this session
-      if (savedUser && hasVisited) {
+      // Auto-login if user data and token exist
+      if (savedUser && token) {
         try {
           const userData = JSON.parse(savedUser);
           setUser(userData);
-          console.log('✅ App.jsx - User loaded from localStorage:', userData.username);
+          console.log('✅ App.jsx - User auto-login:', userData.username);
         } catch (error) {
           console.error('❌ Error parsing saved user:', error);
           localStorage.removeItem('currentUser');
-          sessionStorage.removeItem('hasVisitedLanding');
+          localStorage.removeItem('token');
         }
       } else {
-        console.log('🎯 App.jsx - Showing landing page (no previous session or first visit)');
+        console.log('🎯 App.jsx - No saved session, showing landing page');
         // Clear any stale data
         localStorage.removeItem('currentUser');
-        sessionStorage.removeItem('hasVisitedLanding');
+        localStorage.removeItem('token');
       }
       
       // Add small delay for better UX
@@ -219,15 +220,20 @@ function App() {
   const handleLogin = (userData) => {
     console.log('✅ App.jsx - handleLogin called with:', userData.username);
     setUser(userData);
-    // Mark that user has visited landing page in this session
-    sessionStorage.setItem('hasVisitedLanding', 'true');
+    // Store user data and token in localStorage for persistence
+    localStorage.setItem('currentUser', JSON.stringify(userData));
+    // The token should already be stored by the AuthForms component
+    
+    // Set redirect flag to trigger navigation
+    setLoginRedirect(true);
   };
 
   const handleLogout = () => {
     console.log('🚪 App.jsx - Logging out user:', user?.username);
     localStorage.removeItem('currentUser');
-    sessionStorage.removeItem('hasVisitedLanding');
+    localStorage.removeItem('token');
     setUser(null);
+    setLoginRedirect(false);
     // Close sidebar on logout
     setSidebarOpen(false);
   };
@@ -268,6 +274,11 @@ function App() {
             ) : (
               // Show main app when user is logged in
               <>
+                {/* Redirect to appropriate dashboard after login */}
+                {loginRedirect && (
+                  <Navigate to={user.role === 'EMPLOYEE' ? '/employee-dashboard' : '/dashboard'} replace />
+                )}
+                
                 <Navbar 
                   onMenuToggle={toggleSidebar} 
                   user={user}
@@ -285,9 +296,23 @@ function App() {
                     <ErrorBoundary>
                       <Suspense fallback={<LoadingSpinner size="large" text="Loading page..." />}>
                         <Routes>
-                          {/* Public routes */}
-                          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                          <Route path="/login" element={<Navigate to="/dashboard" replace />} />
+                          {/* Public routes - redirect to appropriate dashboard */}
+                          <Route 
+                            path="/" 
+                            element={
+                              user.role === 'EMPLOYEE' ? 
+                                <Navigate to="/employee-dashboard" replace /> : 
+                                <Navigate to="/dashboard" replace />
+                            } 
+                          />
+                          <Route 
+                            path="/login" 
+                            element={
+                              user.role === 'EMPLOYEE' ? 
+                                <Navigate to="/employee-dashboard" replace /> : 
+                                <Navigate to="/dashboard" replace />
+                            } 
+                          />
                           
                           {/* Admin-only routes */}
                           <Route 
@@ -367,7 +392,7 @@ function App() {
                             } 
                           />
                           
-                          {/* Redirect based on role */}
+                          {/* Redirect all unknown routes to appropriate dashboard */}
                           <Route 
                             path="*" 
                             element={

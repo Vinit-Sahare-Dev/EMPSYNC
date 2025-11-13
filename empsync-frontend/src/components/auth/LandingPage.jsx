@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../ui/Toast';
+import AuthForms from './AuthForms';
 import './LandingPage.css';
 
 const LandingPage = ({ onLogin }) => {
   const [showLogin, setShowLogin] = useState(false);
+  const [showAuthForms, setShowAuthForms] = useState(false);
   const [credentials, setCredentials] = useState({
     username: '',
     password: ''
@@ -87,6 +89,22 @@ const LandingPage = ({ onLogin }) => {
     document.getElementById('features').scrollIntoView({ 
       behavior: 'smooth' 
     });
+  };
+
+  const handleLoginToggle = () => {
+    setShowAuthForms(true);
+  };
+
+  const handleCTAClick = () => {
+    setShowAuthForms(true);
+  };
+
+  const handleAuthSuccess = (user) => {
+    if (onLogin) {
+      onLogin(user);
+    }
+    setShowAuthForms(false);
+    navigate('/dashboard');
   };
 
   // Custom SVG Logo Component
@@ -215,10 +233,10 @@ const LandingPage = ({ onLogin }) => {
           )}
           <button 
             className="login-toggle-btn"
-            onClick={() => setShowLogin(!showLogin)}
+            onClick={handleLoginToggle}
           >
             <span className="btn-text">
-              {showLogin ? 'Back to Home' : 'Admin Login'}
+              {showLogin ? 'Back to Home' : 'Employee/Admin Login'}
             </span>
           </button>
         </div>
@@ -262,9 +280,9 @@ const LandingPage = ({ onLogin }) => {
                 <div className="hero-actions">
                   <button 
                     className="cta-button primary"
-                    onClick={() => setShowLogin(true)}
+                    onClick={handleCTAClick}
                   >
-                    <span>Access Admin Dashboard</span>
+                    <span>Get Started</span>
                     <div className="btn-arrow">→</div>
                   </button>
                   <button 
@@ -572,6 +590,16 @@ const LandingPage = ({ onLogin }) => {
             </div>
           </div>
         </section>
+      )}
+
+      {/* Auth Forms Modal */}
+      {showAuthForms && (
+        <div className="auth-modal-overlay">
+          <AuthForms 
+            onLogin={handleAuthSuccess}
+            onClose={() => setShowAuthForms(false)}
+          />
+        </div>
       )}
     </div>
   );
