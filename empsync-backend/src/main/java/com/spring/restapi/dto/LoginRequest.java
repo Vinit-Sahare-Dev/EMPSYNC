@@ -4,13 +4,15 @@ package com.spring.restapi.dto;
 public class LoginRequest {
     private String username;
     private String password;
+    private String userType; // Add this field
     
     // Constructors
     public LoginRequest() {}
     
-    public LoginRequest(String username, String password) {
+    public LoginRequest(String username, String password, String userType) {
         this.username = username;
         this.password = password;
+        this.userType = userType;
     }
     
     // Getters and setters
@@ -19,4 +21,7 @@ public class LoginRequest {
     
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+    
+    public String getUserType() { return userType; }
+    public void setUserType(String userType) { this.userType = userType; }
 }
