@@ -69,9 +69,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
       const isBackendConnected = await testBackendConnection();
       
       if (!isBackendConnected) {
-        // Fallback to demo login
-        console.log('🔄 Using demo employee login');
-        quickDemoLogin('employee');
+        showToast('error', 'Backend connection failed. Please try again later.');
         return;
       }
 
@@ -109,9 +107,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
       }
     } catch (error) {
       console.error('🚨 Employee login error:', error);
-      // Fallback to demo login
-      console.log('🔄 Falling back to demo employee login');
-      quickDemoLogin('employee');
+      showToast('error', 'Login failed. Please check your credentials and try again.');
     } finally {
       setLoading(false);
     }
@@ -128,9 +124,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
       const isBackendConnected = await testBackendConnection();
       
       if (!isBackendConnected) {
-        // Fallback to demo login
-        console.log('🔄 Using demo admin login');
-        quickDemoLogin('admin');
+        showToast('error', 'Backend connection failed. Please try again later.');
         return;
       }
 
@@ -168,9 +162,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
       }
     } catch (error) {
       console.error('🚨 Admin login error:', error);
-      // Fallback to demo login
-      console.log('🔄 Falling back to demo admin login');
-      quickDemoLogin('admin');
+      showToast('error', 'Login failed. Please check your credentials and try again.');
     } finally {
       setLoading(false);
     }
@@ -201,19 +193,25 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
       console.log('📨 Employee registration response:', data);
 
       if (response.ok) {
-        localStorage.setItem('token', data.token);
-        const userData = {
-          username: data.username,
-          name: data.name,
-          role: data.role,
-          userType: data.userType
-        };
-        localStorage.setItem('currentUser', JSON.stringify(userData));
+        console.log('✅ Employee registration successful');
+        showToast('success', 'Account created successfully! Please login with your credentials.');
         
-        console.log('✅ Employee registration successful:', userData);
-        showToast('success', `Account created successfully! Welcome ${data.name}!`);
-        onLogin(userData);
-        onClose();
+        // Reset form and redirect to login
+        setEmployeeRegister({
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+          name: '',
+          employeeId: '',
+          department: '',
+          position: '',
+          phoneNumber: '',
+          address: ''
+        });
+        
+        // Redirect to employee login
+        setActiveForm('employee-login');
       } else {
         console.error('❌ Employee registration failed:', data.message);
         showToast('error', data.message || 'Registration failed');
@@ -251,19 +249,22 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
       console.log('📨 Admin registration response:', data);
 
       if (response.ok) {
-        localStorage.setItem('token', data.token);
-        const userData = {
-          username: data.username,
-          name: data.name,
-          role: data.role,
-          userType: data.userType
-        };
-        localStorage.setItem('currentUser', JSON.stringify(userData));
+        console.log('✅ Admin registration successful');
+        showToast('success', 'Account created successfully! Please login with your credentials.');
         
-        console.log('✅ Admin registration successful:', userData);
-        showToast('success', `Account created successfully! Welcome ${data.name}!`);
-        onLogin(userData);
-        onClose();
+        // Reset form and redirect to login
+        setAdminRegister({
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+          name: '',
+          adminLevel: 'MANAGER',
+          departmentAccess: ''
+        });
+        
+        // Redirect to admin login
+        setActiveForm('admin-login');
       } else {
         console.error('❌ Admin registration failed:', data.message);
         showToast('error', data.message || 'Registration failed');
@@ -273,53 +274,6 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
       showToast('error', 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fillDemoCredentials = (type) => {
-    if (type === 'employee') {
-      setEmployeeLogin({
-        username: 'john_employee',
-        password: 'password123'
-      });
-      showToast('info', 'Demo employee credentials filled!');
-    } else {
-      setAdminLogin({
-        username: 'admin_manager',
-        password: 'admin123'
-      });
-      showToast('info', 'Demo admin credentials filled!');
-    }
-  };
-
-  // Quick demo login function for testing
-  const quickDemoLogin = (type) => {
-    if (type === 'employee') {
-      // Simulate employee login for demo
-      const demoEmployee = {
-        username: 'john_employee',
-        name: 'John Employee',
-        role: 'EMPLOYEE',
-        userType: 'employee'
-      };
-      localStorage.setItem('token', 'demo-token-employee');
-      localStorage.setItem('currentUser', JSON.stringify(demoEmployee));
-      onLogin(demoEmployee);
-      onClose();
-      showToast('success', 'Demo employee login successful!');
-    } else {
-      // Simulate admin login for demo
-      const demoAdmin = {
-        username: 'admin_manager',
-        name: 'Admin Manager',
-        role: 'ADMIN',
-        userType: 'admin'
-      };
-      localStorage.setItem('token', 'demo-token-admin');
-      localStorage.setItem('currentUser', JSON.stringify(demoAdmin));
-      onLogin(demoAdmin);
-      onClose();
-      showToast('success', 'Demo admin login successful!');
     }
   };
 
@@ -359,6 +313,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
                 onChange={(e) => setEmployeeLogin({...employeeLogin, username: e.target.value})}
                 placeholder="Enter your username"
                 required
+                className="login-input"
               />
             </div>
 
@@ -370,6 +325,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
                 onChange={(e) => setEmployeeLogin({...employeeLogin, password: e.target.value})}
                 placeholder="Enter your password"
                 required
+                className="login-input"
               />
             </div>
 
@@ -389,19 +345,6 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
               <button type="button" onClick={() => setActiveForm('employee-register')}>
                 Register as Employee
               </button>
-            </div>
-
-            <div className="demo-section">
-              <button 
-                type="button" 
-                className="demo-btn fill"
-                onClick={() => fillDemoCredentials('employee')}
-              >
-                Fill Demo Credentials
-              </button>
-              <div className="demo-info">
-                <p><strong>Demo:</strong> john_employee / password123</p>
-              </div>
             </div>
           </form>
         )}
@@ -561,6 +504,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
                 onChange={(e) => setAdminLogin({...adminLogin, username: e.target.value})}
                 placeholder="Enter admin username"
                 required
+                className="login-input"
               />
             </div>
 
@@ -572,6 +516,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
                 onChange={(e) => setAdminLogin({...adminLogin, password: e.target.value})}
                 placeholder="Enter admin password"
                 required
+                className="login-input"
               />
             </div>
 
@@ -591,19 +536,6 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
               <button type="button" onClick={() => setActiveForm('admin-register')}>
                 Register as Admin
               </button>
-            </div>
-
-            <div className="demo-section">
-              <button 
-                type="button" 
-                className="demo-btn fill"
-                onClick={() => fillDemoCredentials('admin')}
-              >
-                Fill Demo Credentials
-              </button>
-              <div className="demo-info">
-                <p><strong>Demo:</strong> admin_manager / admin123</p>
-              </div>
             </div>
           </form>
         )}
