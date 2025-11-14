@@ -5,6 +5,9 @@ import './AuthForms.css';
 const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
   const [activeForm, setActiveForm] = useState(defaultForm);
   const [loading, setLoading] = useState(false);
+  const [forgotPasswordLoading, setForgotPasswordLoading] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
   const { showToast } = useToast();
 
   // Employee Login State
@@ -44,6 +47,13 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
     departmentAccess: ''
   });
 
+  // Reset Password State
+  const [resetPassword, setResetPassword] = useState({
+    token: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+
   // Test backend connection
   const testBackendConnection = async () => {
     try {
@@ -55,6 +65,97 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
     } catch (error) {
       console.error('❌ Backend connection failed:', error);
       return false;
+    }
+  };
+
+  // Forgot Password Handler
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setForgotPasswordLoading(true);
+
+    try {
+      console.log('🔄 Forgot password request:', forgotPasswordEmail);
+      
+      const isBackendConnected = await testBackendConnection();
+      
+      if (!isBackendConnected) {
+        showToast('error', 'Backend connection failed. Please try again later.');
+        return;
+      }
+
+      const response = await fetch('http://localhost:8888/api/auth/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: forgotPasswordEmail,
+          userType: activeForm.startsWith('employee') ? 'employee' : 'admin'
+        })
+      });
+
+      const data = await response.json();
+      console.log('📨 Forgot password response:', data);
+
+      if (response.ok) {
+        showToast('success', 'Password reset instructions sent to your email!');
+        setShowForgotPassword(false);
+        setForgotPasswordEmail('');
+      } else {
+        showToast('error', data.message || 'Failed to send reset instructions');
+      }
+    } catch (error) {
+      console.error('🚨 Forgot password error:', error);
+      showToast('error', 'Failed to process request. Please try again.');
+    } finally {
+      setForgotPasswordLoading(false);
+    }
+  };
+
+  // Reset Password Handler
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (resetPassword.newPassword !== resetPassword.confirmPassword) {
+      showToast('error', 'Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      console.log('🔄 Reset password attempt');
+      
+      const response = await fetch('http://localhost:8888/api/auth/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          token: resetPassword.token,
+          newPassword: resetPassword.newPassword
+        })
+      });
+
+      const data = await response.json();
+      console.log('📨 Reset password response:', data);
+
+      if (response.ok) {
+        showToast('success', 'Password reset successfully! Please login with your new password.');
+        setResetPassword({
+          token: '',
+          newPassword: '',
+          confirmPassword: ''
+        });
+        setActiveForm(activeForm.startsWith('employee') ? 'employee-login' : 'admin-login');
+      } else {
+        showToast('error', data.message || 'Password reset failed');
+      }
+    } catch (error) {
+      console.error('🚨 Reset password error:', error);
+      showToast('error', 'Password reset failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -287,21 +388,133 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
       <div className="auth-tabs">
         <button 
           className={`tab-btn ${activeForm.startsWith('employee') ? 'active' : ''}`}
-          onClick={() => setActiveForm('employee-login')}
+          onClick={() => {
+            setActiveForm('employee-login');
+            setShowForgotPassword(false);
+          }}
         >
           Employee
         </button>
         <button 
           className={`tab-btn ${activeForm.startsWith('admin') ? 'active' : ''}`}
-          onClick={() => setActiveForm('admin-login')}
+          onClick={() => {
+            setActiveForm('admin-login');
+            setShowForgotPassword(false);
+          }}
         >
           Admin/Manager
         </button>
       </div>
 
       <div className="auth-forms">
+        {/* Forgot Password Form */}
+        {showForgotPassword && (
+          <form onSubmit={handleForgotPassword} className="auth-form">
+            <h3>Reset Your Password</h3>
+            <p className="forgot-password-description">
+              Enter your email address and we'll send you instructions to reset your password.
+            </p>
+            
+            <div className="form-group">
+              <label>Email Address</label>
+              <input
+                type="email"
+                value={forgotPasswordEmail}
+                onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                placeholder="Enter your registered email"
+                required
+                className="login-input"
+              />
+            </div>
+
+            <button type="submit" className="auth-btn primary" disabled={forgotPasswordLoading}>
+              {forgotPasswordLoading ? (
+                <>
+                  <div className="btn-spinner"></div>
+                  Sending...
+                </>
+              ) : (
+                'Send Reset Instructions'
+              )}
+            </button>
+
+            <div className="auth-links">
+              <button 
+                type="button" 
+                onClick={() => {
+                  setShowForgotPassword(false);
+                  setForgotPasswordEmail('');
+                }}
+              >
+                Back to Login
+              </button>
+            </div>
+          </form>
+        )}
+
+        {/* Reset Password Form */}
+        {activeForm === 'reset-password' && (
+          <form onSubmit={handleResetPassword} className="auth-form">
+            <h3>Create New Password</h3>
+            
+            <div className="form-group">
+              <label>Reset Token</label>
+              <input
+                type="text"
+                value={resetPassword.token}
+                onChange={(e) => setResetPassword({...resetPassword, token: e.target.value})}
+                placeholder="Enter the token from your email"
+                required
+              />
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label>New Password</label>
+                <input
+                  type="password"
+                  value={resetPassword.newPassword}
+                  onChange={(e) => setResetPassword({...resetPassword, newPassword: e.target.value})}
+                  placeholder="Enter new password"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  value={resetPassword.confirmPassword}
+                  onChange={(e) => setResetPassword({...resetPassword, confirmPassword: e.target.value})}
+                  placeholder="Confirm new password"
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" className="auth-btn primary" disabled={loading}>
+              {loading ? (
+                <>
+                  <div className="btn-spinner"></div>
+                  Resetting Password...
+                </>
+              ) : (
+                'Reset Password'
+              )}
+            </button>
+
+            <div className="auth-links">
+              <button 
+                type="button" 
+                onClick={() => setActiveForm(activeForm.startsWith('employee') ? 'employee-login' : 'admin-login')}
+              >
+                Back to Login
+              </button>
+            </div>
+          </form>
+        )}
+
         {/* Employee Login */}
-        {activeForm === 'employee-login' && (
+        {activeForm === 'employee-login' && !showForgotPassword && (
           <form onSubmit={handleEmployeeLogin} className="auth-form">
             <h3>Employee Login</h3>
             
@@ -327,6 +540,16 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
                 required
                 className="login-input"
               />
+            </div>
+
+            <div className="forgot-password-link">
+              <button 
+                type="button" 
+                onClick={() => setShowForgotPassword(true)}
+                className="forgot-password-btn"
+              >
+                Forgot Password?
+              </button>
             </div>
 
             <button type="submit" className="auth-btn primary" disabled={loading}>
@@ -492,7 +715,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
         )}
 
         {/* Admin Login */}
-        {activeForm === 'admin-login' && (
+        {activeForm === 'admin-login' && !showForgotPassword && (
           <form onSubmit={handleAdminLogin} className="auth-form">
             <h3>Admin Login</h3>
             
@@ -518,6 +741,16 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
                 required
                 className="login-input"
               />
+            </div>
+
+            <div className="forgot-password-link">
+              <button 
+                type="button" 
+                onClick={() => setShowForgotPassword(true)}
+                className="forgot-password-btn"
+              >
+                Forgot Password?
+              </button>
             </div>
 
             <button type="submit" className="auth-btn primary" disabled={loading}>
@@ -564,7 +797,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'employee-login' }) => {
                   required
                 >
                   <option value="MANAGER">Manager</option>
-                  <option value="ADMIN">Admin</option>
+                
                 </select>
               </div>
             </div>
