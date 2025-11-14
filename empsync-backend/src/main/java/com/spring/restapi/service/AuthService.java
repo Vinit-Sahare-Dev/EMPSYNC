@@ -9,6 +9,7 @@ import com.spring.restapi.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,15 @@ public class AuthService {
     @Autowired
     private UserRepository userRepository;
     
+    @Autowired
+    private EmailService emailService;
+    
+    @Autowired
+    private VerificationService verificationService;
+    
+    @Value("${empsync.email.verification.enabled:true}")
+    private boolean emailVerificationEnabled;
+    
     public AuthResponse authenticate(LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
@@ -31,21 +41,43 @@ public class AuthService {
         logger.info("🔐 Login attempt - Username: {}", username);
         
         try {
-            // Check database users first
             Optional<User> userOpt = userRepository.findByUsername(username);
             
             if (userOpt.isPresent()) {
                 User user = userOpt.get();
                 
-                // Simple password check (in production, use password encoding!)
-                if (user.getPassword().equals(password) && "ACTIVE".equals(user.getStatus())) {
-                    logger.info("✅ Database user login successful: {}", username);
+                // Check password
+                if (user.getPassword().equals(password)) {
+                    
+                    // Check account status
+                    if (!"ACTIVE".equals(user.getStatus())) {
+                        logger.warn("❌ User account is inactive: {}", username);
+                        return new AuthResponse(false, "Account is inactive", null, null, null, null);
+                    }
+                    
+                    // Check email verification if enabled
+                    if (emailVerificationEnabled && !user.isEmailVerified()) {
+                        logger.warn("⚠️ Email not verified for user: {}", username);
+                        return new AuthResponse(false, 
+                            "Please verify your email address. Check your inbox for verification link.", 
+                            null, null, null, null);
+                    }
+                    
+                    // Send welcome email on first login (check if verification was sent)
+                    if (user.getVerificationSentAt() != null && user.isEmailVerified()) {
+                        try {
+                            emailService.sendWelcomeEmail(user.getEmail(), user.getName(), user.getUserType());
+                            logger.info("👋 Welcome email sent to: {}", user.getEmail());
+                        } catch (Exception e) {
+                            logger.error("❌ Failed to send welcome email: {}", e.getMessage());
+                            // Don't fail login if email fails
+                        }
+                    }
+                    
+                    logger.info("✅ Login successful: {}", username);
                     return new AuthResponse(true, "Login successful", 
                         user.getUsername(), user.getName(), 
                         user.getRole(), user.getUserType());
-                } else if (!"ACTIVE".equals(user.getStatus())) {
-                    logger.warn("❌ User account is inactive: {}", username);
-                    return new AuthResponse(false, "Account is inactive", null, null, null, null);
                 }
             }
             
@@ -86,6 +118,7 @@ public class AuthService {
             newUser.setName(registerRequest.getName());
             newUser.setUserType(registerRequest.getUserType());
             newUser.setStatus("ACTIVE");
+            newUser.setEmailVerified(false); // Not verified yet
             
             // Set role based on user type
             if ("admin".equals(registerRequest.getUserType())) {
@@ -102,9 +135,34 @@ public class AuthService {
             
             User savedUser = userRepository.save(newUser);
             
+            // Send verification email
+            if (emailVerificationEnabled) {
+                try {
+                    verificationService.createAndSendEmailVerification(savedUser);
+                    logger.info("📧 Verification email sent to: {}", savedUser.getEmail());
+                } catch (Exception e) {
+                    logger.error("❌ Failed to send verification email: {}", e.getMessage());
+                    // Continue with registration even if email fails
+                }
+            } else {
+                // If verification is disabled, mark as verified and send welcome email
+                savedUser.setEmailVerified(true);
+                userRepository.save(savedUser);
+                
+                try {
+                    emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getName(), savedUser.getUserType());
+                } catch (Exception e) {
+                    logger.error("❌ Failed to send welcome email: {}", e.getMessage());
+                }
+            }
+            
             logger.info("✅ User registered successfully: {}", savedUser.getUsername());
             
-            return new AuthResponse(true, "Registration successful", 
+            String message = emailVerificationEnabled ? 
+                "Registration successful! Please check your email to verify your account." :
+                "Registration successful! You can now log in.";
+            
+            return new AuthResponse(true, message, 
                 savedUser.getUsername(), savedUser.getName(), 
                 savedUser.getRole(), savedUser.getUserType());
                 
@@ -114,11 +172,12 @@ public class AuthService {
         }
     }
     
-    // Method to initialize demo users in database
+    /**
+     * Initialize demo users in database
+     */
     @Autowired
     public void initializeDemoUsers() {
         try {
-            // Check if demo users already exist
             if (!userRepository.existsByUsername("admin_manager")) {
                 User demoAdmin = new User();
                 demoAdmin.setUsername("admin_manager");
@@ -130,6 +189,7 @@ public class AuthService {
                 demoAdmin.setAdminLevel("MANAGER");
                 demoAdmin.setDepartmentAccess("ALL");
                 demoAdmin.setStatus("ACTIVE");
+                demoAdmin.setEmailVerified(true); // Demo users are pre-verified
                 userRepository.save(demoAdmin);
                 logger.info("✅ Demo admin user created: admin_manager");
             }
@@ -146,6 +206,7 @@ public class AuthService {
                 demoEmployee.setPosition("Developer");
                 demoEmployee.setEmployeeId("EMP001");
                 demoEmployee.setStatus("ACTIVE");
+                demoEmployee.setEmailVerified(true); // Demo users are pre-verified
                 userRepository.save(demoEmployee);
                 logger.info("✅ Demo employee user created: john_employee");
             }
@@ -155,7 +216,9 @@ public class AuthService {
         }
     }
     
-    // Method to get demo credentials info
+    /**
+     * Get demo credentials info
+     */
     public Map<String, Object> getDemoCredentials() {
         Map<String, Object> demoCreds = new HashMap<>();
         

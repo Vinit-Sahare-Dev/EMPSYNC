@@ -58,6 +58,13 @@ public class User {
     @Column(name = "status", length = 20)
     private String status = "ACTIVE";
     
+    // EMAIL VERIFICATION FIELDS - ADD THESE
+    @Column(name = "email_verified")
+    private boolean emailVerified = false;
+    
+    @Column(name = "verification_sent_at")
+    private LocalDateTime verificationSentAt;
+    
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
     
@@ -73,6 +80,7 @@ public class User {
         this.email = email;
         this.name = name;
         this.userType = userType;
+        this.emailVerified = false;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -131,6 +139,13 @@ public class User {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
     
+    // EMAIL VERIFICATION GETTERS/SETTERS - ADD THESE
+    public boolean isEmailVerified() { return emailVerified; }
+    public void setEmailVerified(boolean emailVerified) { this.emailVerified = emailVerified; }
+    
+    public LocalDateTime getVerificationSentAt() { return verificationSentAt; }
+    public void setVerificationSentAt(LocalDateTime verificationSentAt) { this.verificationSentAt = verificationSentAt; }
+    
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     
@@ -146,6 +161,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", role='" + role + '\'' +
                 ", userType='" + userType + '\'' +
+                ", emailVerified=" + emailVerified +
                 '}';
     }
 }

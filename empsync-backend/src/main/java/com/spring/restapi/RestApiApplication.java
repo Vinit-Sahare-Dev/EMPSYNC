@@ -1,3 +1,4 @@
+// src/main/java/com/spring/restapi/RestApiApplication.java
 package com.spring.restapi;
 
 import org.slf4j.Logger;
@@ -5,8 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling  // ADD THIS to enable scheduled tasks for token cleanup
 public class RestApiApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(RestApiApplication.class);
@@ -28,16 +31,17 @@ public class RestApiApplication {
         logger.info("📊 Swagger UI: http://localhost:{}/swagger-ui.html", port);
         logger.info("📚 API Docs: http://localhost:{}/v3/api-docs", port);
 
-       
         logger.info("✅ Health Check: http://localhost:{}/actuator/health", port);
         logger.info("📈 Metrics: http://localhost:{}/actuator/metrics", port);
+        
+        // Email service info
+        logger.info("📧 Email Service: Enabled");
+        logger.info("🔐 Email Verification: Enabled");
 
         logger.info("🌟 Ready to handle requests!");
 
-   
         Runtime.getRuntime().addShutdownHook(new Thread(() ->
             logger.info("🛑 {} is shutting down gracefully...", appName)
         ));
     }
 }
-
