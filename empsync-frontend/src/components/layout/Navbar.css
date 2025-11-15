@@ -7,7 +7,7 @@
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 
+  box-shadow:
     0 4px 20px rgba(0, 0, 0, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
   position: sticky;
@@ -19,7 +19,7 @@
 .navbar.scrolled {
   background: rgba(255, 255, 255, 0.99);
   backdrop-filter: blur(30px) saturate(200%);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.95);
   height: 70px;
@@ -56,9 +56,9 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(59, 130, 246, 0.08), 
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(59, 130, 246, 0.08),
     transparent);
   transition: left 0.5s ease;
 }
@@ -72,7 +72,7 @@
   border-color: rgba(59, 130, 246, 0.3);
   color: #3b82f6;
   transform: translateX(2px);
-  box-shadow: 
+  box-shadow:
     0 2px 8px rgba(59, 130, 246, 0.1),
     0 0 0 1px rgba(59, 130, 246, 0.05);
 }
@@ -97,7 +97,7 @@
   .menu-text {
     display: none;
   }
-  
+
   .menu-toggle {
     padding: 10px;
     width: 44px;
@@ -126,9 +126,9 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(14, 165, 233, 0.05), 
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(14, 165, 233, 0.05),
     transparent);
   transition: left 0.6s ease;
 }
@@ -152,7 +152,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  box-shadow: 
+  box-shadow:
     0 4px 12px rgba(14, 165, 233, 0.2),
     0 0 0 1px rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
@@ -165,9 +165,9 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(45deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.3), 
+  background: linear-gradient(45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
     transparent);
   transform: rotate(45deg);
   transition: all 0.6s ease;
@@ -179,7 +179,7 @@
 
 .brand-logo:hover {
   transform: scale(1.05);
-  box-shadow: 
+  box-shadow:
     0 6px 20px rgba(14, 165, 233, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.3);
 }
@@ -279,11 +279,11 @@
   .brand-tagline {
     display: none;
   }
-  
+
   .brand-text h1 {
     font-size: 1.3rem;
   }
-  
+
   .brand-logo {
     width: 42px;
     height: 42px;
@@ -436,7 +436,7 @@
   background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: 1px solid rgba(102, 126, 234, 0.25);
-  box-shadow: 
+  box-shadow:
     0 2px 12px rgba(102, 126, 234, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
   padding: 12px 20px;
@@ -462,9 +462,9 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.2), 
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
     transparent);
   transition: left 0.6s ease;
 }
@@ -476,7 +476,7 @@
 .btn-profile:hover {
   background: linear-gradient(135deg, #5a6fd8, #6a4190);
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 6px 24px rgba(102, 126, 234, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   border-color: rgba(102, 126, 234, 0.4);
@@ -484,7 +484,7 @@
 
 .btn-profile:active {
   transform: translateY(-1px) scale(1);
-  box-shadow: 
+  box-shadow:
     0 3px 14px rgba(102, 126, 234, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
@@ -513,7 +513,7 @@
   background: linear-gradient(135deg, #ff6b6b, #ee5a52);
   color: white;
   border: 1px solid rgba(255, 107, 107, 0.25);
-  box-shadow: 
+  box-shadow:
     0 2px 12px rgba(255, 107, 107, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
   padding: 12px 20px;
@@ -539,9 +539,9 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.2), 
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
     transparent);
   transition: left 0.6s ease;
 }
@@ -553,7 +553,7 @@
 .btn-logout:hover {
   background: linear-gradient(135deg, #e55a5a, #d64949);
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 6px 24px rgba(255, 107, 107, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 107, 107, 0.4);
@@ -561,7 +561,7 @@
 
 .btn-logout:active {
   transform: translateY(-1px) scale(1);
-  box-shadow: 
+  box-shadow:
     0 3px 14px rgba(255, 107, 107, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
@@ -669,7 +669,7 @@
     padding: 10px 16px;
     font-size: 0.9rem;
   }
-  
+
   .btn-text {
     font-size: 0.85rem;
   }
@@ -681,27 +681,27 @@
   .btn-logout {
     transition: none;
   }
-  
+
   .btn-profile:hover,
   .btn-logout:hover {
     transform: none;
   }
-  
+
   .btn-profile::before,
   .btn-logout::before {
     display: none;
   }
-  
+
   .profile-icon,
   .logout-icon {
     transition: none;
   }
-  
+
   .btn-profile:hover .profile-icon,
   .btn-logout:hover .logout-icon {
     transform: none;
   }
-  
+
   .btn-profile:hover .btn-text,
   .btn-logout:hover .btn-text {
     transform: none;
@@ -732,11 +732,11 @@
   .user-status {
     display: none;
   }
-  
+
   .btn-text {
     display: none;
   }
-  
+
   .btn {
     padding: 12px;
     border-radius: 10px;
@@ -744,7 +744,7 @@
     height: 44px;
     justify-content: center;
   }
-  
+
   .navbar {
     padding: 0 16px;
   }
@@ -754,20 +754,20 @@
   .navbar-brand h1 {
     font-size: 1.2rem;
   }
-  
+
   .brand-logo {
     width: 38px;
     height: 38px;
   }
-  
+
   .logo-icon {
     font-size: 1.2rem;
   }
-  
+
   .navbar-actions {
     gap: 8px;
   }
-  
+
   .btn {
     padding: 10px;
     width: 42px;
@@ -798,14 +798,14 @@
     transition: none;
     animation: none;
   }
-  
+
   .btn:hover,
   .menu-toggle:hover,
   .user-status:hover,
   .navbar-brand:hover {
     transform: none;
   }
-  
+
   .btn::before,
   .menu-toggle::before,
   .brand-logo::before,

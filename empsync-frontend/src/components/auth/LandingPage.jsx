@@ -103,8 +103,15 @@ const LandingPage = ({ onLogin }) => {
     if (onLogin) {
       onLogin(user);
     }
+
     setShowAuthForms(false);
-    navigate('/dashboard');
+
+    // Redirect based on role so employees land in their own section
+    if (user?.role === 'EMPLOYEE') {
+      navigate('/employee-dashboard');
+    } else {
+      navigate('/dashboard');
+    }
   };
 
   // Custom SVG Logo Component

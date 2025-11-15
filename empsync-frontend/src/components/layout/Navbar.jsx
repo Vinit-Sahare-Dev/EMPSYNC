@@ -10,15 +10,15 @@ const Navbar = ({ onMenuToggle, user, onLogout }) => {
           <span className="menu-icon">☰</span>
           <span className="menu-text">Menu</span>
         </button>
-        
+
         <div className="navbar-brand">
           <div className="brand-logo">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 200 200" 
-              width="32" 
-              height="32" 
-              role="img" 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 200 200"
+              width="32"
+              height="32"
+              role="img"
               aria-labelledby="titleDesc"
               className="logo-svg"
             >
@@ -34,51 +34,51 @@ const Navbar = ({ onMenuToggle, user, onLogout }) => {
               <rect x="8" y="8" width="184" height="184" rx="40" fill="#ffffff"/>
 
               {/* Sync circle (thicker & bolder arcs) */}
-              <path 
-                className="ring" 
-                d="M100 32 A68 68 0 0 1 168 100" 
-                fill="none" 
-                stroke="url(#empsyncGradient)" 
-                strokeWidth="14" 
-                strokeLinecap="round" 
+              <path
+                className="ring"
+                d="M100 32 A68 68 0 0 1 168 100"
+                fill="none"
+                stroke="url(#empsyncGradient)"
+                strokeWidth="14"
+                strokeLinecap="round"
               />
-              <path 
-                className="ring" 
-                d="M100 168 A68 68 0 0 1 32 100" 
-                fill="none" 
-                stroke="url(#empsyncGradient)" 
-                strokeWidth="14" 
-                strokeLinecap="round" 
+              <path
+                className="ring"
+                d="M100 168 A68 68 0 0 1 32 100"
+                fill="none"
+                stroke="url(#empsyncGradient)"
+                strokeWidth="14"
+                strokeLinecap="round"
               />
 
               {/* Central Bold "E" */}
               <g transform="translate(60,58)">
-                <rect 
-                  className="bar" 
-                  x="0" 
-                  y="0" 
-                  width="72" 
-                  height="16" 
-                  fill="url(#empsyncGradient)" 
-                  rx="6" 
+                <rect
+                  className="bar"
+                  x="0"
+                  y="0"
+                  width="72"
+                  height="16"
+                  fill="url(#empsyncGradient)"
+                  rx="6"
                 />
-                <rect 
-                  className="bar" 
-                  x="0" 
-                  y="32" 
-                  width="54" 
-                  height="16" 
-                  fill="url(#empsyncGradient)" 
-                  rx="6" 
+                <rect
+                  className="bar"
+                  x="0"
+                  y="32"
+                  width="54"
+                  height="16"
+                  fill="url(#empsyncGradient)"
+                  rx="6"
                 />
-                <rect 
-                  className="bar" 
-                  x="0" 
-                  y="64" 
-                  width="72" 
-                  height="16" 
-                  fill="url(#empsyncGradient)" 
-                  rx="6" 
+                <rect
+                  className="bar"
+                  x="0"
+                  y="64"
+                  width="72"
+                  height="16"
+                  fill="url(#empsyncGradient)"
+                  rx="6"
                 />
               </g>
             </svg>
@@ -95,14 +95,14 @@ const Navbar = ({ onMenuToggle, user, onLogout }) => {
       <div className="navbar-right">
         {user ? (
           <div className="navbar-actions">
-            <button 
+            <button
               className="btn btn-profile"
               onClick={() => window.location.href = '/profile'}
             >
               <span className="btn-icon profile-icon">👤</span>
               <span className="btn-text">Profile</span>
             </button>
-            <button 
+            <button
               className="btn btn-logout"
               onClick={onLogout}
             >
@@ -112,7 +112,7 @@ const Navbar = ({ onMenuToggle, user, onLogout }) => {
           </div>
         ) : (
           <div className="navbar-actions">
-            <button 
+            <button
               className="btn btn-primary"
               onClick={() => window.location.href = '/login'}
             >

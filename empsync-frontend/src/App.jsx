@@ -174,34 +174,17 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [loginRedirect, setLoginRedirect] = useState(false);
 
   useEffect(() => {
     const initializeApp = async () => {
-      console.log('🔍 App.jsx - Starting app, checking for existing session...');
-      
-      const savedUser = localStorage.getItem('currentUser');
-      const token = localStorage.getItem('token');
-      
-      // Auto-login if user data and token exist
-      if (savedUser && token) {
-        try {
-          const userData = JSON.parse(savedUser);
-          setUser(userData);
-          console.log('✅ App.jsx - User auto-login:', userData.username);
-        } catch (error) {
-          console.error('❌ Error parsing saved user:', error);
-          localStorage.removeItem('currentUser');
-          localStorage.removeItem('token');
-        }
-      } else {
-        console.log('🎯 App.jsx - No saved session, showing landing page');
-        // Clear any stale data
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('token');
-      }
-      
-      // Add small delay for better UX
+      console.log('🔍 App.jsx - Starting app, resetting any previous session...');
+
+      // Always start from a clean state so the app opens on the landing page.
+      // We intentionally do NOT auto-login from localStorage.
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('token');
+
+      // Small delay for smoother loading experience
       await new Promise(resolve => setTimeout(resolve, 500));
       setIsLoading(false);
     };
@@ -223,9 +206,6 @@ function App() {
     // Store user data and token in localStorage for persistence
     localStorage.setItem('currentUser', JSON.stringify(userData));
     // The token should already be stored by the AuthForms component
-    
-    // Set redirect flag to trigger navigation
-    setLoginRedirect(true);
   };
 
   const handleLogout = () => {
@@ -233,7 +213,6 @@ function App() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
     setUser(null);
-    setLoginRedirect(false);
     // Close sidebar on logout
     setSidebarOpen(false);
   };
@@ -274,11 +253,6 @@ function App() {
             ) : (
               // Show main app when user is logged in
               <>
-                {/* Redirect to appropriate dashboard after login */}
-                {loginRedirect && (
-                  <Navigate to={user.role === 'EMPLOYEE' ? '/employee-dashboard' : '/dashboard'} replace />
-                )}
-                
                 <Navbar 
                   onMenuToggle={toggleSidebar} 
                   user={user}
@@ -350,7 +324,7 @@ function App() {
                           <Route 
                             path="/departments" 
                             element={
-                              <ProtectedRoute allowedRoles={['ADMIN']}>
+                              <ProtectedRoute allowedRoles={['ADMIN', 'EMPLOYEE']}>
                                 <DepartmentGrid />
                               </ProtectedRoute>
                             } 
