@@ -332,7 +332,7 @@ public class EmployeeController {
         return ResponseEntity.ok(response);
     }
 
-    // Bulk operations
+    // Bulk operations here 
     @PostMapping("/bulk")
     public ResponseEntity<?> createEmployeesBulk(@Valid @RequestBody List<Employee> employees) {
         logger.info("BULK CREATE EMPLOYEES REQUEST - Count: {}", employees.size());
