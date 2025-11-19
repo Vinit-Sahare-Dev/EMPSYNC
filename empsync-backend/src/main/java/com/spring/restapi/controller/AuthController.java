@@ -20,17 +20,17 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001", "http://localhost:3002", "http://localhost:3003"})
+@CrossOrigin(origins = "*")
 public class AuthController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-    
+
     @Autowired
     private AuthService authService;
-    
+
     @Autowired
     private VerificationService verificationService;
-    
+
     @Autowired
     private UserRepository userRepository;
 
@@ -38,9 +38,9 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         try {
             logger.info("🔐 Login request for user: {}", loginRequest.getUsername());
-            
+
             AuthResponse response = authService.authenticate(loginRequest);
-            
+
             if (response.isSuccess()) {
                 logger.info("✅ Login successful for user: {}", loginRequest.getUsername());
                 return ResponseEntity.ok(response);
@@ -54,15 +54,15 @@ public class AuthController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
-    
+
     @PostMapping("/register/employee")
     public ResponseEntity<AuthResponse> registerEmployee(@RequestBody RegisterRequest registerRequest) {
         try {
             registerRequest.setUserType("employee");
             logger.info("👤 Employee registration: {}", registerRequest.getUsername());
-            
+
             AuthResponse response = authService.register(registerRequest);
-            
+
             if (response.isSuccess()) {
                 logger.info("✅ Employee registered successfully: {}", registerRequest.getUsername());
                 return ResponseEntity.ok(response);
@@ -76,15 +76,15 @@ public class AuthController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
-    
+
     @PostMapping("/register/admin")
     public ResponseEntity<AuthResponse> registerAdmin(@RequestBody RegisterRequest registerRequest) {
         try {
             registerRequest.setUserType("admin");
             logger.info("👑 Admin registration: {}", registerRequest.getUsername());
-            
+
             AuthResponse response = authService.register(registerRequest);
-            
+
             if (response.isSuccess()) {
                 logger.info("✅ Admin registered successfully: {}", registerRequest.getUsername());
                 return ResponseEntity.ok(response);
@@ -98,15 +98,15 @@ public class AuthController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
-    
+
     // NEW ENDPOINT: Verify Email
     @GetMapping("/verify-email")
     public ResponseEntity<Map<String, Object>> verifyEmail(@RequestParam String token) {
         try {
             logger.info("📧 Email verification request with token: {}", token.substring(0, 8) + "...");
-            
+
             boolean verified = verificationService.verifyEmail(token);
-            
+
             Map<String, Object> response = new HashMap<>();
             if (verified) {
                 response.put("success", true);
@@ -127,38 +127,38 @@ public class AuthController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
-    
+
     // NEW ENDPOINT: Resend Verification Email
     @PostMapping("/resend-verification")
     public ResponseEntity<Map<String, Object>> resendVerification(@RequestBody Map<String, String> request) {
         try {
             String email = request.get("email");
             logger.info("📧 Resend verification request for: {}", email);
-            
+
             Optional<User> userOpt = userRepository.findByEmail(email);
-            
+
             Map<String, Object> response = new HashMap<>();
             if (userOpt.isEmpty()) {
                 response.put("success", false);
                 response.put("message", "User not found");
                 return ResponseEntity.badRequest().body(response);
             }
-            
+
             User user = userOpt.get();
-            
+
             if (user.isEmailVerified()) {
                 response.put("success", false);
                 response.put("message", "Email is already verified");
                 return ResponseEntity.badRequest().body(response);
             }
-            
+
             verificationService.resendVerificationEmail(user);
-            
+
             response.put("success", true);
             response.put("message", "Verification email sent successfully");
             logger.info("✅ Verification email resent to: {}", email);
             return ResponseEntity.ok(response);
-            
+
         } catch (Exception e) {
             logger.error("🚨 Resend verification error: {}", e.getMessage());
             Map<String, Object> errorResponse = new HashMap<>();
@@ -167,24 +167,24 @@ public class AuthController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
-    
+
     // NEW ENDPOINT: Forgot Password
     @PostMapping("/forgot-password")
     public ResponseEntity<Map<String, Object>> forgotPassword(@RequestBody Map<String, String> request) {
         try {
             String email = request.get("email");
             logger.info("🔑 Forgot password request for: {}", email);
-            
+
             verificationService.createAndSendPasswordReset(email);
-            
+
             // Always return success to prevent email enumeration
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "If the email exists, password reset instructions have been sent");
-            
+
             logger.info("✅ Password reset email processed for: {}", email);
             return ResponseEntity.ok(response);
-            
+
         } catch (Exception e) {
             logger.error("🚨 Forgot password error: {}", e.getMessage());
             Map<String, Object> errorResponse = new HashMap<>();
@@ -193,18 +193,18 @@ public class AuthController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
-    
+
     // NEW ENDPOINT: Reset Password
     @PostMapping("/reset-password")
     public ResponseEntity<Map<String, Object>> resetPassword(@RequestBody Map<String, String> request) {
         try {
             String token = request.get("token");
             String newPassword = request.get("newPassword");
-            
+
             logger.info("🔑 Password reset request with token: {}", token.substring(0, 8) + "...");
-            
+
             boolean reset = verificationService.resetPassword(token, newPassword);
-            
+
             Map<String, Object> response = new HashMap<>();
             if (reset) {
                 response.put("success", true);
@@ -225,7 +225,7 @@ public class AuthController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
-    
+
     @GetMapping("/demo-credentials")
     public ResponseEntity<Map<String, Object>> getDemoCredentials() {
         try {
@@ -242,13 +242,13 @@ public class AuthController {
             return ResponseEntity.status(500).body(errorResponse);
         }
     }
-    
+
     @GetMapping("/status")
     public ResponseEntity<AuthResponse> status() {
         AuthResponse response = new AuthResponse(true, "Auth service is running", null, null, null, null);
         return ResponseEntity.ok(response);
     }
-    
+
     @PostMapping("/logout")
     public ResponseEntity<AuthResponse> logout() {
         AuthResponse response = new AuthResponse(true, "Logout successful", null, null, null, null);
