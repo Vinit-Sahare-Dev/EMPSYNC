@@ -1,71 +1,123 @@
-// services/apiService.js
+// services/apiService.js - REPLACE ENTIRE FILE WITH THIS:
 class EmpSyncAPI {
   constructor() {
-    this.cache = new Map();
-    this.pendingRequests = new Map();
+    this.baseURL = 'http://localhost:8888/api';
   }
 
-  async getAllEmployees() {
-    const cacheKey = 'employees';
-    
-    // Return cached data immediately if available
-    if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey);
-    }
-
-    // Return pending request if exists
-    if (this.pendingRequests.has(cacheKey)) {
-      return this.pendingRequests.get(cacheKey);
-    }
-
+  async request(endpoint, options = {}) {
     try {
-      // Fast timeout - don't wait more than 2 seconds
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      console.log(`🔄 API Call: ${options.method || 'GET'} ${this.baseURL}${endpoint}`);
 
-      const promise = fetch('http://localhost:8888/api/employees', {
-        signal: controller.signal,
-        credentials: 'include'
-      })
-        .then(async (response) => {
-          clearTimeout(timeoutId);
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          const data = await response.json();
-          this.cache.set(cacheKey, data);
-          return data;
-        })
-        .catch(error => {
-          clearTimeout(timeoutId);
-          throw error;
-        })
-        .finally(() => {
-          this.pendingRequests.delete(cacheKey);
-        });
+      const response = await fetch(`${this.baseURL}${endpoint}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers,
+        },
+        ...options,
+      });
 
-      this.pendingRequests.set(cacheKey, promise);
-      return await promise;
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`❌ API Error ${response.status}:`, errorText);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log(`✅ API Success:`, data);
+      return data;
 
     } catch (error) {
-      this.pendingRequests.delete(cacheKey);
+      console.error(`❌ API Request Failed:`, error);
       throw error;
     }
   }
 
-  // Other methods remain the same but with faster timeouts
+  async getAllEmployees() {
+    try {
+      const data = await this.request('/employees');
+      // Handle different response formats
+      return {
+        success: true,
+        employees: data.employees || data.data || []
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+        employees: []
+      };
+    }
+  }
+
+  async createEmployee(employeeData) {
+    try {
+      const data = await this.request('/employees', {
+        method: 'POST',
+        body: JSON.stringify(employeeData),
+      });
+      return {
+        success: true,
+        employee: data.employee || data,
+        message: data.message || 'Employee created successfully'
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  }
+
+  async updateEmployee(id, employeeData) {
+    try {
+      const data = await this.request(`/employees/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(employeeData),
+      });
+      return {
+        success: true,
+        employee: data.employee || data,
+        message: data.message || 'Employee updated successfully'
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  }
+
+  async deleteEmployee(id) {
+    try {
+      const data = await this.request(`/employees/${id}`, {
+        method: 'DELETE',
+      });
+      return {
+        success: true,
+        message: data.message || 'Employee deleted successfully'
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message
+      };
+    }
+  }
+
   async healthCheck() {
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 1500);
-      
-      const response = await fetch('http://localhost:8888/api/employees', {
-        signal: controller.signal,
-        credentials: 'include'
-      });
-      
-      clearTimeout(timeoutId);
-      return { success: true, status: response.status };
+      const data = await this.request('/employees');
+      return {
+        success: true,
+        connected: true,
+        message: 'Backend connected successfully'
+      };
     } catch (error) {
-      return { success: false, error: error.message };
+      return {
+        success: false,
+        connected: false,
+        message: error.message
+      };
     }
   }
 }
