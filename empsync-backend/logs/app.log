@@ -397,3 +397,538 @@
 2025-11-26 20:53:04.275 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: employeecheck, Bonus: 5000.000, PF: 6000.0000, Tax: 0
 2025-11-26 20:53:04.277 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 42 EMPLOYEES
 2025-11-26 20:53:04.277 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 42 EMPLOYEES
+2025-11-26 23:03:49.691 [restartedMain] INFO  c.s.r.RestApiApplication - Starting RestApiApplication using Java 17.0.4 with PID 28584 (C:\Springdevtools\EMPSYNC\empsync-backend\target\classes started by 91992 in C:\Springdevtools\EMPSYNC\empsync-backend)
+2025-11-26 23:03:49.693 [restartedMain] DEBUG c.s.r.RestApiApplication - Running with Spring Boot v3.5.6, Spring v6.2.11
+2025-11-26 23:03:49.694 [restartedMain] INFO  c.s.r.RestApiApplication - No active profile set, falling back to 1 default profile: "default"
+2025-11-26 23:03:52.020 [restartedMain] WARN  i.u.websockets.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2025-11-26 23:03:52.053 [restartedMain] INFO  io.undertow.servlet - Initializing Spring embedded WebApplicationContext
+2025-11-26 23:03:52.953 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2025-11-26 23:03:53.153 [restartedMain] INFO  c.z.h.p.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5db79bda
+2025-11-26 23:03:53.155 [restartedMain] INFO  c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-26 23:03:53.228 [restartedMain] WARN  o.h.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-26 23:03:55.496 [restartedMain] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+    limit
+        ?
+2025-11-26 23:03:55.531 [restartedMain] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id 
+    from
+        users u1_0 
+    where
+        u1_0.username=? 
+    limit
+        ?
+2025-11-26 23:03:55.991 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-26 23:03:56.390 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-11-26 23:03:56.818 [restartedMain] WARN  o.s.b.d.a.OptionalLiveReloadServer - Unable to start LiveReload server
+2025-11-26 23:03:56.919 [restartedMain] INFO  io.undertow - starting server: Undertow - 2.3.19.Final
+2025-11-26 23:03:56.931 [restartedMain] INFO  org.xnio - XNIO version 3.8.16.Final
+2025-11-26 23:03:56.942 [restartedMain] INFO  org.xnio.nio - XNIO NIO Implementation Version 3.8.16.Final
+2025-11-26 23:03:57.050 [restartedMain] INFO  org.jboss.threads - JBoss Threads version 3.7.0.Final
+2025-11-26 23:03:57.165 [restartedMain] INFO  c.s.r.RestApiApplication - Started RestApiApplication in 8.016 seconds (process running for 8.568)
+2025-11-26 23:03:57.174 [restartedMain] DEBUG c.s.r.RestApiApplication - ? [DEBUG] Debugging startup sequence...
+2025-11-26 23:03:57.175 [restartedMain] INFO  c.s.r.RestApiApplication - ? [INFO] EMPSYNC started successfully!
+2025-11-26 23:03:57.176 [restartedMain] INFO  c.s.r.RestApiApplication - ? Active Profiles: default
+2025-11-26 23:03:57.176 [restartedMain] INFO  c.s.r.RestApiApplication - ? Running on: http://localhost:8888
+2025-11-26 23:03:57.177 [restartedMain] INFO  c.s.r.RestApiApplication - ? Swagger UI: http://localhost:8888/swagger-ui.html
+2025-11-26 23:03:57.178 [restartedMain] INFO  c.s.r.RestApiApplication - ? API Docs: http://localhost:8888/v3/api-docs
+2025-11-26 23:03:57.178 [restartedMain] INFO  c.s.r.RestApiApplication - ? Health Check: http://localhost:8888/actuator/health
+2025-11-26 23:03:57.178 [restartedMain] INFO  c.s.r.RestApiApplication - ? Metrics: http://localhost:8888/actuator/metrics
+2025-11-26 23:03:57.179 [restartedMain] INFO  c.s.r.RestApiApplication - ? Email Service: Enabled
+2025-11-26 23:03:57.179 [restartedMain] INFO  c.s.r.RestApiApplication - ? Email Verification: Enabled
+2025-11-26 23:03:57.179 [restartedMain] INFO  c.s.r.RestApiApplication - ? Ready to handle requests!
+2025-11-26 23:04:08.349 [XNIO-1 task-2] INFO  io.undertow.servlet - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-26 23:04:08.433 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-11-26 23:04:08.455 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-11-26 23:04:08.482 [XNIO-1 task-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-11-26 23:04:08.525 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Aarav Singh (ID: 5)
+2025-11-26 23:04:08.525 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Aarav Singh, Bonus: 8500.000, PF: 10200.0000, Tax: 0
+2025-11-26 23:04:08.526 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Nisha Patel (ID: 6)
+2025-11-26 23:04:08.526 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Nisha Patel, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:04:08.526 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rohit Sharma (ID: 7)
+2025-11-26 23:04:08.526 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rohit Sharma, Bonus: 7200.000, PF: 8640.0000, Tax: 0
+2025-11-26 23:04:08.526 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sneha Gupta (ID: 8)
+2025-11-26 23:04:08.526 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sneha Gupta, Bonus: 6200.000, PF: 7440.0000, Tax: 0
+2025-11-26 23:04:08.527 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ali Khan (ID: 9)
+2025-11-26 23:04:08.527 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ali Khan, Bonus: 7000.000, PF: 8400.0000, Tax: 0
+2025-11-26 23:04:08.528 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Priya Joshi (ID: 10)
+2025-11-26 23:04:08.528 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Priya Joshi, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:04:08.528 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vikram Desai (ID: 11)
+2025-11-26 23:04:08.529 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vikram Desai, Bonus: 9000.000, PF: 10800.0000, Tax: 0
+2025-11-26 23:04:08.529 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Meera Iyer (ID: 12)
+2025-11-26 23:04:08.529 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Meera Iyer, Bonus: 5800.000, PF: 6960.0000, Tax: 0
+2025-11-26 23:04:08.530 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Karan Malhotra (ID: 13)
+2025-11-26 23:04:08.530 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Karan Malhotra, Bonus: 7400.000, PF: 8880.0000, Tax: 0
+2025-11-26 23:04:08.530 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rajesh Kumar (ID: 14)
+2025-11-26 23:04:08.531 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rajesh Kumar, Bonus: 9500.000, PF: 11400.0000, Tax: 0
+2025-11-26 23:04:08.531 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ananya Reddy (ID: 15)
+2025-11-26 23:04:08.531 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ananya Reddy, Bonus: 8800.000, PF: 10560.0000, Tax: 0
+2025-11-26 23:04:08.532 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Suresh Menon (ID: 16)
+2025-11-26 23:04:08.532 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Suresh Menon, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:04:08.533 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Manish Jain (ID: 20)
+2025-11-26 23:04:08.533 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Manish Jain, Bonus: 7500.000, PF: 9000.0000, Tax: 0
+2025-11-26 23:04:08.534 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Neha Kapoor (ID: 21)
+2025-11-26 23:04:08.534 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Neha Kapoor, Bonus: 7800.000, PF: 9360.0000, Tax: 0
+2025-11-26 23:04:08.534 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rahul Verma (ID: 22)
+2025-11-26 23:04:08.535 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rahul Verma, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:04:08.535 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kavya Singh (ID: 23)
+2025-11-26 23:04:08.536 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kavya Singh, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:04:08.536 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Aditya Sharma (ID: 34)
+2025-11-26 23:04:08.536 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Aditya Sharma, Bonus: 9200.000, PF: 11040.0000, Tax: 0
+2025-11-26 23:04:08.536 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Priyanka Mehta (ID: 35)
+2025-11-26 23:04:08.536 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Priyanka Mehta, Bonus: 8600.000, PF: 10320.0000, Tax: 0
+2025-11-26 23:04:08.536 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rahul Deshpande (ID: 36)
+2025-11-26 23:04:08.536 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rahul Deshpande, Bonus: 7200.000, PF: 8640.0000, Tax: 0
+2025-11-26 23:04:08.537 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Anjali Chatterjee (ID: 37)
+2025-11-26 23:04:08.537 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Anjali Chatterjee, Bonus: 8100.000, PF: 9720.0000, Tax: 0
+2025-11-26 23:04:08.537 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vikram Reddy (ID: 38)
+2025-11-26 23:04:08.537 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vikram Reddy, Bonus: 7800.000, PF: 9360.0000, Tax: 0
+2025-11-26 23:04:08.537 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sneha Nair (ID: 39)
+2025-11-26 23:04:08.537 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sneha Nair, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:04:08.537 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kunal Joshi (ID: 40)
+2025-11-26 23:04:08.537 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kunal Joshi, Bonus: 7500.000, PF: 9000.0000, Tax: 0
+2025-11-26 23:04:08.537 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Meghna Patel (ID: 41)
+2025-11-26 23:04:08.538 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Meghna Patel, Bonus: 6400.000, PF: 7680.0000, Tax: 0
+2025-11-26 23:04:08.538 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Arun Kumar (ID: 42)
+2025-11-26 23:04:08.538 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Arun Kumar, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:04:08.539 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Pooja Singh (ID: 43)
+2025-11-26 23:04:08.539 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Pooja Singh, Bonus: 6900.000, PF: 8280.0000, Tax: 0
+2025-11-26 23:04:08.539 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rohit Gupta (ID: 44)
+2025-11-26 23:04:08.539 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rohit Gupta, Bonus: 8300.000, PF: 9960.0000, Tax: 0
+2025-11-26 23:04:08.540 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Divya Iyer (ID: 45)
+2025-11-26 23:04:08.540 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Divya Iyer, Bonus: 6700.000, PF: 8040.0000, Tax: 0
+2025-11-26 23:04:08.540 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Amit Verma (ID: 46)
+2025-11-26 23:04:08.540 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Amit Verma, Bonus: 7600.000, PF: 9120.0000, Tax: 0
+2025-11-26 23:04:08.540 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Neha Rao (ID: 47)
+2025-11-26 23:04:08.540 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Neha Rao, Bonus: 7900.000, PF: 9480.0000, Tax: 0
+2025-11-26 23:04:08.540 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sandeep Malhotra (ID: 48)
+2025-11-26 23:04:08.540 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sandeep Malhotra, Bonus: 9400.000, PF: 11280.0000, Tax: 0
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Anita Choudhary (ID: 49)
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Anita Choudhary, Bonus: 6200.000, PF: 7440.0000, Tax: 0
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rajiv Menon (ID: 50)
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rajiv Menon, Bonus: 8700.000, PF: 10440.0000, Tax: 0
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sunita Jain (ID: 51)
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sunita Jain, Bonus: 7300.000, PF: 8760.0000, Tax: 0
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Deepak Srinivasan (ID: 52)
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Deepak Srinivasan, Bonus: 8500.000, PF: 10200.0000, Tax: 0
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kavita Pillai (ID: 53)
+2025-11-26 23:04:08.541 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kavita Pillai, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:04:08.542 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Mohan Das (ID: 54)
+2025-11-26 23:04:08.542 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Mohan Das, Bonus: 9800.000, PF: 11760.0000, Tax: 0
+2025-11-26 23:04:08.542 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Lata Bhatia (ID: 55)
+2025-11-26 23:04:08.542 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Lata Bhatia, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:04:08.542 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sanjay Thakur (ID: 56)
+2025-11-26 23:04:08.542 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sanjay Thakur, Bonus: 7400.000, PF: 8880.0000, Tax: 0
+2025-11-26 23:04:08.543 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ritu Yadav (ID: 57)
+2025-11-26 23:04:08.543 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ritu Yadav, Bonus: 7700.000, PF: 9240.0000, Tax: 0
+2025-11-26 23:04:08.544 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Chaitanya  (ID: 63)
+2025-11-26 23:04:08.544 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Chaitanya , Bonus: 5000.000, PF: 6000.0000, Tax: 0
+2025-11-26 23:04:08.544 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: employeecheck (ID: 64)
+2025-11-26 23:04:08.544 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: employeecheck, Bonus: 5000.000, PF: 6000.0000, Tax: 0
+2025-11-26 23:04:08.545 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 42 EMPLOYEES
+2025-11-26 23:04:08.547 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 42 EMPLOYEES
+2025-11-26 23:04:08.724 [XNIO-1 task-3] INFO  c.s.r.c.AuthController - ? Login request for user: vinit51
+2025-11-26 23:04:08.725 [XNIO-1 task-3] INFO  c.s.r.s.AuthService - ? Login attempt - Username: vinit51
+2025-11-26 23:04:08.727 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.admin_level,
+        u1_0.created_at,
+        u1_0.department,
+        u1_0.department_access,
+        u1_0.email,
+        u1_0.email_verified,
+        u1_0.employee_id,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone_number,
+        u1_0.position,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.user_type,
+        u1_0.username,
+        u1_0.verification_sent_at 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2025-11-26 23:04:08.731 [XNIO-1 task-3] INFO  c.s.r.s.AuthService - ? Login successful: vinit51
+2025-11-26 23:04:08.731 [XNIO-1 task-3] INFO  c.s.r.c.AuthController - ? Login successful for user: vinit51
+2025-11-26 23:06:06.229 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-11-26 23:06:06.229 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-11-26 23:06:06.232 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-11-26 23:06:06.245 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Aarav Singh (ID: 5)
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Aarav Singh, Bonus: 8500.000, PF: 10200.0000, Tax: 0
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Nisha Patel (ID: 6)
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Nisha Patel, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rohit Sharma (ID: 7)
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rohit Sharma, Bonus: 7200.000, PF: 8640.0000, Tax: 0
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sneha Gupta (ID: 8)
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sneha Gupta, Bonus: 6200.000, PF: 7440.0000, Tax: 0
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ali Khan (ID: 9)
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ali Khan, Bonus: 7000.000, PF: 8400.0000, Tax: 0
+2025-11-26 23:06:06.246 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Priya Joshi (ID: 10)
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Priya Joshi, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vikram Desai (ID: 11)
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vikram Desai, Bonus: 9000.000, PF: 10800.0000, Tax: 0
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Meera Iyer (ID: 12)
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Meera Iyer, Bonus: 5800.000, PF: 6960.0000, Tax: 0
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Karan Malhotra (ID: 13)
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Karan Malhotra, Bonus: 7400.000, PF: 8880.0000, Tax: 0
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rajesh Kumar (ID: 14)
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rajesh Kumar, Bonus: 9500.000, PF: 11400.0000, Tax: 0
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ananya Reddy (ID: 15)
+2025-11-26 23:06:06.247 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ananya Reddy, Bonus: 8800.000, PF: 10560.0000, Tax: 0
+2025-11-26 23:06:06.248 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Suresh Menon (ID: 16)
+2025-11-26 23:06:06.249 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Suresh Menon, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:06:06.250 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Manish Jain (ID: 20)
+2025-11-26 23:06:06.250 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Manish Jain, Bonus: 7500.000, PF: 9000.0000, Tax: 0
+2025-11-26 23:06:06.250 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Neha Kapoor (ID: 21)
+2025-11-26 23:06:06.250 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Neha Kapoor, Bonus: 7800.000, PF: 9360.0000, Tax: 0
+2025-11-26 23:06:06.250 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rahul Verma (ID: 22)
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rahul Verma, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kavya Singh (ID: 23)
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kavya Singh, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Aditya Sharma (ID: 34)
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Aditya Sharma, Bonus: 9200.000, PF: 11040.0000, Tax: 0
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Priyanka Mehta (ID: 35)
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Priyanka Mehta, Bonus: 8600.000, PF: 10320.0000, Tax: 0
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rahul Deshpande (ID: 36)
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rahul Deshpande, Bonus: 7200.000, PF: 8640.0000, Tax: 0
+2025-11-26 23:06:06.251 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Anjali Chatterjee (ID: 37)
+2025-11-26 23:06:06.252 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Anjali Chatterjee, Bonus: 8100.000, PF: 9720.0000, Tax: 0
+2025-11-26 23:06:06.252 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vikram Reddy (ID: 38)
+2025-11-26 23:06:06.252 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vikram Reddy, Bonus: 7800.000, PF: 9360.0000, Tax: 0
+2025-11-26 23:06:06.252 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sneha Nair (ID: 39)
+2025-11-26 23:06:06.252 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sneha Nair, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:06:06.252 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kunal Joshi (ID: 40)
+2025-11-26 23:06:06.252 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kunal Joshi, Bonus: 7500.000, PF: 9000.0000, Tax: 0
+2025-11-26 23:06:06.252 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Meghna Patel (ID: 41)
+2025-11-26 23:06:06.252 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Meghna Patel, Bonus: 6400.000, PF: 7680.0000, Tax: 0
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Arun Kumar (ID: 42)
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Arun Kumar, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Pooja Singh (ID: 43)
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Pooja Singh, Bonus: 6900.000, PF: 8280.0000, Tax: 0
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rohit Gupta (ID: 44)
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rohit Gupta, Bonus: 8300.000, PF: 9960.0000, Tax: 0
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Divya Iyer (ID: 45)
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Divya Iyer, Bonus: 6700.000, PF: 8040.0000, Tax: 0
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Amit Verma (ID: 46)
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Amit Verma, Bonus: 7600.000, PF: 9120.0000, Tax: 0
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Neha Rao (ID: 47)
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Neha Rao, Bonus: 7900.000, PF: 9480.0000, Tax: 0
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sandeep Malhotra (ID: 48)
+2025-11-26 23:06:06.253 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sandeep Malhotra, Bonus: 9400.000, PF: 11280.0000, Tax: 0
+2025-11-26 23:06:06.254 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Anita Choudhary (ID: 49)
+2025-11-26 23:06:06.254 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Anita Choudhary, Bonus: 6200.000, PF: 7440.0000, Tax: 0
+2025-11-26 23:06:06.254 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rajiv Menon (ID: 50)
+2025-11-26 23:06:06.254 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rajiv Menon, Bonus: 8700.000, PF: 10440.0000, Tax: 0
+2025-11-26 23:06:06.254 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sunita Jain (ID: 51)
+2025-11-26 23:06:06.254 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sunita Jain, Bonus: 7300.000, PF: 8760.0000, Tax: 0
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Deepak Srinivasan (ID: 52)
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Deepak Srinivasan, Bonus: 8500.000, PF: 10200.0000, Tax: 0
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kavita Pillai (ID: 53)
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kavita Pillai, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Mohan Das (ID: 54)
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Mohan Das, Bonus: 9800.000, PF: 11760.0000, Tax: 0
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Lata Bhatia (ID: 55)
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Lata Bhatia, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sanjay Thakur (ID: 56)
+2025-11-26 23:06:06.255 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sanjay Thakur, Bonus: 7400.000, PF: 8880.0000, Tax: 0
+2025-11-26 23:06:06.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ritu Yadav (ID: 57)
+2025-11-26 23:06:06.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ritu Yadav, Bonus: 7700.000, PF: 9240.0000, Tax: 0
+2025-11-26 23:06:06.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Chaitanya  (ID: 63)
+2025-11-26 23:06:06.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Chaitanya , Bonus: 5000.000, PF: 6000.0000, Tax: 0
+2025-11-26 23:06:06.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: employeecheck (ID: 64)
+2025-11-26 23:06:06.256 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: employeecheck, Bonus: 5000.000, PF: 6000.0000, Tax: 0
+2025-11-26 23:06:06.256 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 42 EMPLOYEES
+2025-11-26 23:06:06.256 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 42 EMPLOYEES
+2025-11-26 23:06:06.268 [XNIO-1 task-3] INFO  c.s.r.c.AuthController - ? Login request for user: vinit51
+2025-11-26 23:06:06.269 [XNIO-1 task-3] INFO  c.s.r.s.AuthService - ? Login attempt - Username: vinit51
+2025-11-26 23:06:06.271 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.admin_level,
+        u1_0.created_at,
+        u1_0.department,
+        u1_0.department_access,
+        u1_0.email,
+        u1_0.email_verified,
+        u1_0.employee_id,
+        u1_0.name,
+        u1_0.password,
+        u1_0.phone_number,
+        u1_0.position,
+        u1_0.role,
+        u1_0.status,
+        u1_0.updated_at,
+        u1_0.user_type,
+        u1_0.username,
+        u1_0.verification_sent_at 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2025-11-26 23:06:06.274 [XNIO-1 task-3] INFO  c.s.r.s.AuthService - ? Login successful: vinit51
+2025-11-26 23:06:06.275 [XNIO-1 task-3] INFO  c.s.r.c.AuthController - ? Login successful for user: vinit51
+2025-11-26 23:06:06.529 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-11-26 23:06:06.529 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-11-26 23:06:06.533 [XNIO-1 task-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-11-26 23:06:06.545 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Aarav Singh (ID: 5)
+2025-11-26 23:06:06.545 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Aarav Singh, Bonus: 8500.000, PF: 10200.0000, Tax: 0
+2025-11-26 23:06:06.546 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Nisha Patel (ID: 6)
+2025-11-26 23:06:06.546 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Nisha Patel, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:06:06.547 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rohit Sharma (ID: 7)
+2025-11-26 23:06:06.547 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rohit Sharma, Bonus: 7200.000, PF: 8640.0000, Tax: 0
+2025-11-26 23:06:06.547 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sneha Gupta (ID: 8)
+2025-11-26 23:06:06.547 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sneha Gupta, Bonus: 6200.000, PF: 7440.0000, Tax: 0
+2025-11-26 23:06:06.548 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ali Khan (ID: 9)
+2025-11-26 23:06:06.548 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ali Khan, Bonus: 7000.000, PF: 8400.0000, Tax: 0
+2025-11-26 23:06:06.548 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Priya Joshi (ID: 10)
+2025-11-26 23:06:06.548 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Priya Joshi, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:06:06.548 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vikram Desai (ID: 11)
+2025-11-26 23:06:06.548 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vikram Desai, Bonus: 9000.000, PF: 10800.0000, Tax: 0
+2025-11-26 23:06:06.549 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Meera Iyer (ID: 12)
+2025-11-26 23:06:06.549 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Meera Iyer, Bonus: 5800.000, PF: 6960.0000, Tax: 0
+2025-11-26 23:06:06.549 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Karan Malhotra (ID: 13)
+2025-11-26 23:06:06.549 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Karan Malhotra, Bonus: 7400.000, PF: 8880.0000, Tax: 0
+2025-11-26 23:06:06.549 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rajesh Kumar (ID: 14)
+2025-11-26 23:06:06.549 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rajesh Kumar, Bonus: 9500.000, PF: 11400.0000, Tax: 0
+2025-11-26 23:06:06.549 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ananya Reddy (ID: 15)
+2025-11-26 23:06:06.549 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ananya Reddy, Bonus: 8800.000, PF: 10560.0000, Tax: 0
+2025-11-26 23:06:06.550 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Suresh Menon (ID: 16)
+2025-11-26 23:06:06.550 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Suresh Menon, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:06:06.550 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Manish Jain (ID: 20)
+2025-11-26 23:06:06.550 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Manish Jain, Bonus: 7500.000, PF: 9000.0000, Tax: 0
+2025-11-26 23:06:06.550 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Neha Kapoor (ID: 21)
+2025-11-26 23:06:06.551 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Neha Kapoor, Bonus: 7800.000, PF: 9360.0000, Tax: 0
+2025-11-26 23:06:06.551 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rahul Verma (ID: 22)
+2025-11-26 23:06:06.551 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rahul Verma, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:06:06.551 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kavya Singh (ID: 23)
+2025-11-26 23:06:06.552 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kavya Singh, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:06:06.552 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Aditya Sharma (ID: 34)
+2025-11-26 23:06:06.552 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Aditya Sharma, Bonus: 9200.000, PF: 11040.0000, Tax: 0
+2025-11-26 23:06:06.552 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Priyanka Mehta (ID: 35)
+2025-11-26 23:06:06.553 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Priyanka Mehta, Bonus: 8600.000, PF: 10320.0000, Tax: 0
+2025-11-26 23:06:06.553 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rahul Deshpande (ID: 36)
+2025-11-26 23:06:06.553 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rahul Deshpande, Bonus: 7200.000, PF: 8640.0000, Tax: 0
+2025-11-26 23:06:06.553 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Anjali Chatterjee (ID: 37)
+2025-11-26 23:06:06.553 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Anjali Chatterjee, Bonus: 8100.000, PF: 9720.0000, Tax: 0
+2025-11-26 23:06:06.553 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vikram Reddy (ID: 38)
+2025-11-26 23:06:06.553 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vikram Reddy, Bonus: 7800.000, PF: 9360.0000, Tax: 0
+2025-11-26 23:06:06.554 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sneha Nair (ID: 39)
+2025-11-26 23:06:06.554 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sneha Nair, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:06:06.554 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kunal Joshi (ID: 40)
+2025-11-26 23:06:06.554 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kunal Joshi, Bonus: 7500.000, PF: 9000.0000, Tax: 0
+2025-11-26 23:06:06.554 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Meghna Patel (ID: 41)
+2025-11-26 23:06:06.554 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Meghna Patel, Bonus: 6400.000, PF: 7680.0000, Tax: 0
+2025-11-26 23:06:06.555 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Arun Kumar (ID: 42)
+2025-11-26 23:06:06.555 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Arun Kumar, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:06:06.555 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Pooja Singh (ID: 43)
+2025-11-26 23:06:06.555 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Pooja Singh, Bonus: 6900.000, PF: 8280.0000, Tax: 0
+2025-11-26 23:06:06.555 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rohit Gupta (ID: 44)
+2025-11-26 23:06:06.555 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rohit Gupta, Bonus: 8300.000, PF: 9960.0000, Tax: 0
+2025-11-26 23:06:06.555 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Divya Iyer (ID: 45)
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Divya Iyer, Bonus: 6700.000, PF: 8040.0000, Tax: 0
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Amit Verma (ID: 46)
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Amit Verma, Bonus: 7600.000, PF: 9120.0000, Tax: 0
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Neha Rao (ID: 47)
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Neha Rao, Bonus: 7900.000, PF: 9480.0000, Tax: 0
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sandeep Malhotra (ID: 48)
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sandeep Malhotra, Bonus: 9400.000, PF: 11280.0000, Tax: 0
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Anita Choudhary (ID: 49)
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Anita Choudhary, Bonus: 6200.000, PF: 7440.0000, Tax: 0
+2025-11-26 23:06:06.556 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rajiv Menon (ID: 50)
+2025-11-26 23:06:06.557 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rajiv Menon, Bonus: 8700.000, PF: 10440.0000, Tax: 0
+2025-11-26 23:06:06.557 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sunita Jain (ID: 51)
+2025-11-26 23:06:06.558 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sunita Jain, Bonus: 7300.000, PF: 8760.0000, Tax: 0
+2025-11-26 23:06:06.558 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Deepak Srinivasan (ID: 52)
+2025-11-26 23:06:06.558 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Deepak Srinivasan, Bonus: 8500.000, PF: 10200.0000, Tax: 0
+2025-11-26 23:06:06.558 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kavita Pillai (ID: 53)
+2025-11-26 23:06:06.558 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kavita Pillai, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:06:06.558 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Mohan Das (ID: 54)
+2025-11-26 23:06:06.558 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Mohan Das, Bonus: 9800.000, PF: 11760.0000, Tax: 0
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Lata Bhatia (ID: 55)
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Lata Bhatia, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sanjay Thakur (ID: 56)
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sanjay Thakur, Bonus: 7400.000, PF: 8880.0000, Tax: 0
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ritu Yadav (ID: 57)
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ritu Yadav, Bonus: 7700.000, PF: 9240.0000, Tax: 0
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Chaitanya  (ID: 63)
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Chaitanya , Bonus: 5000.000, PF: 6000.0000, Tax: 0
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: employeecheck (ID: 64)
+2025-11-26 23:06:06.559 [XNIO-1 task-2] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: employeecheck, Bonus: 5000.000, PF: 6000.0000, Tax: 0
+2025-11-26 23:06:06.559 [XNIO-1 task-2] INFO  c.s.r.s.EmployeeService - FETCHED 42 EMPLOYEES
+2025-11-26 23:06:06.560 [XNIO-1 task-2] INFO  c.s.r.c.EmployeeController - RETURNING 42 EMPLOYEES
+2025-11-26 23:06:06.570 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - GET ALL EMPLOYEES REQUEST
+2025-11-26 23:06:06.571 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHING ALL EMPLOYEES
+2025-11-26 23:06:06.576 [XNIO-1 task-3] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.address,
+        e1_0.bonus,
+        e1_0.created_at,
+        e1_0.department,
+        e1_0.email,
+        e1_0.gender,
+        e1_0.join_date,
+        e1_0.name,
+        e1_0.pf,
+        e1_0.phone,
+        e1_0.position,
+        e1_0.salary,
+        e1_0.status,
+        e1_0.tax,
+        e1_0.updated_at 
+    from
+        employees e1_0
+2025-11-26 23:06:06.586 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Aarav Singh (ID: 5)
+2025-11-26 23:06:06.586 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Aarav Singh, Bonus: 8500.000, PF: 10200.0000, Tax: 0
+2025-11-26 23:06:06.586 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Nisha Patel (ID: 6)
+2025-11-26 23:06:06.586 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Nisha Patel, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:06:06.586 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rohit Sharma (ID: 7)
+2025-11-26 23:06:06.586 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rohit Sharma, Bonus: 7200.000, PF: 8640.0000, Tax: 0
+2025-11-26 23:06:06.587 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sneha Gupta (ID: 8)
+2025-11-26 23:06:06.587 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sneha Gupta, Bonus: 6200.000, PF: 7440.0000, Tax: 0
+2025-11-26 23:06:06.587 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ali Khan (ID: 9)
+2025-11-26 23:06:06.587 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ali Khan, Bonus: 7000.000, PF: 8400.0000, Tax: 0
+2025-11-26 23:06:06.587 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Priya Joshi (ID: 10)
+2025-11-26 23:06:06.587 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Priya Joshi, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:06:06.587 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vikram Desai (ID: 11)
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vikram Desai, Bonus: 9000.000, PF: 10800.0000, Tax: 0
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Meera Iyer (ID: 12)
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Meera Iyer, Bonus: 5800.000, PF: 6960.0000, Tax: 0
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Karan Malhotra (ID: 13)
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Karan Malhotra, Bonus: 7400.000, PF: 8880.0000, Tax: 0
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rajesh Kumar (ID: 14)
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rajesh Kumar, Bonus: 9500.000, PF: 11400.0000, Tax: 0
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ananya Reddy (ID: 15)
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ananya Reddy, Bonus: 8800.000, PF: 10560.0000, Tax: 0
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Suresh Menon (ID: 16)
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Suresh Menon, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Manish Jain (ID: 20)
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Manish Jain, Bonus: 7500.000, PF: 9000.0000, Tax: 0
+2025-11-26 23:06:06.588 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Neha Kapoor (ID: 21)
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Neha Kapoor, Bonus: 7800.000, PF: 9360.0000, Tax: 0
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rahul Verma (ID: 22)
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rahul Verma, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kavya Singh (ID: 23)
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kavya Singh, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Aditya Sharma (ID: 34)
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Aditya Sharma, Bonus: 9200.000, PF: 11040.0000, Tax: 0
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Priyanka Mehta (ID: 35)
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Priyanka Mehta, Bonus: 8600.000, PF: 10320.0000, Tax: 0
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rahul Deshpande (ID: 36)
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rahul Deshpande, Bonus: 7200.000, PF: 8640.0000, Tax: 0
+2025-11-26 23:06:06.589 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Anjali Chatterjee (ID: 37)
+2025-11-26 23:06:06.590 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Anjali Chatterjee, Bonus: 8100.000, PF: 9720.0000, Tax: 0
+2025-11-26 23:06:06.590 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Vikram Reddy (ID: 38)
+2025-11-26 23:06:06.590 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Vikram Reddy, Bonus: 7800.000, PF: 9360.0000, Tax: 0
+2025-11-26 23:06:06.590 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sneha Nair (ID: 39)
+2025-11-26 23:06:06.590 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sneha Nair, Bonus: 6800.000, PF: 8160.0000, Tax: 0
+2025-11-26 23:06:06.590 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kunal Joshi (ID: 40)
+2025-11-26 23:06:06.590 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kunal Joshi, Bonus: 7500.000, PF: 9000.0000, Tax: 0
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Meghna Patel (ID: 41)
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Meghna Patel, Bonus: 6400.000, PF: 7680.0000, Tax: 0
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Arun Kumar (ID: 42)
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Arun Kumar, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Pooja Singh (ID: 43)
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Pooja Singh, Bonus: 6900.000, PF: 8280.0000, Tax: 0
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rohit Gupta (ID: 44)
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rohit Gupta, Bonus: 8300.000, PF: 9960.0000, Tax: 0
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Divya Iyer (ID: 45)
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Divya Iyer, Bonus: 6700.000, PF: 8040.0000, Tax: 0
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Amit Verma (ID: 46)
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Amit Verma, Bonus: 7600.000, PF: 9120.0000, Tax: 0
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Neha Rao (ID: 47)
+2025-11-26 23:06:06.591 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Neha Rao, Bonus: 7900.000, PF: 9480.0000, Tax: 0
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sandeep Malhotra (ID: 48)
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sandeep Malhotra, Bonus: 9400.000, PF: 11280.0000, Tax: 0
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Anita Choudhary (ID: 49)
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Anita Choudhary, Bonus: 6200.000, PF: 7440.0000, Tax: 0
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Rajiv Menon (ID: 50)
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Rajiv Menon, Bonus: 8700.000, PF: 10440.0000, Tax: 0
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sunita Jain (ID: 51)
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sunita Jain, Bonus: 7300.000, PF: 8760.0000, Tax: 0
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Deepak Srinivasan (ID: 52)
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Deepak Srinivasan, Bonus: 8500.000, PF: 10200.0000, Tax: 0
+2025-11-26 23:06:06.592 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Kavita Pillai (ID: 53)
+2025-11-26 23:06:06.593 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Kavita Pillai, Bonus: 6500.000, PF: 7800.0000, Tax: 0
+2025-11-26 23:06:06.595 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Mohan Das (ID: 54)
+2025-11-26 23:06:06.598 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Mohan Das, Bonus: 9800.000, PF: 11760.0000, Tax: 0
+2025-11-26 23:06:06.599 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Lata Bhatia (ID: 55)
+2025-11-26 23:06:06.600 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Lata Bhatia, Bonus: 7100.000, PF: 8520.0000, Tax: 0
+2025-11-26 23:06:06.600 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Sanjay Thakur (ID: 56)
+2025-11-26 23:06:06.601 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Sanjay Thakur, Bonus: 7400.000, PF: 8880.0000, Tax: 0
+2025-11-26 23:06:06.601 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Ritu Yadav (ID: 57)
+2025-11-26 23:06:06.601 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Ritu Yadav, Bonus: 7700.000, PF: 9240.0000, Tax: 0
+2025-11-26 23:06:06.601 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: Chaitanya  (ID: 63)
+2025-11-26 23:06:06.601 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: Chaitanya , Bonus: 5000.000, PF: 6000.0000, Tax: 0
+2025-11-26 23:06:06.601 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - CALCULATING DEDUCTIONS - Employee: employeecheck (ID: 64)
+2025-11-26 23:06:06.601 [XNIO-1 task-3] DEBUG c.s.r.s.EmployeeService - DEDUCTIONS CALCULATED - Employee: employeecheck, Bonus: 5000.000, PF: 6000.0000, Tax: 0
+2025-11-26 23:06:06.601 [XNIO-1 task-3] INFO  c.s.r.s.EmployeeService - FETCHED 42 EMPLOYEES
+2025-11-26 23:06:06.602 [XNIO-1 task-3] INFO  c.s.r.c.EmployeeController - RETURNING 42 EMPLOYEES
