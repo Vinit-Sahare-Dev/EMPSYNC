@@ -2,18 +2,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  height: 150px;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 0 24px;
+  height: 72px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.1);
   box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navbar.scrolled {
@@ -33,20 +33,20 @@
 
 /* Clean Menu Toggle */
 .menu-toggle {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1.5px solid rgba(226, 232, 240, 0.8);
-  padding: 10px 16px;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(226, 232, 240, 0.15);
+  padding: 8px 12px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 8px;
+  transition: all 0.2s ease;
   color: #64748b;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .menu-toggle::before {
@@ -143,19 +143,19 @@
 }
 
 .brand-logo {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
   box-shadow:
-    0 4px 12px rgba(14, 165, 233, 0.2),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
+    0 2px 8px rgba(59, 130, 246, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+  transition: all 0.2s ease;
 }
 
 .brand-logo::before {
@@ -433,26 +433,25 @@
 
 /* Professional Profile Button */
 .btn-profile {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
-  border: 1px solid rgba(102, 126, 234, 0.25);
+  border: 1px solid rgba(59, 130, 246, 0.2);
   box-shadow:
-    0 2px 12px rgba(102, 126, 234, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-size: 0.95rem;
-  font-weight: 600;
+    0 1px 3px rgba(59, 130, 246, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 
 .btn-profile::before {
@@ -510,26 +509,25 @@
 
 /* Professional Logout Button */
 .btn-logout {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   color: white;
-  border: 1px solid rgba(255, 107, 107, 0.25);
+  border: 1px solid rgba(239, 68, 68, 0.2);
   box-shadow:
-    0 2px 12px rgba(255, 107, 107, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-size: 0.95rem;
-  font-weight: 600;
+    0 1px 3px rgba(239, 68, 68, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 
 .btn-logout::before {

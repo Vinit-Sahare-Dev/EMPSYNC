@@ -87,7 +87,6 @@ const Navbar = ({ onMenuToggle, user, onLogout }) => {
             <h1>
               <span className="brand-highlight">Emp</span>Sync
             </h1>
-            <span className="brand-tagline">Employee Management System</span>
           </div>
         </div>
       </div>

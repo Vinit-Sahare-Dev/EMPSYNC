@@ -155,7 +155,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
               Go Back
             </button>
             <button 
-              onClick={() => window.location.href = user.role === 'EMPLOYEE' ? '/employee-dashboard' : '/dashboard'} 
+              onClick={() => window.location.href = '/dashboard'} 
               className="btn btn-outline"
             >
               Go to Dashboard
@@ -270,21 +270,17 @@ function App() {
                     <ErrorBoundary>
                       <Suspense fallback={<LoadingSpinner size="large" text="Loading page..." />}>
                         <Routes>
-                          {/* Public routes - redirect to appropriate dashboard */}
+                          {/* Public routes - redirect to dashboard */}
                           <Route 
                             path="/" 
                             element={
-                              user.role === 'EMPLOYEE' ? 
-                                <Navigate to="/employee-dashboard" replace /> : 
-                                <Navigate to="/dashboard" replace />
+                              <Navigate to="/dashboard" replace />
                             } 
                           />
                           <Route 
                             path="/login" 
                             element={
-                              user.role === 'EMPLOYEE' ? 
-                                <Navigate to="/employee-dashboard" replace /> : 
-                                <Navigate to="/dashboard" replace />
+                              <Navigate to="/dashboard" replace />
                             } 
                           />
                           
@@ -324,7 +320,7 @@ function App() {
                           <Route 
                             path="/departments" 
                             element={
-                              <ProtectedRoute allowedRoles={['ADMIN', 'EMPLOYEE']}>
+                              <ProtectedRoute allowedRoles={['ADMIN']}>
                                 <DepartmentGrid />
                               </ProtectedRoute>
                             } 
@@ -346,17 +342,7 @@ function App() {
                             } 
                           />
                           
-                          {/* Employee routes */}
-                          <Route 
-                            path="/employee-dashboard" 
-                            element={
-                              <ProtectedRoute allowedRoles={['EMPLOYEE']}>
-                                <EmployeeDashboard />
-                              </ProtectedRoute>
-                            } 
-                          />
-                          
-                          {/* Shared routes (both admin and employee can access) */}
+                          {/* Shared routes (admin can access) */}
                           <Route 
                             path="/profile" 
                             element={
@@ -366,13 +352,11 @@ function App() {
                             } 
                           />
                           
-                          {/* Redirect all unknown routes to appropriate dashboard */}
+                          {/* Redirect all unknown routes to dashboard */}
                           <Route 
                             path="*" 
                             element={
-                              user.role === 'EMPLOYEE' ? 
-                                <Navigate to="/employee-dashboard" replace /> : 
-                                <Navigate to="/dashboard" replace />
+                              <Navigate to="/dashboard" replace />
                             } 
                           />
                         </Routes>

@@ -100,8 +100,8 @@ public class AuthService {
                 return new AuthResponse(false, "Username already exists", null, null, null, null);
             }
 
-            // Check if email already exists
-            if (userRepository.existsByEmail(registerRequest.getEmail())) {
+            // Check if email already exists - allow for employees
+            if (userRepository.existsByEmail(registerRequest.getEmail()) && registerRequest.getUserType().equals("ADMIN")) {
                 return new AuthResponse(false, "Email already exists", null, null, null, null);
             }
 
@@ -113,6 +113,7 @@ public class AuthService {
             newUser.setName(registerRequest.getName());
             newUser.setUserType(registerRequest.getUserType());
             newUser.setStatus("ACTIVE");
+            newUser.setEmailVerified(true); // Initialize to avoid null error
 
             // Set email verification based on configuration
             if (emailVerificationEnabled) {
