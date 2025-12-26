@@ -13,6 +13,9 @@ const LandingPage = ({ onLogin }) => {
   const [loading, setLoading] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  
+  const navigate = useNavigate();
+  const { showToast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -232,11 +235,10 @@ const LandingPage = ({ onLogin }) => {
             <EmpSyncLogo size={32} />
           </div>
           <div className="nav-brand-text">
-            <span className="project-name">EMPSYNC</span>
-            <span className="project-tagline">Admin Portal</span>
+            <span className="project-name" style={{ fontSize: '2.2rem', fontWeight: 900, background: 'linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #8b5cf6 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', letterSpacing: '-0.05em', textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', position: 'relative', display: 'inline-block', marginBottom: '2px' }}>EMPSYNC</span>
           </div>
         </div>
-		
+        
         <div className="nav-actions">
           {!showLogin && (
             <button className="nav-features-btn" onClick={scrollToFeatures}>
@@ -306,7 +308,7 @@ const LandingPage = ({ onLogin }) => {
             <h2>Powerful Features for Modern Workforce Management</h2>
             <p>Everything you need to efficiently manage your team and streamline operations</p>
           </div>
-          <div className="features-grid">
+          <div className="features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
             <div className="feature-card">
               <div className="feature-icon-wrapper">
                 <span className="feature-icon-large">👥</span>
