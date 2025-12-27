@@ -60,7 +60,7 @@ public class User {
 
     // EMAIL VERIFICATION FIELDS - ADD THESE
     @Column(name = "email_verified")
-    private boolean emailVerified = false;
+    private Boolean emailVerified = false;
 
     @Column(name = "verification_sent_at")
     private LocalDateTime verificationSentAt;

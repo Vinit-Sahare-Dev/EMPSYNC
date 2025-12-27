@@ -1,6 +1,6 @@
 // src/components/layout/Navbar.jsx
 import React from 'react';
-import './Navbar.css';
+import './ProfessionalNavbar.css';
 
 const Navbar = ({ onMenuToggle, user, onLogout }) => {
   return (
@@ -98,15 +98,13 @@ const Navbar = ({ onMenuToggle, user, onLogout }) => {
               className="btn btn-profile"
               onClick={() => window.location.href = '/profile'}
             >
-              <span className="btn-icon profile-icon">👤</span>
-              <span className="btn-text">Profile</span>
+              Profile
             </button>
             <button
               className="btn btn-logout"
               onClick={onLogout}
             >
-              <span className="btn-icon logout-icon">🚪</span>
-              <span className="btn-text">Logout</span>
+              Logout
             </button>
           </div>
         ) : (

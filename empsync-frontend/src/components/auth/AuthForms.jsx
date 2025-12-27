@@ -47,7 +47,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
   // Test backend connection
   const testBackendConnection = async () => {
     try {
-      const response = await fetch('http://localhost:8888/api/health', {
+      const response = await fetch('http://localhost:8888/api/auth/status', {
         method: 'GET',
         timeout: 5000
       });
