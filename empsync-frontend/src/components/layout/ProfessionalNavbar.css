@@ -44,20 +44,46 @@
   flex-direction: column;
 }
 
-.brand-name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.2;
+.brand-text h1 {
   margin: 0;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.5px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 .brand-highlight {
-  color: #3B82F6;
+  color: white;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-text h1:hover .brand-highlight {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .brand-tagline {
-  font-size: 0.75rem;
-  color: #6b7280;
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0;
   line-height: 1;
 }
@@ -374,7 +400,22 @@
   margin: 0.5rem 0;
 }
 
-/* Navigation Menu */
+/* Professional Navbar Styles - Matching Landing Page */
+.navbar {
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 70px;
+  transition: all 0.3s ease;
+}
+
 .navbar-nav {
   background: white;
   border-bottom: 1px solid #e5e7eb;
@@ -562,7 +603,29 @@
   }
 }
 
+@media (max-width: 768px) {
+  .brand-text h1 {
+    font-size: 1.3rem;
+    gap: 1px;
+  }
+  
+  .brand-logo {
+    width: 28px;
+    height: 28px;
+  }
+}
+
 @media (max-width: 480px) {
+  .brand-text h1 {
+    font-size: 1.1rem;
+    gap: 1px;
+  }
+  
+  .brand-logo {
+    width: 24px;
+    height: 24px;
+  }
+  
   .brand-tagline {
     display: none;
   }

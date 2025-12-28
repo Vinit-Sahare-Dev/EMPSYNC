@@ -186,10 +186,10 @@
 }
 
 .auth-btn.primary {
-  background: white;
-  color: #1e293b;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+  border: none;
 }
 
 .auth-btn.primary:hover:not(:disabled) {

@@ -7,6 +7,7 @@ import Navbar from './components/layout/Navbar';
 import Sidebar from './components/layout/Sidebar';
 import LoadingSpinner from './components/layout/LoadingSpinner';
 import './styles/App.css';
+import './styles/SPATransitions.css';
 
 // Simple Error Boundary
 class ErrorBoundary extends React.Component {

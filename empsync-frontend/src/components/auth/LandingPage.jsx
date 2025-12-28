@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '../ui/Toast';
 import AuthForms from './AuthForms';
 import './LandingPage.css';
+import './FooterEnhancement.css';
+import './PickEffect.css';
 
 const LandingPage = ({ onLogin }) => {
   const [showLogin, setShowLogin] = useState(false);
@@ -271,17 +273,19 @@ const LandingPage = ({ onLogin }) => {
 
             <div className="hero-buttons">
               <button 
-                className="cta-button cta-primary"
+                className="cta-button cta-primary pick-effect"
                 onClick={handleLoginToggle}
               >
                 <span>Get Started</span>
                 <div className="btn-arrow">→</div>
+                <div className="ripple-effect"></div>
               </button>
               <button 
-                className="cta-button cta-secondary"
+                className="cta-button cta-secondary pick-effect"
                 onClick={scrollToFeatures}
               >
                 Explore Features
+                <div className="ripple-effect"></div>
               </button>
             </div>
           </div>
@@ -308,7 +312,7 @@ const LandingPage = ({ onLogin }) => {
             <h2>Powerful Features for Modern Workforce Management</h2>
             <p>Everything you need to efficiently manage your team and streamline operations</p>
           </div>
-          <div className="features-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+          <div className="features-grid">
             <div className="feature-card">
               <div className="feature-icon-wrapper">
                 <span className="feature-icon-large">👥</span>
@@ -349,25 +353,51 @@ const LandingPage = ({ onLogin }) => {
               </p>
               <span className="feature-badge">Security</span>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon-wrapper">
-                <span className="feature-icon-large">🏢</span>
-              </div>
-              <h3>Department Management</h3>
-              <p className="feature-description">
-                Organize teams by departments, assign managers, and streamline communication channels.
-              </p>
-              <span className="feature-badge">Organization</span>
+                      </div>
+        </section>
+      )}
+
+      {/* About Us Section */}
+      {!showLogin && (
+        <section className="about-section">
+          <div className="about-container">
+            <div className="about-header">
+              <h2>About EMPSYNC</h2>
+              <p>Transforming workforce management with innovative technology</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon-wrapper">
-                <span className="feature-icon-large">📈</span>
+            <div className="about-content">
+              <div className="about-text">
+                <h3>Our Mission</h3>
+                <p>
+                  EMPSYNC is dedicated to revolutionizing how organizations manage their most valuable asset - their people. 
+                  We combine cutting-edge technology with user-friendly design to create solutions that streamline operations, 
+                  boost productivity, and foster growth.
+                </p>
+                <h3>Why Choose Us?</h3>
+                <p>
+                  Built by developers who understand the challenges of modern workforce management, EMPSYNC offers 
+                  comprehensive tools that scale with your organization. From startups to enterprises, we provide the 
+                  flexibility and power you need to succeed.
+                </p>
               </div>
-              <h3>Performance Monitoring</h3>
-              <p className="feature-description">
-                Track employee performance, set goals, conduct reviews, and identify top performers across the organization.
-              </p>
-              <span className="feature-badge">HR Tools</span>
+              <div className="about-stats">
+                <div className="stat-item">
+                  <span className="stat-number">500+</span>
+                  <span className="stat-label">Organizations</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-number">50K+</span>
+                  <span className="stat-label">Employees</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-number">99.9%</span>
+                  <span className="stat-label">Uptime</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-number">24/7</span>
+                  <span className="stat-label">Support</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -377,31 +407,73 @@ const LandingPage = ({ onLogin }) => {
       {!showLogin && (
         <footer className="landing-footer">
           <div className="footer-content">
-            <div className="footer-brand">
-              <div className="logo">
-                <SmallLogo size={40} />
-                <div className="brand-text">
-                  <h3>EMPSYNC</h3>
-                  <span>Workforce Management Solution</span>
+            <div className="footer-section">
+              <div className="footer-links-horizontal">
+                <div className="footer-contacts">
+                  <div className="footer-brand">
+                    <div className="logo">
+                      <SmallLogo size={40} />
+                      <div className="brand-text">
+                        <h3>EMPSYNC</h3>
+                        <span>Workforce Management Solution</span>
+                      </div>
+                    </div>
+                    <p className="footer-description">
+                      Empowering organizations with modern workforce management tools. 
+                      Streamline operations, boost productivity, and foster growth with our comprehensive platform.
+                    </p>
+                  </div>
+                  <div className="social-links">
+                    <a href="#" className="social-link">
+                      <span className="social-icon">📧</span>
+                      <span className="social-text">Contact</span>
+                    </a>
+                    <a href="#" className="social-link">
+                      <span className="social-icon">💼</span>
+                      <span className="social-text">LinkedIn</span>
+                    </a>
+                  </div>
                 </div>
-              </div>
-              <p className="footer-description">
-                Empowering organizations with modern workforce management tools. 
-                Streamline operations, boost productivity, and foster growth with our comprehensive platform.
-              </p>
-              <div className="social-links">
-                <a href="#" className="social-link">
-                  <span className="social-icon">📧</span>
-                  <span className="social-text">Contact</span>
-                </a>
-                <a href="#" className="social-link">
-                  <span className="social-icon">💼</span>
-                  <span className="social-text">LinkedIn</span>
-                </a>
-                <a href="#" className="social-link">
-                  <span className="social-icon">🐦</span>
-                  <span className="social-text">Twitter</span>
-                </a>
+                
+                <div className="footer-column">
+                  <h4>Product</h4>
+                  <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#demo">Request Demo</a></li>
+                  </ul>
+                </div>
+                
+                <div className="footer-column">
+                  <h4>Company</h4>
+                  <ul>
+                    <li><a href="#team">Our Team</a></li>
+                    <li><a href="#careers">Careers</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#press">Press Kit</a></li>
+                  </ul>
+                </div>
+                
+                <div className="footer-column">
+                  <h4>Resources</h4>
+                  <ul>
+                    <li><a href="#docs">Documentation</a></li>
+                    <li><a href="#api">API Reference</a></li>
+                    <li><a href="#support">Support Center</a></li>
+                    <li><a href="#community">Community</a></li>
+                  </ul>
+                </div>
+                
+                <div className="footer-column">
+                  <h4>Legal</h4>
+                  <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#security">Security</a></li>
+                    <li><a href="#compliance">Compliance</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
