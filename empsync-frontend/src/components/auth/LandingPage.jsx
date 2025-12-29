@@ -382,11 +382,11 @@ const LandingPage = ({ onLogin }) => {
               </div>
               <div className="about-stats">
                 <div className="stat-item">
-                  <span className="stat-number">500+</span>
+                  <span className="stat-number">50+</span>
                   <span className="stat-label">Organizations</span>
                 </div>
                 <div className="stat-item">
-                  <span className="stat-number">50K+</span>
+                  <span className="stat-number">1000+</span>
                   <span className="stat-label">Employees</span>
                 </div>
                 <div className="stat-item">

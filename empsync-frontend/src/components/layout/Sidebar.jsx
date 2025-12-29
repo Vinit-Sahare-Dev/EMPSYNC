@@ -64,7 +64,7 @@ const Sidebar = ({ isOpen, onClose, userRole }) => {
 
   return (
     <>
-      {isOpen && <div className="sidebar-overlay" onClick={onClose}></div>}
+      <div className={`sidebar-overlay ${isOpen ? 'show' : ''}`} onClick={onClose}></div>
       <div className={`sidebar ${isOpen ? 'open' : ''}`}>
         {/* Header */}
         <div className="sidebar-header">
