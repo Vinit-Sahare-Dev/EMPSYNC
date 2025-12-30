@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { empSyncAPI } from '../../services/apiService';
+import { useToast } from '../ui/Toast';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -12,6 +13,7 @@ const Dashboard = () => {
   });
   const [backendConnected, setBackendConnected] = useState(false);
   const [realTimeInsights, setRealTimeInsights] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
   const navigate = useNavigate();
 
