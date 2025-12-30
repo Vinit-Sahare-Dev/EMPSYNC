@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useToast } from '../ui/Toast';
 import { empSyncAPI } from '../../services/apiService';
 import './Dashboard.css';
 
@@ -11,7 +10,6 @@ const Dashboard = () => {
     recentActivity: [],
     employees: []
   });
-  const [loading, setLoading] = useState(false);
   const [backendConnected, setBackendConnected] = useState(false);
   const [realTimeInsights, setRealTimeInsights] = useState([]);
   const { showToast } = useToast();
@@ -30,10 +28,6 @@ const Dashboard = () => {
   }, [navigate]);
 
   const loadDashboardData = useCallback(async () => {
-    if (loading) return;
-    
-    setLoading(true);
-    
     try {
       const backendPromise = empSyncAPI.getAllEmployees().catch(() => null);
       const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(null), 1000));
@@ -43,23 +37,19 @@ const Dashboard = () => {
       if (result && result.success) {
         setBackendConnected(true);
         processDashboardData(result.employees || []);
-        showToast('success', 'Data refreshed successfully');
       } else {
         setBackendConnected(false);
         const savedEmployees = localStorage.getItem('employees');
         const employees = savedEmployees ? JSON.parse(savedEmployees) : getDefaultEmployees();
         processDashboardData(employees);
-        showToast('info', 'Using demo data');
       }
     } catch (error) {
       console.log('Using fallback data');
       const savedEmployees = localStorage.getItem('employees');
       const employees = savedEmployees ? JSON.parse(savedEmployees) : getDefaultEmployees();
       processDashboardData(employees);
-    } finally {
-      setLoading(false);
     }
-  }, [loading, showToast]);
+  }, []);
 
   const startRealTimeInsights = () => {
     const insights = [
@@ -172,9 +162,9 @@ const Dashboard = () => {
 
   const quickActions = [
     { id: 'add', icon: '👤', label: 'Add Employee', action: () => navigate('/employees') },
-    { id: 'insights', icon: '📊', label: 'Live Insights', action: () => showToast('success', 'Showing real-time analytics') },
-    { id: 'reports', icon: '📈', label: 'Reports', action: () => showToast('info', 'Generating reports...') },
-    { id: 'analytics', icon: '🔍', label: 'Analytics', action: () => showToast('info', 'Opening analytics') }
+    { id: 'insights', icon: '📊', label: 'Live Insights', action: () => console.log('Live insights activated') },
+    { id: 'reports', icon: '📈', label: 'Reports', action: () => console.log('Generating reports...') },
+    { id: 'analytics', icon: '🔍', label: 'Analytics', action: () => console.log('Opening analytics') }
   ];
 
   const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
@@ -228,33 +218,40 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      {/* Compact Header */}
-      <div className="dashboard-header">
-        <div className="header-content">
-          <div className="welcome-section">
-            <div className="welcome-main">
-              <h1>Welcome back{currentUser.name ? `, ${currentUser.name}` : ''}</h1>
-              <p className="welcome-subtitle">Team overview & analytics</p>
+    <div className="dashboard-professional">
+      {/* Hero Section - Inspired by Landing Page */}
+      <div className="dashboard-hero">
+        <div className="hero-content">
+          <div className="hero-left">
+            <div className="hero-welcome">
+              <h1 className="hero-title">
+                Welcome back, <span className="hero-name">{currentUser.name}</span>
+              </h1>
+              <p className="hero-subtitle">Team overview & workforce analytics</p>
             </div>
             
-            <div className="welcome-stats">
-              <div className="welcome-stat">
-                <span className="stat-number">{dashboardData.stats.total}</span>
-                <span className="stat-label">Employees</span>
+            <div className="hero-stats">
+              <div className="hero-stat">
+                <span className="hero-number">{dashboardData.stats.total}</span>
+                <span className="hero-label">Total Employees</span>
               </div>
-              <div className="welcome-stat">
-                <span className="stat-number">{dashboardData.stats.departments}</span>
-                <span className="stat-label">Departments</span>
+              <div className="hero-stat">
+                <span className="hero-number">{dashboardData.stats.active}</span>
+                <span className="hero-label">Active Now</span>
               </div>
-              <div className="welcome-stat">
-                <span className="stat-number">{dashboardData.stats.newHires}</span>
-                <span className="stat-label">New Hires</span>
+              <div className="hero-stat">
+                <span className="hero-number">{dashboardData.stats.departments}</span>
+                <span className="hero-label">Departments</span>
               </div>
             </div>
+          </div>
 
-            <div className="insights-ticker">
-              <div className="insights-label">Live Insights</div>
+          <div className="hero-right">
+            <div className="live-insights">
+              <div className="insights-header">
+                <span className="insights-icon">📊</span>
+                <span className="insights-title">Live Insights</span>
+              </div>
               <div className="insights-scroll">
                 {realTimeInsights.map((insight, index) => (
                   <div key={index} className="insight-item">{insight}</div>
@@ -263,104 +260,114 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        
-        <div className="header-actions">
-          <div className="connection-status">
-            <span className={`status-dot ${backendConnected ? 'connected' : 'demo'}`}></span>
-            <span>{backendConnected ? 'Live Data' : 'Demo Mode'}</span>
-          </div>
-          <button className="btn btn-primary insights-btn" onClick={() => showToast('success', 'Showing insights dashboard')}>
-            <span className="btn-icon">📊</span>
-            Insights
-          </button>
-          <button className="btn btn-secondary" onClick={loadDashboardData} disabled={loading}>
-            <span className="btn-icon">{loading ? '⟳' : '↻'}</span>
-            {loading ? 'Refreshing...' : 'Refresh'}
-          </button>
-        </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="stats-grid">
-        <div className="stat-card primary">
-          <div className="stat-icon">👥</div>
-          <div className="stat-content">
-            <h3>{loading ? '...' : dashboardData.stats.total}</h3>
-            <p>Total Employees</p>
-            <span className="stat-trend positive">+12%</span>
-          </div>
-        </div>
-        <div className="stat-card success">
-          <div className="stat-icon">✅</div>
-          <div className="stat-content">
-            <h3>{loading ? '...' : dashboardData.stats.active}</h3>
-            <p>Active</p>
-            <span className="stat-trend positive">+5%</span>
-          </div>
-        </div>
-        <div className="stat-card info">
-          <div className="stat-icon">🏢</div>
-          <div className="stat-content">
-            <h3>{loading ? '...' : dashboardData.stats.departments}</h3>
-            <p>Departments</p>
-          </div>
-        </div>
-        <div className="stat-card warning">
-          <div className="stat-icon">🆕</div>
-          <div className="stat-content">
-            <h3>{loading ? '...' : dashboardData.stats.newHires}</h3>
-            <p>New Hires</p>
-            <span className="stat-trend positive">+{dashboardData.stats.newHires}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="quick-actions-section">
-        <h3>Quick Actions</h3>
-        <div className="actions-grid">
-          {quickActions.map(action => (
-            <button key={action.id} className="action-btn" onClick={action.action}>
-              <span className="action-icon">{action.icon}</span>
-              <span className="action-label">{action.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="recent-activity">
-        <h3>Recent Team Members</h3>
-        <div className="activity-grid">
-          {dashboardData.recentActivity.map(activity => (
-            <div key={activity.id} className="activity-card">
-              <img src={activity.avatar} alt={activity.name} />
-              <div className="activity-info">
-                <h4>{activity.name}</h4>
-                <p>{activity.position}</p>
-                <span>{activity.department}</span>
-              </div>
+      <div className="stats-section">
+        <div className="stats-grid">
+          <div className="stat-card primary-stat">
+            <div className="stat-icon-large">👥</div>
+            <div className="stat-content">
+              <h3>{dashboardData.stats.total}</h3>
+              <p>Total Employees</p>
+              <div className="stat-trend positive">+12%</div>
             </div>
-          ))}
+          </div>
+          
+          <div className="stat-card success-stat">
+            <div className="stat-icon-large">✅</div>
+            <div className="stat-content">
+              <h3>{dashboardData.stats.active}</h3>
+              <p>Active Now</p>
+              <div className="stat-trend positive">+5%</div>
+            </div>
+          </div>
+          <div className="stat-card success-stat">
+            <div className="stat-icon-large">📈</div>
+            <div className="stat-content">
+              <h3>{dashboardData.stats.newHires}</h3>
+              <p>New Hires</p>
+              <div className="stat-trend positive">+{dashboardData.stats.newHires}</div>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Department Distribution */}
-      <div className="chart-section">
-        <div className="chart-header">
+      <div className="chart-section-professional">
+        <div className="chart-header-professional">
           <div>
-            <h3>Department Distribution</h3>
+            <h2>Department Distribution</h2>
             <span className="chart-subtitle">Team composition overview</span>
           </div>
+          <div className="connection-status">
+            <span className={`status-indicator ${backendConnected ? 'connected' : 'demo'}`}></span>
+            <span>{backendConnected ? 'Live Data' : 'Demo Mode'}</span>
+          </div>
         </div>
-        <div className="chart-container">
+        
+        <div className="chart-container-professional">
           {dashboardData.departmentStats.length > 0 ? (
             <DepartmentChart data={dashboardData.departmentStats} />
           ) : (
             <div className="no-chart-data">
+              <div className="no-data-icon">📊</div>
               <p>No department data available</p>
+              <button className="btn btn-primary" onClick={loadDashboardData} disabled={loading}>
+                {loading ? 'Loading...' : 'Load Sample Data'}
+              </button>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="quick-actions-professional">
+        <h2>Quick Actions</h2>
+        <div className="actions-grid-professional">
+          <button className="action-card" onClick={() => navigate('/employees')}>
+            <div className="action-icon-large">👤</div>
+            <div className="action-content">
+              <h3>Add Employee</h3>
+              <p>Register new team member</p>
+            </div>
+          </button>
+          
+          <button className="action-card" onClick={() => showToast('success', 'Opening analytics dashboard')}>
+            <div className="action-icon-large">📊</div>
+            <div className="action-content">
+              <h3>View Analytics</h3>
+              <p>Detailed insights & reports</p>
+            </div>
+          </button>
+          
+          <button className="action-card" onClick={() => showToast('info', 'Generating reports')}>
+            <div className="action-icon-large">📈</div>
+            <div className="action-content">
+              <h3>Generate Reports</h3>
+              <p>Export workforce data</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Recent Activity */}
+      <div className="activity-section-professional">
+        <h2>Recent Team Activity</h2>
+        <div className="activity-grid-professional">
+          {dashboardData.recentActivity.map(activity => (
+            <div key={activity.id} className="activity-card-professional">
+              <img src={activity.avatar} alt={activity.name} className="activity-avatar" />
+              <div className="activity-info">
+                <h4>{activity.name}</h4>
+                <p>{activity.position}</p>
+                <div className="activity-meta">
+                  <span className="activity-department">{activity.department}</span>
+                  <span className="activity-time">{activity.time}</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

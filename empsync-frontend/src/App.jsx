@@ -3,8 +3,7 @@ import React, { useState, Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ToastProvider from './components/ui/Toast';
-import Navbar from './components/layout/Navbar';
-import Sidebar from './components/layout/Sidebar';
+import NavbarModern from './components/layout/NavbarModern';
 import LoadingSpinner from './components/layout/LoadingSpinner';
 import './styles/App.css';
 import './styles/SPATransitions.css';
@@ -172,18 +171,31 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
 };
 
 function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const initializeApp = async () => {
-      console.log('🔍 App.jsx - Starting app, resetting any previous session...');
+      console.log('🔍 App.jsx - Starting app, checking for existing session...');
 
-      // Always start from a clean state so the app opens on the landing page.
-      // We intentionally do NOT auto-login from localStorage.
-      localStorage.removeItem('currentUser');
-      localStorage.removeItem('token');
+      // Check for existing user session in localStorage
+      const savedUser = localStorage.getItem('currentUser');
+      const savedToken = localStorage.getItem('token');
+      
+      if (savedUser && savedToken) {
+        try {
+          const userData = JSON.parse(savedUser);
+          console.log('✅ App.jsx - Found existing user session:', userData.username);
+          setUser(userData);
+        } catch (error) {
+          console.error('❌ App.jsx - Error parsing user data:', error);
+          // Clear invalid data
+          localStorage.removeItem('currentUser');
+          localStorage.removeItem('token');
+        }
+      } else {
+        console.log('ℹ️ App.jsx - No existing session found');
+      }
 
       // Small delay for smoother loading experience
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -193,13 +205,6 @@ function App() {
     initializeApp();
   }, []);
 
-  const toggleSidebar = () => {
-    setSidebarOpen(prev => !prev);
-  };
-
-  const closeSidebar = () => {
-    setSidebarOpen(false);
-  };
 
   const handleLogin = (userData) => {
     console.log('✅ App.jsx - handleLogin called with:', userData.username);
@@ -214,8 +219,6 @@ function App() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
     setUser(null);
-    // Close sidebar on logout
-    setSidebarOpen(false);
   };
 
   // Show loading spinner while checking authentication
@@ -254,20 +257,11 @@ function App() {
             ) : (
               // Show main app when user is logged in
               <>
-                <Navbar 
-                  onMenuToggle={toggleSidebar} 
+                <NavbarModern 
                   user={user}
                   onLogout={handleLogout}
-                  sidebarOpen={sidebarOpen}
                 />
-                <div className="empsync-container">
-                  <Sidebar 
-                    isOpen={sidebarOpen} 
-                    onClose={closeSidebar}
-                    userRole={user.role}
-                    userName={user.name || user.username}
-                  />
-                  <main className={`empsync-main ${sidebarOpen ? 'sidebar-open' : ''}`}>
+                  <main className="empsync-main">
                     <ErrorBoundary>
                       <Suspense fallback={<LoadingSpinner size="large" text="Loading page..." />}>
                         <Routes>
@@ -364,7 +358,6 @@ function App() {
                       </Suspense>
                     </ErrorBoundary>
                   </main>
-                </div>
               </>
             )}
           </div>

@@ -1,81 +1,161 @@
 // src/components/layout/NavbarModern.jsx
 import React, { useState } from 'react';
-import { Bars3Icon, XMarkIcon, UserIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import { NavLink } from 'react-router-dom';
+import { 
+  Bars3Icon, 
+  XMarkIcon, 
+  UserIcon, 
+  ArrowRightOnRectangleIcon,
+  HomeIcon,
+  UserGroupIcon,
+  BuildingOfficeIcon,
+  ChartBarIcon,
+  Cog6ToothIcon
+} from '@heroicons/react/24/outline';
 
 const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleProfileDropdown = () => {
     setProfileDropdownOpen(!profileDropdownOpen);
   };
 
-  return (
-    <nav className="navbar bg-white border-b border-gray-200 shadow-sm fixed top-0 left-0 right-0 z-30">
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Left side - Menu toggle and Logo */}
-          <div className="flex items-center">
-            <button
-              onClick={onMenuToggle}
-              className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-colors duration-200 lg:hidden"
-            >
-              {sidebarOpen ? (
-                <XMarkIcon className="h-6 w-6" />
-              ) : (
-                <Bars3Icon className="h-6 w-6" />
-              )}
-            </button>
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
-            <div className="flex items-center ml-4 lg:ml-0">
-              {/* Logo */}
-              <div className="flex-shrink-0">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">E</span>
-                  </div>
-                  <div className="ml-3">
-                    <h1 className="text-xl font-bold text-gray-900">
-                      <span className="text-primary-600">Emp</span>Sync
-                    </h1>
-                    <p className="text-xs text-gray-500 hidden sm:block">Employee Management</p>
-                  </div>
+  // Navigation items from sidebar
+  const navigation = [
+    {
+      name: 'Dashboard',
+      href: user?.role === 'EMPLOYEE' ? '/employee-dashboard' : '/dashboard',
+      icon: HomeIcon,
+      roles: ['ADMIN', 'EMPLOYEE'],
+    },
+    {
+      name: 'Employees',
+      href: '/employees',
+      icon: UserGroupIcon,
+      roles: ['ADMIN'],
+    },
+    {
+      name: 'Departments',
+      href: '/departments',
+      icon: BuildingOfficeIcon,
+      roles: ['ADMIN', 'EMPLOYEE'],
+    },
+    {
+      name: 'Analytics',
+      href: '/analytics',
+      icon: ChartBarIcon,
+      roles: ['ADMIN'],
+    },
+    {
+      name: 'Settings',
+      href: '/settings',
+      icon: Cog6ToothIcon,
+      roles: ['ADMIN'],
+    },
+    {
+      name: 'Profile',
+      href: '/profile',
+      icon: UserIcon,
+      roles: ['ADMIN', 'EMPLOYEE'],
+    },
+  ];
+
+  // Filter navigation based on user role
+  const filteredNavigation = navigation.filter(item => 
+    user && item.roles.includes(user.role)
+  );
+
+  return (
+    <nav className="navbar-modern">
+      <div className="navbar-container">
+        <div className="navbar-content">
+          {/* Left side - Logo and Navigation */}
+          <div className="navbar-left">
+            {/* Mobile menu button */}
+            {user && (
+              <button
+                onClick={toggleMobileMenu}
+                className="mobile-menu-btn"
+              >
+                {mobileMenuOpen ? (
+                  <XMarkIcon className="h-6 w-6" />
+                ) : (
+                  <Bars3Icon className="h-6 w-6" />
+                )}
+              </button>
+            )}
+
+            {/* Logo */}
+            <div className="navbar-logo">
+              <div className="logo-container">
+                <div className="logo-icon">
+                  <span className="logo-text">E</span>
+                </div>
+                <div className="logo-text-container">
+                  <h1 className="logo-title">
+                    EMPSYNC
+                  </h1>
+                  <p className="logo-subtitle">Employee Management</p>
                 </div>
               </div>
             </div>
+
+            {/* Desktop Navigation Menu */}
+            {user && (
+              <nav className="desktop-nav">
+                {filteredNavigation.map((item) => (
+                  <NavLink
+                    key={item.name}
+                    to={item.href}
+                    className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}
+                  >
+                    <div className="nav-link-content">
+                      <item.icon className="nav-icon" />
+                      <span>{item.name}</span>
+                    </div>
+                  </NavLink>
+                ))}
+              </nav>
+            )}
           </div>
 
           {/* Right side - User info and actions */}
-          <div className="flex items-center space-x-4">
+          <div className="navbar-right">
             {user ? (
               <>
                 {/* User Role Badge - Hidden on mobile */}
-                <div className="hidden sm:block">
-                  <span className="badge badge-primary">
+                <div className="user-role-badge">
+                  <span className="badge-primary">
                     {user.role}
                   </span>
                 </div>
 
                 {/* Profile Dropdown */}
-                <div className="relative">
+                <div className="profile-dropdown">
                   <button
                     onClick={toggleProfileDropdown}
-                    className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                    className="profile-btn"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
+                    <div className="profile-avatar">
                       <UserIcon className="h-5 w-5 text-white" />
                     </div>
-                    <div className="hidden md:block text-left">
-                      <p className="text-sm font-medium text-gray-900">{user.name || user.username}</p>
-                      <p className="text-xs text-gray-500">{user.role}</p>
+                    <div className="profile-info">
+                      <p className="profile-name">{user.name || user.username}</p>
+                      <p className="profile-role">{user.role}</p>
                     </div>
                   </button>
 
                   {/* Dropdown Menu */}
                   {profileDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-large border border-gray-100 py-1 animate-scale-in">
-                      <div className="px-4 py-2 border-b border-gray-100">
-                        <p className="text-sm font-medium text-gray-900">{user.name || user.username}</p>
-                        <p className="text-xs text-gray-500">{user.email || 'No email'}</p>
+                    <div className="dropdown-menu">
+                      <div className="dropdown-header">
+                        <p className="dropdown-name">{user.name || user.username}</p>
+                        <p className="dropdown-email">{user.email || 'No email'}</p>
                       </div>
                       
                       <button
@@ -83,9 +163,9 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
                           window.location.href = '/profile';
                           setProfileDropdownOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                        className="dropdown-item"
                       >
-                        <UserIcon className="h-4 w-4" />
+                        <UserIcon className="dropdown-icon" />
                         <span>Profile</span>
                       </button>
                       
@@ -94,9 +174,9 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
                           onLogout();
                           setProfileDropdownOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 text-sm text-danger-600 hover:bg-danger-50 flex items-center space-x-2"
+                        className="dropdown-item dropdown-logout"
                       >
-                        <ArrowRightOnRectangleIcon className="h-4 w-4" />
+                        <ArrowRightOnRectangleIcon className="dropdown-icon" />
                         <span>Logout</span>
                       </button>
                     </div>
@@ -106,7 +186,7 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
                 {/* Mobile Logout Button */}
                 <button
                   onClick={onLogout}
-                  className="md:hidden p-2 rounded-lg text-danger-600 hover:bg-danger-50 transition-colors duration-200"
+                  className="mobile-logout-btn"
                   title="Logout"
                 >
                   <ArrowRightOnRectangleIcon className="h-5 w-5" />
@@ -115,7 +195,7 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
             ) : (
               <button
                 onClick={() => window.location.href = '/login'}
-                className="btn btn-primary"
+                className="login-btn"
               >
                 Login
               </button>
@@ -127,9 +207,36 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
       {/* Click outside to close dropdown */}
       {profileDropdownOpen && (
         <div
-          className="fixed inset-0 z-20"
+          className="dropdown-overlay"
           onClick={() => setProfileDropdownOpen(false)}
         />
+      )}
+
+      {/* Mobile Navigation Menu */}
+      {mobileMenuOpen && user && (
+        <>
+          <div
+            className="mobile-menu-overlay"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div className="mobile-menu">
+            <nav className="mobile-nav">
+              {filteredNavigation.map((item) => (
+                <NavLink
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={({ isActive }) => `mobile-nav-link ${isActive ? 'mobile-nav-link-active' : ''}`}
+                >
+                  <div className="mobile-nav-content">
+                    <item.icon className="mobile-nav-icon" />
+                    <span>{item.name}</span>
+                  </div>
+                </NavLink>
+              ))}
+            </nav>
+          </div>
+        </>
       )}
     </nav>
   );
