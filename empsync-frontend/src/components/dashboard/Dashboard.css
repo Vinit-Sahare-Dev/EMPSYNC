@@ -4,9 +4,12 @@
 .dashboard {
   min-height: 100vh;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #e94560 100%);
-  padding: 2rem 1.5rem;
+  padding: 2rem 2rem;
+  margin: 0;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   position: relative;
+  width: 100%;
+  max-width: 100%;
 }
 
 .dashboard::before {

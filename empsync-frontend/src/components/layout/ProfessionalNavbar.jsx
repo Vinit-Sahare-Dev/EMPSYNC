@@ -86,7 +86,7 @@ const navigation = [
               </div>
               <div className="brand-text">
                 <h1 className="brand-name">
-                  <span className="brand-highlight">Emp</span>Sync
+                  <span className="brand-highlight">EMP</span>SYNC
                 </h1>
                 <p className="brand-tagline">Employee Management System</p>
               </div>
