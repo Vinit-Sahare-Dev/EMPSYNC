@@ -242,11 +242,21 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
 
   return (
     <>
-      <div className="auth-forms-container">
-        <div className="auth-header">
-          <h2>EMPSYNC Portal</h2>
-          <p>Choose your login method</p>
+      <div className="integrated-auth-container">
+        <div className="auth-shapes">
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+          <div className="shape shape-3"></div>
+          <div className="shape shape-4"></div>
         </div>
+        <div className="auth-forms-container">
+          <div className="auth-header">
+            <div className="auth-icon">
+              <span>🔐</span>
+            </div>
+            <h2>EMPSYNC Portal</h2>
+            <p>Secure authentication system</p>
+          </div>
 
         <div className="auth-tabs">
           <button 
@@ -539,6 +549,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
         <button className="close-btn" onClick={onClose}>
           ×
         </button>
+        </div>
       </div>
     </>
   );

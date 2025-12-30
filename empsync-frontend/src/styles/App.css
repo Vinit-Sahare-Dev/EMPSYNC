@@ -6,38 +6,44 @@
 }
 
 :root {
-  /* Bootstrap Color System */
-  --bs-blue: rgb(128, 128, 192);
-  --bs-indigo: rgb(128, 128, 255);
-  --bs-purple: #6f42c1;
-  --bs-pink: #d63384;
+  /* Modern Purple-Pink Gradient Theme */
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #f093fb;
+  
+  /* Bootstrap Color System - Updated */
+  --bs-blue: #667eea;
+  --bs-indigo: #764ba2;
+  --bs-purple: #f093fb;
+  --bs-pink: #f093fb;
   --bs-red: #dc3545;
   --bs-orange: #fd7e14;
-  --bs-yellow: #ffc107;
-  --bs-green: #198754;
+  --bs-yellow: #fbbf24;
+  --bs-green: #10b981;
   --bs-teal: #20c997;
-  --bs-cyan: #0dcaf0;
+  --bs-cyan: #06b6d4;
   --bs-white: #fff;
   --bs-gray: #6c757d;
   --bs-gray-dark: #343a40;
-  --bs-primary: #0d6efd;
+  --bs-primary: #667eea;
   --bs-secondary: #6c757d;
-  --bs-success: #198754;
-  --bs-info: #0dcaf0;
-  --bs-warning: #ffc107;
+  --bs-success: #10b981;
+  --bs-info: #06b6d4;
+  --bs-warning: #fbbf24;
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
 
   /* Enhanced Theme Variables */
-  --primary-color: var(--bs-primary);
-  --secondary-color: var(--bs-secondary);
-  --success-color: var(--bs-success);
-  --danger-color: var(--bs-danger);
-  --warning-color: var(--bs-warning);
-  --info-color: var(--bs-info);
-  --light-color: var(--bs-light);
-  --dark-color: var(--bs-dark);
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --success-color: #10b981;
+  --danger-color: #dc3545;
+  --warning-color: #fbbf24;
+  --info-color: #06b6d4;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
   
   /* Background Colors */
   --bg-primary: #ffffff;
@@ -57,10 +63,10 @@
   --border-radius-sm: 0.25rem;
   --border-radius-lg: 0.5rem;
   --border-radius-xl: 0.75rem;
-  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-  --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+  --shadow-sm: 0 0.125rem 0.25rem rgba(102, 126, 234, 0.075);
+  --shadow-md: 0 0.5rem 1rem rgba(102, 126, 234, 0.15);
+  --shadow-lg: 0 1rem 3rem rgba(102, 126, 234, 0.175);
+  --shadow-inset: inset 0 1px 2px rgba(102, 126, 234, 0.075);
   
   /* Enhanced Spacing */
   --spacing-xs: 0.25rem;
@@ -71,8 +77,8 @@
   --spacing-xxl: 3rem;
   
   /* Enhanced Transitions */
-  --transition: all 0.15s ease-in-out;
-  --transition-slow: all 0.3s ease;
+  --transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
