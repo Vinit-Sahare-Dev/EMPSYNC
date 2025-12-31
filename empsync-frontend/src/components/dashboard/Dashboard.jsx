@@ -12,7 +12,6 @@ const Dashboard = () => {
     employees: []
   });
   const [backendConnected, setBackendConnected] = useState(false);
-  const [realTimeInsights, setRealTimeInsights] = useState([]);
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
   const navigate = useNavigate();
@@ -26,7 +25,6 @@ const Dashboard = () => {
     }
     
     loadDashboardData();
-    startRealTimeInsights();
   }, [navigate]);
 
   const loadDashboardData = useCallback(async () => {
@@ -52,28 +50,6 @@ const Dashboard = () => {
       processDashboardData(employees);
     }
   }, []);
-
-  const startRealTimeInsights = () => {
-    const insights = [
-      "🚀 IT department leading with 35% growth",
-      "⭐ 5 new team members onboarded",
-      "📈 Marketing reached 50K impressions",
-      "💼 Finance optimized budget by 18%",
-      "🎯 Sales exceeded targets by 27%"
-    ];
-    
-    setRealTimeInsights(insights);
-    
-    const interval = setInterval(() => {
-      setRealTimeInsights(prev => {
-        const newInsights = [...prev];
-        const first = newInsights.shift();
-        return [...newInsights, first];
-      });
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  };
 
   const getDefaultEmployees = () => {
     return [
@@ -229,68 +205,52 @@ const Dashboard = () => {
       {/* Hero Section - Inspired by Landing Page */}
       <div className="dashboard-hero">
         <div className="hero-content">
-          <div className="hero-left">
-            <div className="hero-welcome">
-              <h1 className="hero-title">
-                Welcome back, <span className="hero-name">{currentUser.name}</span>
-              </h1>
-              <p className="hero-subtitle">Team overview & workforce analytics</p>
+          <div className="hero-welcome">
+            <h1 className="hero-title">
+              Welcome back, <span className="hero-name">{currentUser.name}</span>
+            </h1>
+            <p className="hero-subtitle">Team overview & workforce analytics</p>
+          </div>
+          
+          <div className="hero-stats">
+            <div className="hero-stat">
+              <span className="hero-number">{dashboardData.stats.total}</span>
+              <span className="hero-label">Total Employees</span>
             </div>
-            
-            <div className="hero-stats">
-              <div className="hero-stat">
-                <span className="hero-number">{dashboardData.stats.total}</span>
-                <span className="hero-label">Total Employees</span>
-              </div>
-              <div className="hero-stat">
-                <span className="hero-number">{dashboardData.stats.active}</span>
-                <span className="hero-label">Active Now</span>
-              </div>
-              <div className="hero-stat">
-                <span className="hero-number">{dashboardData.stats.departments}</span>
-                <span className="hero-label">Departments</span>
-              </div>
+            <div className="hero-stat">
+              <span className="hero-number">{dashboardData.stats.active}</span>
+              <span className="hero-label">Active Now</span>
+            </div>
+            <div className="hero-stat">
+              <span className="hero-number">{dashboardData.stats.departments}</span>
+              <span className="hero-label">Departments</span>
+            </div>
+            <div className="hero-stat">
+              <span className="hero-number">{dashboardData.stats.newHires}</span>
+              <span className="hero-label">New Hires</span>
             </div>
           </div>
 
-          <div className="hero-right">
-            <div className="live-insights">
-              <div className="insights-header">
-                <span className="insights-icon">📊</span>
-                <span className="insights-title">Live Insights</span>
-              </div>
-              <div className="insights-scroll">
-                {realTimeInsights.map((insight, index) => (
-                  <div key={index} className="insight-item">{insight}</div>
-                ))}
-              </div>
+          <div className="hero-actions">
+            <div className="hero-time">
+              <span className="time-date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              <span className="time-clock">{new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
+            </div>
+            <div className="hero-quick-actions">
+              <button className="hero-action-btn">
+                <span className="action-icon">➕</span>
+                <span className="action-text">Add Employee</span>
+              </button>
+              <button className="hero-action-btn">
+                <span className="action-icon">📊</span>
+                <span className="action-text">View Reports</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Stats Grid */}
-      <div className="stats-section">
-        <div className="stats-grid">
-          <div className="stat-card success-stat">
-            <div className="stat-icon-large">✅</div>
-            <div className="stat-content">
-              <h3>{dashboardData.stats.active}</h3>
-              <p>Active Now</p>
-              <div className="stat-trend positive">+5%</div>
-            </div>
-          </div>
-          <div className="stat-card success-stat">
-            <div className="stat-icon-large">📈</div>
-            <div className="stat-content">
-              <h3>{dashboardData.stats.newHires}</h3>
-              <p>New Hires</p>
-              <div className="stat-trend positive">+{dashboardData.stats.newHires}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      
       {/* Main Content Grid */}
       <div className="dashboard-main-grid">
         {/* Left Column - Recent Employees */}
@@ -298,7 +258,7 @@ const Dashboard = () => {
           <div className="recent-employees-professional">
             <h2>Recent Employees</h2>
             <div className="recent-employees-grid">
-              {dashboardData.employees.slice(0, 8).map((employee, index) => (
+              {dashboardData.employees.slice(0, 4).map((employee, index) => (
                 <div key={`employee-${employee.id || index}`} className="recent-employee-card">
                   <img 
                     src={`https://ui-avatars.com/api/?name=${encodeURIComponent(employee.name)}&background=3B82F6&color=fff&size=64`} 
@@ -343,28 +303,6 @@ const Dashboard = () => {
                   </button>
                 </div>
               )}
-            </div>
-          </div>
-        </div>
-        
-        {/* Right Column - Recent Activity */}
-        <div className="dashboard-right-column">
-          <div className="activity-section-professional">
-            <h2>Recent Team Activity</h2>
-            <div className="activity-grid-professional">
-              {dashboardData.recentActivity.map((activity, index) => (
-                <div key={`activity-${activity.id || index}`} className="activity-card-professional">
-                  <img src={activity.avatar} alt={activity.name} className="activity-avatar" />
-                  <div className="activity-info">
-                    <h4>{activity.name}</h4>
-                    <p>{activity.position}</p>
-                    <div className="activity-meta">
-                      <span className="activity-department">{activity.department}</span>
-                      <span className="activity-time">{activity.time}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
