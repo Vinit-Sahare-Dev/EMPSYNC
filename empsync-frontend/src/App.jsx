@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, { useState, Suspense, lazy, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ToastProvider from './components/ui/Toast';
@@ -59,26 +59,14 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-// Lazy load components with better error handling
-const lazyWithRetry = (componentImport) =>
-  lazy(async () => {
-    try {
-      return await componentImport();
-    } catch (error) {
-      console.error('Lazy loading failed:', error);
-      // Retry once
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      return await componentImport();
-    }
-  });
-
-const Dashboard = lazyWithRetry(() => import('./components/dashboard/Dashboard'));
-const EmployeeGrid = lazyWithRetry(() => import('./components/employees/EmployeeGrid'));
-const Analytics = lazyWithRetry(() => import('./components/dashboard/Analytics'));
-const Settings = lazyWithRetry(() => import('./components/settings/Settings'));
-const LandingPage = lazyWithRetry(() => import('./components/auth/LandingPage'));
-const DepartmentGrid = lazyWithRetry(() => import('./components/departments/DepartmentGrid'));
-const Profile = lazyWithRetry(() => import('./components/profile/Profile'));
+// Direct imports for faster loading
+import Dashboard from './components/dashboard/Dashboard';
+import EmployeeGrid from './components/employees/EmployeeGrid';
+import Analytics from './components/dashboard/Analytics';
+import Settings from './components/settings/Settings';
+import LandingPage from './components/auth/LandingPage';
+import DepartmentGrid from './components/departments/DepartmentGrid';
+import Profile from './components/profile/Profile';
 
 // Employee Dashboard (Limited Access)
 const EmployeeDashboard = () => (
@@ -119,7 +107,14 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
     const savedUser = localStorage.getItem('currentUser');
     if (savedUser) {
       try {
-        setUser(JSON.parse(savedUser));
+        const parsedUser = JSON.parse(savedUser);
+        // Ensure user object has the expected structure
+        const safeUser = {
+          username: String(parsedUser.username || ''),
+          role: String(parsedUser.role || 'USER'),
+          ...parsedUser
+        };
+        setUser(safeUser);
       } catch (error) {
         console.error('Error parsing user data:', error);
         localStorage.removeItem('currentUser');
@@ -137,15 +132,15 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
     return <Navigate to="/" replace />;
   }
 
-  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
-    console.log('❌ Role not allowed:', user.role, 'Allowed:', allowedRoles);
+  if (allowedRoles.length > 0 && !allowedRoles.includes(String(user.role || ''))) {
+    console.log('❌ Role not allowed:', String(user.role), 'Allowed:', allowedRoles);
     return (
       <div className="access-denied">
         <div className="access-denied-content">
           <h2>Access Denied</h2>
           <p>You don't have permission to access this page.</p>
           <p className="role-info">
-            Your role: <strong>{user.role}</strong>
+            Your role: <strong>{String(user.role || 'Unknown')}</strong>
           </p>
           <div className="access-actions">
             <button 
@@ -158,7 +153,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
               onClick={() => window.location.href = '/dashboard'} 
               className="btn btn-outline"
             >
-              Go to Dashboard
+              Dashboard
             </button>
           </div>
         </div>
@@ -166,7 +161,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
     );
   }
 
-  console.log('✅ Access granted for:', user.username);
+  console.log('✅ Access granted for:', String(user.username || 'Unknown'));
   return children;
 };
 
@@ -245,14 +240,12 @@ function App() {
             {!user ? (
               // Show landing page when no user is logged in
               <ErrorBoundary>
-                <Suspense fallback={<LoadingSpinner size="large" text="Loading application..." />}>
-                  <Routes>
-                    <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
-                    <Route path="/login" element={<LandingPage onLogin={handleLogin} />} />
-                    <Route path="/signup" element={<LandingPage onLogin={handleLogin} />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                  </Routes>
-                </Suspense>
+                <Routes>
+                  <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
+                  <Route path="/login" element={<LandingPage onLogin={handleLogin} />} />
+                  <Route path="/signup" element={<LandingPage onLogin={handleLogin} />} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
               </ErrorBoundary>
             ) : (
               // Show main app when user is logged in
@@ -263,8 +256,7 @@ function App() {
                 />
                   <main className="empsync-main">
                     <ErrorBoundary>
-                      <Suspense fallback={<LoadingSpinner size="large" text="Loading page..." />}>
-                        <Routes>
+                      <Routes>
                           {/* Public routes - redirect to dashboard */}
                           <Route 
                             path="/" 
@@ -355,7 +347,6 @@ function App() {
                             } 
                           />
                         </Routes>
-                      </Suspense>
                     </ErrorBoundary>
                   </main>
               </>

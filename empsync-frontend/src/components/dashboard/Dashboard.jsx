@@ -96,6 +96,18 @@ const Dashboard = () => {
       {
         id: 5, name: "David Brown", email: "david@company.com", department: "IT",
         position: "IT Manager", status: "Active", joinDate: new Date().toISOString(), salary: 95000
+      },
+      {
+        id: 6, name: "Emily Davis", email: "emily@company.com", department: "Sales",
+        position: "Sales Representative", status: "Active", joinDate: new Date().toISOString(), salary: 60000
+      },
+      {
+        id: 7, name: "Robert Miller", email: "robert@company.com", department: "IT",
+        position: "DevOps Engineer", status: "Active", joinDate: new Date().toISOString(), salary: 80000
+      },
+      {
+        id: 8, name: "Lisa Anderson", email: "lisa@company.com", department: "HR",
+        position: "Recruiter", status: "Active", joinDate: new Date().toISOString(), salary: 55000
       }
     ];
   };
@@ -161,13 +173,6 @@ const Dashboard = () => {
       employees
     });
   };
-
-  const quickActions = [
-    { id: 'add', icon: '👤', label: 'Add Employee', action: () => navigate('/employees') },
-    { id: 'insights', icon: '📊', label: 'Live Insights', action: () => console.log('Live insights activated') },
-    { id: 'reports', icon: '📈', label: 'Reports', action: () => console.log('Generating reports...') },
-    { id: 'analytics', icon: '🔍', label: 'Analytics', action: () => console.log('Opening analytics') }
-  ];
 
   const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
@@ -267,15 +272,6 @@ const Dashboard = () => {
       {/* Stats Grid */}
       <div className="stats-section">
         <div className="stats-grid">
-          <div className="stat-card primary-stat">
-            <div className="stat-icon-large">👥</div>
-            <div className="stat-content">
-              <h3>{dashboardData.stats.total}</h3>
-              <p>Total Employees</p>
-              <div className="stat-trend positive">+12%</div>
-            </div>
-          </div>
-          
           <div className="stat-card success-stat">
             <div className="stat-icon-large">✅</div>
             <div className="stat-content">
@@ -295,81 +291,82 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Department Distribution */}
-      <div className="chart-section-professional">
-        <div className="chart-header-professional">
-          <div>
-            <h2>Department Distribution</h2>
-            <span className="chart-subtitle">Team composition overview</span>
+      {/* Main Content Grid */}
+      <div className="dashboard-main-grid">
+        {/* Left Column - Recent Employees */}
+        <div className="dashboard-left-column">
+          <div className="recent-employees-professional">
+            <h2>Recent Employees</h2>
+            <div className="recent-employees-grid">
+              {dashboardData.employees.slice(0, 8).map((employee, index) => (
+                <div key={`employee-${employee.id || index}`} className="recent-employee-card">
+                  <img 
+                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(employee.name)}&background=3B82F6&color=fff&size=64`} 
+                    alt={employee.name} 
+                    className="recent-employee-avatar" 
+                  />
+                  <div className="recent-employee-info">
+                    <h4>{employee.name}</h4>
+                    <p>{employee.position}</p>
+                    <div className="recent-employee-meta">
+                      <span className="employee-department">{employee.department}</span>
+                      <span className="employee-status active">Active</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="connection-status">
-            <span className={`status-indicator ${backendConnected ? 'connected' : 'demo'}`}></span>
-            <span>{backendConnected ? 'Live Data' : 'Demo Mode'}</span>
+          
+          {/* Department Distribution */}
+          <div className="chart-section-professional">
+            <div className="chart-header-professional">
+              <div>
+                <h2>Department Distribution</h2>
+                <span className="chart-subtitle">Team composition overview</span>
+              </div>
+              <div className="connection-status">
+                <span className={`status-indicator ${backendConnected ? 'connected' : 'demo'}`}></span>
+                <span>{backendConnected ? 'Live Data' : 'Demo Mode'}</span>
+              </div>
+            </div>
+            
+            <div className="chart-container-professional">
+              {dashboardData.departmentStats.length > 0 ? (
+                <DepartmentChart data={dashboardData.departmentStats} />
+              ) : (
+                <div className="no-chart-data">
+                  <div className="no-data-icon">📊</div>
+                  <p>No department data available</p>
+                  <button className="btn btn-primary" onClick={loadDashboardData} disabled={loading}>
+                    {loading ? 'Loading...' : 'Load Sample Data'}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         
-        <div className="chart-container-professional">
-          {dashboardData.departmentStats.length > 0 ? (
-            <DepartmentChart data={dashboardData.departmentStats} />
-          ) : (
-            <div className="no-chart-data">
-              <div className="no-data-icon">📊</div>
-              <p>No department data available</p>
-              <button className="btn btn-primary" onClick={loadDashboardData} disabled={loading}>
-                {loading ? 'Loading...' : 'Load Sample Data'}
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="quick-actions-professional">
-        <h2>Quick Actions</h2>
-        <div className="actions-grid-professional">
-          <button className="action-card" onClick={() => navigate('/employees')}>
-            <div className="action-icon-large">👤</div>
-            <div className="action-content">
-              <h3>Add Employee</h3>
-              <p>Register new team member</p>
-            </div>
-          </button>
-          
-          <button className="action-card" onClick={() => showToast('success', 'Opening analytics dashboard')}>
-            <div className="action-icon-large">📊</div>
-            <div className="action-content">
-              <h3>View Analytics</h3>
-              <p>Detailed insights & reports</p>
-            </div>
-          </button>
-          
-          <button className="action-card" onClick={() => showToast('info', 'Generating reports')}>
-            <div className="action-icon-large">📈</div>
-            <div className="action-content">
-              <h3>Generate Reports</h3>
-              <p>Export workforce data</p>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="activity-section-professional">
-        <h2>Recent Team Activity</h2>
-        <div className="activity-grid-professional">
-          {dashboardData.recentActivity.map(activity => (
-            <div key={activity.id} className="activity-card-professional">
-              <img src={activity.avatar} alt={activity.name} className="activity-avatar" />
-              <div className="activity-info">
-                <h4>{activity.name}</h4>
-                <p>{activity.position}</p>
-                <div className="activity-meta">
-                  <span className="activity-department">{activity.department}</span>
-                  <span className="activity-time">{activity.time}</span>
+        {/* Right Column - Recent Activity */}
+        <div className="dashboard-right-column">
+          <div className="activity-section-professional">
+            <h2>Recent Team Activity</h2>
+            <div className="activity-grid-professional">
+              {dashboardData.recentActivity.map((activity, index) => (
+                <div key={`activity-${activity.id || index}`} className="activity-card-professional">
+                  <img src={activity.avatar} alt={activity.name} className="activity-avatar" />
+                  <div className="activity-info">
+                    <h4>{activity.name}</h4>
+                    <p>{activity.position}</p>
+                    <div className="activity-meta">
+                      <span className="activity-department">{activity.department}</span>
+                      <span className="activity-time">{activity.time}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>

@@ -230,7 +230,7 @@ body {
 .employee-header {
   background: linear-gradient(135deg, var(--bs-primary), var(--bs-indigo));
   color: white;
-  padding: var(--spacing-xl);
+  padding: var(--spacing-md);
   position: relative;
   overflow: hidden;
 }
@@ -255,47 +255,51 @@ body {
 .employee-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
 }
 
 .stat-card {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-sm);
   border-radius: var(--border-radius);
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .stat-number {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   display: block;
 }
 
 .stat-label {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   opacity: 0.9;
 }
 
 /* Enhanced Employee Cards */
 .employee-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--spacing-lg);
-  padding: var(--spacing-xl);
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  width: 100%;
 }
 
 .employee-card {
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-xs);
   transition: var(--transition);
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .employee-card::before {
@@ -323,12 +327,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 .employee-avatar {
-  width: 60px;
-  height: 60px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--bs-primary), var(--bs-info));
   color: white;
@@ -336,9 +340,9 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 1.25rem;
-  box-shadow: var(--shadow-md);
-  border: 3px solid white;
+  font-size: 0.8rem;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid white;
 }
 
 .employee-actions {
@@ -347,16 +351,16 @@ body {
 }
 
 .employee-info h3 {
-  margin: var(--spacing-sm) 0 var(--spacing-xs) 0;
+  margin: var(--spacing-xs) 0 var(--spacing-xs) 0;
   color: var(--text-primary);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
 .employee-email {
   color: var(--bs-primary);
   margin: 0 0 var(--spacing-xs) 0;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
@@ -367,15 +371,16 @@ body {
   color: var(--text-primary);
   margin: 0 0 var(--spacing-xs) 0;
   background: var(--bs-light);
-  padding: 0.25rem 0.5rem;
+  padding: 0.2rem 0.4rem;
   border-radius: var(--border-radius-sm);
   display: inline-block;
+  font-size: 0.75rem;
 }
 
 .employee-department {
   color: var(--text-secondary);
-  margin: 0 0 var(--spacing-md) 0;
-  font-size: 0.9rem;
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
@@ -384,9 +389,9 @@ body {
 .employee-details {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
-  font-size: 0.85rem;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+  font-size: 0.75rem;
   color: var(--text-secondary);
 }
 
@@ -406,8 +411,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
   border-top: 1px solid var(--border-color);
+  margin-top: auto;
 }
 
 /* Enhanced Status Badges */
@@ -783,7 +789,7 @@ body {
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1200px) {
   .employee-cards {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -809,8 +815,19 @@ body {
   }
   
   .employee-cards {
-    grid-template-columns: 1fr;
-    padding: var(--spacing-md);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+  }
+  
+  .employee-card {
+    padding: var(--spacing-xs);
+  }
+  
+  .employee-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.7rem;
   }
   
   .filter-group {
@@ -831,7 +848,6 @@ body {
   .bulk-buttons {
     justify-content: space-between;
   }
-  
   .employee-table {
     font-size: 0.8rem;
   }
@@ -845,6 +861,43 @@ body {
 @media (max-width: 480px) {
   .navbar-brand h1 {
     font-size: 1.2rem;
+  }
+  
+  .employee-header {
+    padding: var(--spacing-sm);
+  }
+  
+  .employee-cards {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+  }
+  
+  .employee-card {
+    padding: var(--spacing-xs);
+  }
+  
+  .employee-avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 0.6rem;
+  }
+  
+  .employee-info h3 {
+    font-size: 0.85rem;
+  }
+  
+  .employee-email {
+    font-size: 0.7rem;
+  }
+  
+  .employee-position {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.3rem;
+  }
+  
+  .employee-department {
+    font-size: 0.7rem;
   }
   
   .employee-card-header {
