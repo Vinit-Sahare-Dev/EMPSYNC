@@ -1,7 +1,7 @@
 /* src/components/employee/EmployeeDashboard.css */
 .employee-dashboard {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #e94560 100%);
   padding: 20px;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .dashboard-header {
-  background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #e94560 100%);
   border-radius: 12px;
   padding: 1rem 1.5rem;
   margin-bottom: 1rem;

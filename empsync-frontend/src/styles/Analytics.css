@@ -1,9 +1,9 @@
 /* src/styles/Analytics.css - Enhanced with Bootstrap */
 .analytics-container {
-  padding: 1.5rem;
+  padding: 12px;
   max-width: 1400px;
   margin: 0 auto;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  background: #f8fafc;
   min-height: 100vh;
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
@@ -13,15 +13,12 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 2rem;
-  background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
+  margin-bottom: 1.5rem;
+  background: #ffffff;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
   position: relative;
   overflow: hidden;
 }
@@ -32,19 +29,15 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #3B82F6, #06B6D4, #8B5CF6);
+  height: 3px;
+  background: #3b82f6;
 }
 
 .header-content h1 {
   color: #1f2937;
-  margin-bottom: 0.5rem;
-  font-size: 1.75rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #1f2937, #374151);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin-bottom: 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .header-content p {
@@ -122,26 +115,23 @@
 /* Enhanced Metrics Grid */
 .metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .metric-card {
-  background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
-  border-radius: 1rem;
-  padding: 2rem;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
 }
 
 .metric-card::before {
@@ -149,9 +139,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--metric-color), transparent 70%);
+  width: 3px;
+  height: 100%;
+  background: var(--metric-color);
 }
 
 .metric-card.primary { --metric-color: #3B82F6; }
@@ -168,39 +158,35 @@
 }
 
 .metric-icon {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   flex-shrink: 0;
   transition: all 0.3s ease;
 }
 
 .metric-card.primary .metric-icon {
-  background: linear-gradient(135deg, #DBEAFE, #BFDBFE);
-  color: #1D4ED8;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  background: #dbeafe;
+  color: #1d4ed8;
 }
 
 .metric-card.success .metric-icon {
-  background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
-  color: #065F46;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  background: #d1fae5;
+  color: #065f46;
 }
 
 .metric-card.warning .metric-icon {
-  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-  color: #92400E;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+  background: #fef3c7;
+  color: #92400e;
 }
 
 .metric-card.info .metric-icon {
-  background: linear-gradient(135deg, #CFFAFE, #A5F3FC);
-  color: #0E7490;
-  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.2);
+  background: #e0f2fe;
+  color: #075985;
 }
 
 .metric-card:hover .metric-icon {
@@ -222,15 +208,11 @@
 }
 
 .metric-value {
-  font-size: 2.25rem;
-  font-weight: 800;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: #1f2937;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   line-height: 1;
-  background: linear-gradient(135deg, #1f2937, #374151);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .metric-change {
@@ -244,26 +226,23 @@
 }
 
 .metric-change.positive {
-  background: linear-gradient(135deg, #D1FAE5, #A7F3D0);
-  color: #065F46;
+  background: #d1fae5;
+  color: #065f46;
 }
 
 .metric-change.negative {
-  background: linear-gradient(135deg, #FEE2E2, #FECACA);
-  color: #991B1B;
+  background: #fee2e2;
+  color: #991b1b;
 }
 
 /* Enhanced Sections */
 .section {
-  background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  margin-bottom: 1.5rem;
-  backdrop-filter: blur(10px);
+  background: #ffffff;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
   position: relative;
   overflow: hidden;
 }
@@ -274,22 +253,18 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #3B82F6, #06B6D4);
+  height: 2px;
+  background: #6366f1;
 }
 
 .section h2 {
   color: #1f2937;
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #1f2937, #374151);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .section h2::before {
@@ -300,47 +275,50 @@
 /* Enhanced Salary Statistics */
 .salary-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
 }
 
 .salary-card {
-  color: white;
-  padding: 2rem;
-  border-radius: 1rem;
+  color: #1f2937;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
 }
 
 .salary-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  display: none;
 }
 
 .salary-card:nth-child(1) {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  color: #075985;
 }
 
 .salary-card:nth-child(2) {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
 }
 
 .salary-card:nth-child(3) {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
 }
 
 .salary-card:nth-child(4) {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
 }
 
 .salary-card:hover {
@@ -349,7 +327,7 @@
 }
 
 .salary-icon {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   opacity: 0.9;
   position: relative;
   z-index: 1;
@@ -376,9 +354,9 @@
 }
 
 .salary-amount {
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
   line-height: 1;
 }
 
@@ -391,17 +369,17 @@
 /* Enhanced Department Grid */
 .department-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
 }
 
 .department-card {
-  background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
+  background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 1rem;
-  padding: 1.5rem;
+  border-radius: 0.75rem;
+  padding: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   position: relative;
   overflow: hidden;
 }
@@ -412,8 +390,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #3B82F6, #06B6D4);
+  height: 2px;
+  background: #8b5cf6;
 }
 
 .department-card:hover {
@@ -439,13 +417,12 @@
 }
 
 .employee-count {
-  background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+  background: #3b82f6;
   color: white;
   padding: 0.35rem 0.75rem;
   border-radius: 1rem;
   font-size: 0.75rem;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .dept-metrics {
@@ -491,21 +468,14 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #10B981, #34D399);
+  background: #10b981;
   border-radius: 4px;
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
 .progress-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  animation: shimmer 2s infinite;
+  display: none;
 }
 
 @keyframes shimmer {

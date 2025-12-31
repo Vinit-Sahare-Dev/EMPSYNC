@@ -212,11 +212,7 @@ const Settings = () => {
 
   return (
     <div className="settings-container">
-      <div className="settings-header">
-        <h1>Settings & Configuration</h1>
-        <p>Manage your EMPSYNC application preferences and system configuration</p>
-      </div>
-
+      
       <div className="settings-layout">
         {/* Sidebar Navigation */}
         <div className="settings-sidebar">

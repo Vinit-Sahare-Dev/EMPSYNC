@@ -1,0 +1,18 @@
+# Backend
+empsync-backend/target/
+empsync-backend/.mvn/
+empsync-backend/.idea/
+empsync-backend/src/test/
+empsync-backend/logs/
+
+# Frontend
+empsync-backend/node_modules/
+empsync-backend/dist/
+empsync-backend/.vite/
+empsync-backend/.env.local
+empsync-backend/.env.production
+
+# System
+.DS_Store
+Thumbs.db
+*.log

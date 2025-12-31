@@ -237,13 +237,13 @@ const Dashboard = () => {
               <span className="time-clock">{new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
             <div className="hero-quick-actions">
-              <button className="hero-action-btn">
+              <button className="hero-action-btn" onClick={() => navigate('/employees')}>
                 <span className="action-icon">➕</span>
                 <span className="action-text">Add Employee</span>
               </button>
-              <button className="hero-action-btn">
+              <button className="hero-action-btn" onClick={() => navigate('/analytics')}>
                 <span className="action-icon">📊</span>
-                <span className="action-text">View Reports</span>
+                <span className="action-text">View Analytics</span>
               </button>
             </div>
           </div>
