@@ -6,11 +6,11 @@
 }
 
 :root {
-  /* Modern Purple-Pink Gradient Theme */
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  --primary-color: #667eea;
-  --secondary-color: #764ba2;
-  --accent-color: #f093fb;
+  /* Modern Blue Gradient Theme - Matching Employee Header */
+  --primary-gradient: linear-gradient(135deg, #3B82F6 0%, #1E40AF 50%, #1E3A8A 100%);
+  --primary-color: #3B82F6;
+  --secondary-color: #1E40AF;
+  --accent-color: #60A5FA;
   
   /* Bootstrap Color System - Updated */
   --bs-blue: #667eea;

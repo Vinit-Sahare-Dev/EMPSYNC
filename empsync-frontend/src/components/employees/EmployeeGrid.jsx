@@ -2,29 +2,24 @@
 import React, { useState, useEffect } from 'react';
 import EmployeeModal from './EmployeeModal';
 import EmployeeCard from './EmployeeCard';
-import EmployeeTable from './EmployeeTable';
 import { empSyncAPI } from '../../services/apiService';
 
 // Safe toast fallback
 const useToastFallback = () => {
   return {
     showToast: (type, message) => {
-      console.log(`${type}: ${message}`);
-      // Simple notification fallback
+      // Disabled - no notifications
       const notification = document.createElement('div');
-      notification.className = `temp-toast temp-toast-${type}`;
-      notification.textContent = message;
-      notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 12px 20px;
-        background: ${type === 'error' ? '#f44336' : type === 'success' ? '#4caf50' : '#2196f3'};
-        color: white;
-        border-radius: 4px;
-        z-index: 10000;
-        max-width: 300px;
-      `;
+      notification.style.position = 'fixed';
+      notification.style.top = '50%';
+      notification.style.left = '50%';
+      notification.style.transform = 'translate(-50%, -50%)';
+      notification.style.background = `${type === 'error' ? '#f44336' : type === 'success' ? '#4caf50' : '#2196f3'}`;
+      notification.style.color = 'white';
+      notification.style.borderRadius = '4px';
+      notification.style.zIndex = '10000';
+      notification.style.maxWidth = '300px';
+      notification.innerHTML = message;
       document.body.appendChild(notification);
       
       setTimeout(() => {
@@ -121,24 +116,17 @@ const EmployeeGrid = ({ view = "grid" }) => {
   // Handle adding new employee - BACKEND ONLY
   const handleAddEmployee = async (employeeData) => {
     try {
-      console.log('📨 Creating employee via backend API:', employeeData);
-
+      // Employee created successfully - no notifications
       const response = await empSyncAPI.createEmployee(employeeData);
-      console.log('Backend create response:', response);
-
+      
       if (response.success) {
-        toast.showToast('success', response.message || 'Employee added successfully to database!');
-        setIsModalOpen(false);
-
         // Reload fresh data from backend
         await loadEmployeesFromBackend();
       } else {
-        throw new Error(response.message || 'Failed to create employee in database');
+        // Handle error silently
       }
     } catch (error) {
-      console.error('❌ Error adding employee to backend:', error);
-      toast.showToast('error', `Failed to add employee: ${error.message}`);
-      // Don't fallback to local storage - keep modal open for retry
+      // Handle error silently
     }
   };
 

@@ -44,7 +44,7 @@ const Dashboard = () => {
         processDashboardData(employees);
       }
     } catch (error) {
-      console.log('Using fallback data');
+      // Silently use fallback data without console logs
       const savedEmployees = localStorage.getItem('employees');
       const employees = savedEmployees ? JSON.parse(savedEmployees) : getDefaultEmployees();
       processDashboardData(employees);
@@ -131,13 +131,13 @@ const Dashboard = () => {
 
     const recentActivity = employees
       .sort((a, b) => new Date(b.joinDate) - new Date(a.joinDate))
-      .slice(0, 3)
+      .slice(0, 6)
       .map(emp => ({
         id: emp.id || Math.random(),
         name: emp.name,
         department: emp.department,
         position: emp.position,
-        time: 'Recently',
+        time: 'Recently Joined',
         avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(emp.name)}&background=3B82F6&color=fff&size=64`,
         status: 'active'
       }));
@@ -149,8 +149,6 @@ const Dashboard = () => {
       employees
     });
   };
-
-  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
   const DepartmentChart = ({ data }) => {
     const maxCount = Math.max(...data.map(dept => dept.count), 1);
@@ -200,6 +198,8 @@ const Dashboard = () => {
     );
   };
 
+  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
   return (
     <div className="dashboard-professional">
       {/* Hero Section - Inspired by Landing Page */}
@@ -233,78 +233,62 @@ const Dashboard = () => {
 
           <div className="hero-actions">
             <div className="hero-time">
-              <span className="time-date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
-              <span className="time-clock">{new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
+              <span className="time-date">
+                {new Date().toLocaleDateString('en-US', { 
+                  weekday: 'long', 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </span>
+              <span className="time-clock">
+                {new Date().toLocaleTimeString('en-US', { 
+                  hour: '2-digit', 
+                  minute: '2-digit' 
+                })}
+              </span>
             </div>
             <div className="hero-quick-actions">
-              <button className="hero-action-btn">
+              <button className="hero-action-btn" onClick={() => navigate('/employees')}>
                 <span className="action-icon">➕</span>
                 <span className="action-text">Add Employee</span>
-              </button>
-              <button className="hero-action-btn">
-                <span className="action-icon">📊</span>
-                <span className="action-text">View Reports</span>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      
       {/* Main Content Grid */}
-      <div className="dashboard-main-grid">
-        {/* Left Column - Recent Employees */}
-        <div className="dashboard-left-column">
-          <div className="recent-employees-professional">
-            <h2>Recent Employees</h2>
-            <div className="recent-employees-grid">
-              {dashboardData.employees.slice(0, 4).map((employee, index) => (
-                <div key={`employee-${employee.id || index}`} className="recent-employee-card">
-                  <img 
-                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(employee.name)}&background=3B82F6&color=fff&size=64`} 
-                    alt={employee.name} 
-                    className="recent-employee-avatar" 
-                  />
-                  <div className="recent-employee-info">
-                    <h4>{employee.name}</h4>
-                    <p>{employee.position}</p>
-                    <div className="recent-employee-meta">
-                      <span className="employee-department">{employee.department}</span>
-                      <span className="employee-status active">Active</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+      <div className="chart-section-professional">
+        <div className="chart-header-professional">
+          <div>
+            <h2>Department Distribution</h2>
+            <span className="chart-subtitle">Team composition overview</span>
           </div>
-          
-          {/* Department Distribution */}
-          <div className="chart-section-professional">
-            <div className="chart-header-professional">
-              <div>
-                <h2>Department Distribution</h2>
-                <span className="chart-subtitle">Team composition overview</span>
-              </div>
-              <div className="connection-status">
-                <span className={`status-indicator ${backendConnected ? 'connected' : 'demo'}`}></span>
-                <span>{backendConnected ? 'Live Data' : 'Demo Mode'}</span>
-              </div>
-            </div>
-            
-            <div className="chart-container-professional">
-              {dashboardData.departmentStats.length > 0 ? (
-                <DepartmentChart data={dashboardData.departmentStats} />
-              ) : (
-                <div className="no-chart-data">
-                  <div className="no-data-icon">📊</div>
-                  <p>No department data available</p>
-                  <button className="btn btn-primary" onClick={loadDashboardData} disabled={loading}>
-                    {loading ? 'Loading...' : 'Load Sample Data'}
-                  </button>
-                </div>
-              )}
-            </div>
+          <div className="connection-status">
+            <span className={`status-indicator ${backendConnected ? 'connected' : 'demo'}`}></span>
+            <span className="status-text">
+              {backendConnected ? 'Live Data' : 'Demo Mode'}
+            </span>
           </div>
+        </div>
+
+        <div className="chart-container-professional">
+          {dashboardData.departmentStats.length > 0 ? (
+            <DepartmentChart data={dashboardData.departmentStats} />
+          ) : (
+            <div className="no-chart-data">
+              <div className="no-data-icon">📊</div>
+              <p>No department data available</p>
+              <button 
+                className="btn btn-primary" 
+                onClick={loadDashboardData} 
+                disabled={loading}
+              >
+                {loading ? 'Loading...' : 'Load Sample Data'}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

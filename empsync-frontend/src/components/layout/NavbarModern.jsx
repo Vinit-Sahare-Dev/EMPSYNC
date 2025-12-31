@@ -93,14 +93,15 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
             {/* Logo */}
             <div className="navbar-logo">
               <div className="logo-container">
-                <div className="logo-icon">
-                  <span className="logo-text">E</span>
-                </div>
+                <img 
+                  src="/empSync-logo.svg" 
+                  alt="EmpSync Logo" 
+                  className="logo-icon"
+                />
                 <div className="logo-text-container">
                   <h1 className="logo-title">
                     EMPSYNC
                   </h1>
-                  <p className="logo-subtitle">Employee Management</p>
                 </div>
               </div>
             </div>
