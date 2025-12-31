@@ -14,7 +14,7 @@ const LandingPage = ({ onLogin }) => {
   });
   const [loading, setLoading] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true); // Start as visible for instant loading
   
   const navigate = useNavigate();
   const { showToast } = useToast();
@@ -24,17 +24,11 @@ const LandingPage = ({ onLogin }) => {
       setScrolled(window.scrollY > 50);
     };
 
-    const handleVisibility = () => {
-      setIsVisible(true);
-    };
-
+    // Remove load event listener for instant visibility
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('load', handleVisibility);
-    handleVisibility();
-
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('load', handleVisibility);
     };
   }, []);
 

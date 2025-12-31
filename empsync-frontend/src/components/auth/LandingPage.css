@@ -2011,10 +2011,6 @@
   margin: 0;
 }
 
-.footer-column li {
-  margin-bottom: 0.75rem;
-}
-
 .footer-column a {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
