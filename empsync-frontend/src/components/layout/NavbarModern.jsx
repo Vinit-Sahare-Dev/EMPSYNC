@@ -1,10 +1,11 @@
 // src/components/layout/NavbarModern.jsx
 import React, { useState } from 'react';
+import './NavbarModern.css';
 import { NavLink } from 'react-router-dom';
-import { 
-  Bars3Icon, 
-  XMarkIcon, 
-  UserIcon, 
+import {
+  Bars3Icon,
+  XMarkIcon,
+  UserIcon,
   ArrowRightOnRectangleIcon,
   HomeIcon,
   UserGroupIcon,
@@ -66,7 +67,7 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
   ];
 
   // Filter navigation based on user role
-  const filteredNavigation = navigation.filter(item => 
+  const filteredNavigation = navigation.filter(item =>
     user && item.roles.includes(user.role)
   );
 
@@ -93,9 +94,9 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
             {/* Logo */}
             <div className="navbar-logo">
               <div className="logo-container">
-                <img 
-                  src="/empSync-logo.svg" 
-                  alt="EmpSync Logo" 
+                <img
+                  src="/empSync-logo.svg"
+                  alt="EmpSync Logo"
                   className="logo-icon"
                 />
                 <div className="logo-text-container">
@@ -158,7 +159,7 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
                         <p className="dropdown-name">{user.name || user.username}</p>
                         <p className="dropdown-email">{user.email || 'No email'}</p>
                       </div>
-                      
+
                       <button
                         onClick={() => {
                           window.location.href = '/profile';
@@ -169,7 +170,7 @@ const NavbarModern = ({ onMenuToggle, user, onLogout, sidebarOpen }) => {
                         <UserIcon className="dropdown-icon" />
                         <span>Profile</span>
                       </button>
-                      
+
                       <button
                         onClick={() => {
                           onLogout();

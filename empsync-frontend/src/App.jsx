@@ -37,14 +37,14 @@ class ErrorBoundary extends React.Component {
               </details>
             )}
             <div className="error-actions">
-              <button 
-                onClick={() => window.location.reload()} 
+              <button
+                onClick={() => window.location.reload()}
                 className="btn btn-primary"
               >
                 Reload Page
               </button>
-              <button 
-                onClick={() => this.setState({ hasError: false, error: null })} 
+              <button
+                onClick={() => this.setState({ hasError: false, error: null })}
                 className="btn btn-outline"
               >
                 Try Again
@@ -60,6 +60,7 @@ class ErrorBoundary extends React.Component {
 }
 
 // Direct imports for faster loading
+// Direct imports for faster loading
 import Dashboard from './components/dashboard/Dashboard';
 import EmployeeGrid from './components/employees/EmployeeGrid';
 import Analytics from './components/dashboard/Analytics';
@@ -67,36 +68,8 @@ import Settings from './components/settings/Settings';
 import LandingPage from './components/auth/LandingPage';
 import DepartmentGrid from './components/departments/DepartmentGrid';
 import Profile from './components/profile/Profile';
+import EmployeeDashboard from './components/employee/EmployeeDashboard';
 
-// Employee Dashboard (Limited Access)
-const EmployeeDashboard = () => (
-  <div className="employee-dashboard">
-    <div className="dashboard-header">
-      <h1>Employee Dashboard</h1>
-      <p>Welcome to your employee portal</p>
-    </div>
-    <div className="employee-welcome">
-      <div className="welcome-card">
-        <h3>👋 Welcome, Employee!</h3>
-        <p>This is your personalized dashboard with limited access.</p>
-        <div className="employee-features">
-          <div className="feature-item">
-            <span className="feature-icon">📊</span>
-            <span>View Basic Analytics</span>
-          </div>
-          <div className="feature-item">
-            <span className="feature-icon">👥</span>
-            <span>View Employee Directory</span>
-          </div>
-          <div className="feature-item">
-            <span className="feature-icon">👤</span>
-            <span>Access Your Profile</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
@@ -143,14 +116,14 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
             Your role: <strong>{String(user.role || 'Unknown')}</strong>
           </p>
           <div className="access-actions">
-            <button 
-              onClick={() => window.history.back()} 
+            <button
+              onClick={() => window.history.back()}
               className="btn btn-primary"
             >
               Go Back
             </button>
-            <button 
-              onClick={() => window.location.href = '/dashboard'} 
+            <button
+              onClick={() => window.location.href = '/dashboard'}
               className="btn btn-outline"
             >
               Dashboard
@@ -176,7 +149,7 @@ function App() {
       // Check for existing user session in localStorage
       const savedUser = localStorage.getItem('currentUser');
       const savedToken = localStorage.getItem('token');
-      
+
       if (savedUser && savedToken) {
         try {
           const userData = JSON.parse(savedUser);
@@ -250,105 +223,105 @@ function App() {
             ) : (
               // Show main app when user is logged in
               <>
-                <NavbarModern 
+                <NavbarModern
                   user={user}
                   onLogout={handleLogout}
                 />
-                  <main className="empsync-main">
-                    <ErrorBoundary>
-                      <Routes>
-                          {/* Public routes - redirect to dashboard */}
-                          <Route 
-                            path="/" 
-                            element={
-                              <Navigate to="/dashboard" replace />
-                            } 
-                          />
-                          <Route 
-                            path="/login" 
-                            element={
-                              <Navigate to="/dashboard" replace />
-                            } 
-                          />
-                          
-                          {/* Admin-only routes */}
-                          <Route 
-                            path="/dashboard" 
-                            element={
-                              <ProtectedRoute allowedRoles={['ADMIN']}>
-                                <Dashboard />
-                              </ProtectedRoute>
-                            } 
-                          />
-                          <Route 
-                            path="/employees" 
-                            element={
-                              <ProtectedRoute allowedRoles={['ADMIN']}>
-                                <EmployeeGrid />
-                              </ProtectedRoute>
-                            } 
-                          />
-                          <Route 
-                            path="/employees-table" 
-                            element={
-                              <ProtectedRoute allowedRoles={['ADMIN']}>
-                                <EmployeeGrid view="table" />
-                              </ProtectedRoute>
-                            } 
-                          />
-                          <Route 
-                            path="/employees-grid" 
-                            element={
-                              <ProtectedRoute allowedRoles={['ADMIN']}>
-                                <EmployeeGrid view="grid" />
-                              </ProtectedRoute>
-                            } 
-                          />
-                          <Route 
-                            path="/departments" 
-                            element={
-                              <ProtectedRoute allowedRoles={['ADMIN']}>
-                                <DepartmentGrid />
-                              </ProtectedRoute>
-                            } 
-                          />
-                          <Route 
-                            path="/analytics" 
-                            element={
-                              <ProtectedRoute allowedRoles={['ADMIN']}>
-                                <Analytics />
-                              </ProtectedRoute>
-                            } 
-                          />
-                          <Route 
-                            path="/settings" 
-                            element={
-                              <ProtectedRoute allowedRoles={['ADMIN']}>
-                                <Settings />
-                              </ProtectedRoute>
-                            } 
-                          />
-                          
-                          {/* Shared routes (admin can access) */}
-                          <Route 
-                            path="/profile" 
-                            element={
-                              <ProtectedRoute>
-                                <Profile user={user} />
-                              </ProtectedRoute>
-                            } 
-                          />
-                          
-                          {/* Redirect all unknown routes to dashboard */}
-                          <Route 
-                            path="*" 
-                            element={
-                              <Navigate to="/dashboard" replace />
-                            } 
-                          />
-                        </Routes>
-                    </ErrorBoundary>
-                  </main>
+                <main className="empsync-main">
+                  <ErrorBoundary>
+                    <Routes>
+                      {/* Public routes - redirect to dashboard */}
+                      <Route
+                        path="/"
+                        element={
+                          <Navigate to="/dashboard" replace />
+                        }
+                      />
+                      <Route
+                        path="/login"
+                        element={
+                          <Navigate to="/dashboard" replace />
+                        }
+                      />
+
+                      {/* Admin-only routes */}
+                      <Route
+                        path="/dashboard"
+                        element={
+                          <ProtectedRoute allowedRoles={['ADMIN']}>
+                            <Dashboard />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/employees"
+                        element={
+                          <ProtectedRoute allowedRoles={['ADMIN']}>
+                            <EmployeeGrid />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/employees-table"
+                        element={
+                          <ProtectedRoute allowedRoles={['ADMIN']}>
+                            <EmployeeGrid view="table" />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/employees-grid"
+                        element={
+                          <ProtectedRoute allowedRoles={['ADMIN']}>
+                            <EmployeeGrid view="grid" />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/departments"
+                        element={
+                          <ProtectedRoute allowedRoles={['ADMIN']}>
+                            <DepartmentGrid />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/analytics"
+                        element={
+                          <ProtectedRoute allowedRoles={['ADMIN']}>
+                            <Analytics />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/settings"
+                        element={
+                          <ProtectedRoute allowedRoles={['ADMIN']}>
+                            <Settings />
+                          </ProtectedRoute>
+                        }
+                      />
+
+                      {/* Shared routes (admin can access) */}
+                      <Route
+                        path="/profile"
+                        element={
+                          <ProtectedRoute>
+                            <Profile user={user} />
+                          </ProtectedRoute>
+                        }
+                      />
+
+                      {/* Redirect all unknown routes to dashboard */}
+                      <Route
+                        path="*"
+                        element={
+                          <Navigate to="/dashboard" replace />
+                        }
+                      />
+                    </Routes>
+                  </ErrorBoundary>
+                </main>
               </>
             )}
           </div>
