@@ -1,0 +1,14 @@
+# Database Connection URLs for Migration Tools
+
+# For External Migration Tools (Aiven, etc.)
+DATABASE_URL=jdbc:mysql://localhost:3307/employee_management_system?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+
+# Connection Details:
+# Host: localhost
+# Port: 3307 (external mapped port)
+# Database: employee_management_system
+# Username: root
+# Password: newpassword
+
+# For Docker Internal (only works inside Docker)
+# DATABASE_URL=jdbc:mysql://mysql:3306/employee_management_system?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true

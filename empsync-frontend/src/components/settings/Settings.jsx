@@ -12,28 +12,28 @@ const Settings = () => {
     currency: 'INR',
     dateFormat: 'DD/MM/YYYY',
     timezone: 'Asia/Kolkata',
-    
+
     // Notification Settings
     emailNotifications: true,
     pushNotifications: false,
     salaryUpdateAlerts: true,
     newEmployeeAlerts: true,
-    
+
     // Data & Sync Settings
     autoSync: true,
     syncInterval: 30,
     backupEnabled: true,
     backupFrequency: 'daily',
-    
+
     // Security Settings
     sessionTimeout: 60,
     twoFactorAuth: false,
     passwordPolicy: 'medium',
-    
+
     // API Settings
-    apiUrl: 'http://localhost:8888/api',
+    apiUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8888/api',
     apiTimeout: 10000,
-    
+
     // Display Settings
     theme: 'light',
     language: 'en',
@@ -84,14 +84,14 @@ const Settings = () => {
     try {
       // Save to localStorage
       localStorage.setItem('empsync-settings', JSON.stringify(settings));
-      
+
       // If API URL changed, update the API client
       if (settings.apiUrl !== empSyncAPI.client.defaults.baseURL) {
         empSyncAPI.client.defaults.baseURL = settings.apiUrl;
         showToast('info', 'API URL updated. Testing connection...');
         await testBackendConnection();
       }
-      
+
       showToast('success', 'Settings saved successfully!');
     } catch (error) {
       showToast('error', 'Failed to save settings');
@@ -134,13 +134,13 @@ const Settings = () => {
     try {
       const employees = localStorage.getItem('employees');
       const settings = localStorage.getItem('empsync-settings');
-      
+
       const exportData = {
         employees: employees ? JSON.parse(employees) : [],
         settings: settings ? JSON.parse(settings) : {},
         exportDate: new Date().toISOString()
       };
-      
+
       const dataStr = JSON.stringify(exportData, null, 2);
       const dataBlob = new Blob([dataStr], { type: 'application/json' });
       const url = URL.createObjectURL(dataBlob);
@@ -149,7 +149,7 @@ const Settings = () => {
       link.download = `empsync-backup-${new Date().toISOString().split('T')[0]}.json`;
       link.click();
       URL.revokeObjectURL(url);
-      
+
       showToast('success', 'Data exported successfully!');
     } catch (error) {
       showToast('error', 'Failed to export data');
@@ -164,7 +164,7 @@ const Settings = () => {
     reader.onload = (e) => {
       try {
         const data = JSON.parse(e.target.result);
-        
+
         if (data.employees) {
           localStorage.setItem('employees', JSON.stringify(data.employees));
         }
@@ -172,7 +172,7 @@ const Settings = () => {
           localStorage.setItem('empsync-settings', JSON.stringify(data.settings));
           setSettings(prev => ({ ...prev, ...data.settings }));
         }
-        
+
         showToast('success', 'Data imported successfully!');
         // Reset file input
         event.target.value = '';
@@ -212,25 +212,25 @@ const Settings = () => {
 
   return (
     <div className="settings-container">
-      
+
       <div className="settings-layout">
         {/* Sidebar Navigation */}
         <div className="settings-sidebar">
           <div className="sidebar-section">
             <h3>Application</h3>
-            <button 
+            <button
               className={`sidebar-tab ${activeTab === 'general' ? 'active' : ''}`}
               onClick={() => setActiveTab('general')}
             >
               ⚙️ General Settings
             </button>
-            <button 
+            <button
               className={`sidebar-tab ${activeTab === 'notifications' ? 'active' : ''}`}
               onClick={() => setActiveTab('notifications')}
             >
               🔔 Notifications
             </button>
-            <button 
+            <button
               className={`sidebar-tab ${activeTab === 'display' ? 'active' : ''}`}
               onClick={() => setActiveTab('display')}
             >
@@ -240,19 +240,19 @@ const Settings = () => {
 
           <div className="sidebar-section">
             <h3>System</h3>
-            <button 
+            <button
               className={`sidebar-tab ${activeTab === 'api' ? 'active' : ''}`}
               onClick={() => setActiveTab('api')}
             >
               🔌 API & Integration
             </button>
-            <button 
+            <button
               className={`sidebar-tab ${activeTab === 'security' ? 'active' : ''}`}
               onClick={() => setActiveTab('security')}
             >
               🔒 Security
             </button>
-            <button 
+            <button
               className={`sidebar-tab ${activeTab === 'data' ? 'active' : ''}`}
               onClick={() => setActiveTab('data')}
             >
@@ -445,7 +445,7 @@ const Settings = () => {
           {activeTab === 'api' && (
             <div className="settings-section">
               <h2>API & Integration Settings</h2>
-              
+
               <div className="connection-status">
                 <div className="status-indicator" style={{ backgroundColor: getConnectionStatusColor() }}></div>
                 <span>{getConnectionStatusText()}</span>
@@ -461,7 +461,7 @@ const Settings = () => {
                     type="url"
                     value={settings.apiUrl}
                     onChange={(e) => handleSettingChange('apiUrl', e.target.value)}
-                    placeholder="http://localhost:8888/api"
+                    placeholder={import.meta.env.VITE_API_BASE_URL || "http://localhost:8888/api"}
                   />
                 </div>
 
@@ -550,7 +550,7 @@ const Settings = () => {
           {activeTab === 'data' && (
             <div className="settings-section">
               <h2>Data Management</h2>
-              
+
               <div className="data-actions">
                 <div className="data-action-card">
                   <h3>📤 Export Data</h3>

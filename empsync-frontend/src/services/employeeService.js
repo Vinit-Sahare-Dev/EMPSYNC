@@ -1,5 +1,5 @@
 // src/services/employeeService.js
-const API_BASE_URL = 'http://localhost:8888/api'; // Your backend port
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8888/api'; // Your backend port
 
 class EmployeeService {
   // Get all employees
@@ -40,12 +40,12 @@ class EmployeeService {
         },
         body: JSON.stringify(employeeData),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to create employee');
       }
-      
+
       return await response.json();
     } catch (error) {
       console.error('Error creating employee:', error);
@@ -63,12 +63,12 @@ class EmployeeService {
         },
         body: JSON.stringify(employeeData),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to update employee');
       }
-      
+
       return await response.json();
     } catch (error) {
       console.error('Error updating employee:', error);
@@ -82,12 +82,12 @@ class EmployeeService {
       const response = await fetch(`${API_BASE_URL}/employees/${id}`, {
         method: 'DELETE',
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to delete employee');
       }
-      
+
       return await response.text(); // Your backend returns string message
     } catch (error) {
       console.error('Error deleting employee:', error);

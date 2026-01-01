@@ -1,12 +1,15 @@
-// services/apiService.js - REPLACE ENTIRE FILE WITH THIS:
+// services/apiService.js
 class EmpSyncAPI {
   constructor() {
-    this.baseURL = 'http://localhost:8888/api';
+    this.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8888/api';
   }
 
   async request(endpoint, options = {}) {
     try {
-      console.log(`🔄 API Call: ${options.method || 'GET'} ${this.baseURL}${endpoint}`);
+      // API debugging can be enabled via localStorage if needed
+      if (localStorage.getItem('debug_api') === 'true') {
+        console.log(`🔄 API Call: ${options.method || 'GET'} ${this.baseURL}${endpoint}`);
+      }
 
       const response = await fetch(`${this.baseURL}${endpoint}`, {
         headers: {
@@ -23,7 +26,6 @@ class EmpSyncAPI {
       }
 
       const data = await response.json();
-      console.log(`✅ API Success:`, data);
       return data;
 
     } catch (error) {
@@ -106,7 +108,7 @@ class EmpSyncAPI {
 
   async healthCheck() {
     try {
-      const data = await this.request('/employees');
+      await this.request('/employees');
       return {
         success: true,
         connected: true,

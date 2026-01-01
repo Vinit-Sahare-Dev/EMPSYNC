@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useToast } from '../ui/Toast';
 import './AuthForms.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8888/api';
+
 const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
   const [activeForm, setActiveForm] = useState(defaultForm);
   const [loading, setLoading] = useState(false);
@@ -40,14 +42,14 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
     if (typeof Toast === 'function') {
       Toast[type](message);
     } else {
-      console.log(`${type.toUpperCase()}: ${message}`);
+      // Fallback if Toast is not available
     }
   };
 
   // Test backend connection
   const testBackendConnection = async () => {
     try {
-      const response = await fetch('http://localhost:8888/api/auth/status', {
+      const response = await fetch(`${API_BASE_URL}/auth/status`, {
         method: 'GET',
         timeout: 5000
       });
@@ -63,9 +65,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
     setForgotPasswordLoading(true);
 
     try {
-      console.log('🔄 Forgot password attempt:', forgotPasswordEmail);
-      
-      const response = await fetch('http://localhost:8888/api/auth/forgot-password', {
+      const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +74,6 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
       });
 
       const data = await response.json();
-      console.log('📨 Forgot password response:', data);
 
       if (response.ok) {
         showToast('success', 'Password reset instructions sent to your email!');
@@ -103,9 +102,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
     }
 
     try {
-      console.log('🔄 Reset password attempt');
-      
-      const response = await fetch('http://localhost:8888/api/auth/reset-password', {
+      const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +111,6 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
       });
 
       const data = await response.json();
-      console.log('📨 Reset password response:', data);
 
       if (response.ok) {
         showToast('success', 'Password reset successfully! Please login with your new password.');
@@ -137,17 +133,15 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
     setLoading(true);
 
     try {
-      console.log('🔄 Login attempt:', adminLogin.username);
-      
-      // Test backend first
+      // Test backend connection first
       const isBackendConnected = await testBackendConnection();
-      
+
       if (!isBackendConnected) {
         showToast('error', 'Backend connection failed. Please try again later.');
         return;
       }
 
-      const response = await fetch('http://localhost:8888/api/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -159,7 +153,6 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
       });
 
       const data = await response.json();
-      console.log('📨 Login response:', data);
 
       if (response.ok) {
         localStorage.setItem('token', data.token);
@@ -170,8 +163,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
           userType: data.userType
         };
         localStorage.setItem('currentUser', JSON.stringify(userData));
-        
-        console.log('✅ Login successful:', userData);
+
         showToast('success', `Welcome ${data.name}!`);
         onLogin(userData);
         onClose();
@@ -198,9 +190,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
     }
 
     try {
-      console.log('🔄 Registration attempt:', adminRegister.username);
-      
-      const response = await fetch('http://localhost:8888/api/auth/register/admin', {
+      const response = await fetch(`${API_BASE_URL}/auth/register/admin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -209,12 +199,10 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
       });
 
       const data = await response.json();
-      console.log('📨 Registration response:', data);
 
       if (response.ok) {
-        console.log('✅ Registration successful');
         showToast('success', 'Account created successfully! Please login with your credentials.');
-        
+
         // Reset form and redirect to login
         setAdminRegister({
           username: '',
@@ -225,7 +213,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
           adminLevel: 'MANAGER',
           departmentAccess: ''
         });
-        
+
         // Redirect to login
         setActiveForm('admin-login');
       } else {
@@ -258,297 +246,297 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
             <p>Secure authentication system</p>
           </div>
 
-        <div className="auth-tabs">
-          <button 
-            className={`tab-btn ${activeForm.startsWith('admin') ? 'active' : ''}`}
-            onClick={() => {
-              setActiveForm('admin-login');
-              setShowForgotPassword(false);
-            }}
-          >
-            Access
-          </button>
-        </div>
+          <div className="auth-tabs">
+            <button
+              className={`tab-btn ${activeForm.startsWith('admin') ? 'active' : ''}`}
+              onClick={() => {
+                setActiveForm('admin-login');
+                setShowForgotPassword(false);
+              }}
+            >
+              Access
+            </button>
+          </div>
 
-        <div className="auth-forms">
-          {/* Forgot Password Form */}
-          {showForgotPassword && (
-            <form onSubmit={handleForgotPassword} className="auth-form">
-              <h3>Reset Your Password</h3>
-              <p className="forgot-password-description">
-                Enter your email address and we'll send you instructions to reset your password.
-              </p>
-              
-              <div className="form-group">
-                <label>Email Address</label>
-                <input
-                  type="email"
-                  value={forgotPasswordEmail}
-                  onChange={(e) => setForgotPasswordEmail(e.target.value)}
-                  placeholder="Enter your registered email"
-                  required
-                  className="login-input"
-                />
-              </div>
+          <div className="auth-forms">
+            {/* Forgot Password Form */}
+            {showForgotPassword && (
+              <form onSubmit={handleForgotPassword} className="auth-form">
+                <h3>Reset Your Password</h3>
+                <p className="forgot-password-description">
+                  Enter your email address and we'll send you instructions to reset your password.
+                </p>
 
-              <button type="submit" className="auth-btn primary" disabled={forgotPasswordLoading}>
-                {forgotPasswordLoading ? (
-                  <>
-                    <div className="btn-spinner"></div>
-                    Sending...
-                  </>
-                ) : (
-                  'Send Reset Instructions'
-                )}
-              </button>
-
-              <div className="auth-links">
-                <button 
-                  type="button" 
-                  onClick={() => {
-                    setShowForgotPassword(false);
-                    setForgotPasswordEmail('');
-                  }}
-                >
-                  Back
-                </button>
-              </div>
-            </form>
-          )}
-
-          {/* Reset Password Form */}
-          {activeForm === 'reset-password' && (
-            <form onSubmit={handleResetPassword} className="auth-form">
-              <h3>Create New Password</h3>
-              
-              <div className="form-group">
-                <label>Reset Token</label>
-                <input
-                  type="text"
-                  value={resetPassword.token}
-                  onChange={(e) => setResetPassword({...resetPassword, token: e.target.value})}
-                  placeholder="Enter token from your email"
-                  required
-                />
-              </div>
-
-              <div className="form-row">
                 <div className="form-group">
-                  <label>New Password</label>
+                  <label>Email Address</label>
                   <input
-                    type="password"
-                    value={resetPassword.newPassword}
-                    onChange={(e) => setResetPassword({...resetPassword, newPassword: e.target.value})}
-                    placeholder="Enter new password"
+                    type="email"
+                    value={forgotPasswordEmail}
+                    onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                    placeholder="Enter your registered email"
                     required
+                    className="login-input"
                   />
                 </div>
-                <div className="form-group">
-                  <label>Confirm Password</label>
-                  <input
-                    type="password"
-                    value={resetPassword.confirmPassword}
-                    onChange={(e) => setResetPassword({...resetPassword, confirmPassword: e.target.value})}
-                    placeholder="Confirm new password"
-                    required
-                  />
+
+                <button type="submit" className="auth-btn primary" disabled={forgotPasswordLoading}>
+                  {forgotPasswordLoading ? (
+                    <>
+                      <div className="btn-spinner"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    'Send Reset Instructions'
+                  )}
+                </button>
+
+                <div className="auth-links">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowForgotPassword(false);
+                      setForgotPasswordEmail('');
+                    }}
+                  >
+                    Back
+                  </button>
                 </div>
-              </div>
+              </form>
+            )}
 
-              <button type="submit" className="auth-btn primary" disabled={loading}>
-                {loading ? (
-                  <>
-                    <div className="btn-spinner"></div>
-                    Resetting Password...
-                  </>
-                ) : (
-                  'Reset Password'
-                )}
-              </button>
+            {/* Reset Password Form */}
+            {activeForm === 'reset-password' && (
+              <form onSubmit={handleResetPassword} className="auth-form">
+                <h3>Create New Password</h3>
 
-              <div className="auth-links">
-                <button 
-                  type="button" 
-                  onClick={() => setActiveForm('admin-login')}
-                >
-                  Back
-                </button>
-              </div>
-            </form>
-          )}
-
-          {/* Admin Login */}
-          {activeForm === 'admin-login' && !showForgotPassword && (
-            <form onSubmit={handleAdminLogin} className="auth-form">
-              <h3>Login</h3>
-              
-              <div className="form-group">
-                <label>Username</label>
-                <input
-                  type="text"
-                  value={adminLogin.username}
-                  onChange={(e) => setAdminLogin({...adminLogin, username: e.target.value})}
-                  placeholder="Enter username"
-                  required
-                  className="login-input"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  value={adminLogin.password}
-                  onChange={(e) => setAdminLogin({...adminLogin, password: e.target.value})}
-                  placeholder="Enter password"
-                  required
-                  className="login-input"
-                />
-              </div>
-
-              <div className="forgot-password-link">
-                <button 
-                  type="button" 
-                  onClick={() => setShowForgotPassword(true)}
-                  className="forgot-password-btn"
-                >
-                  Forgot Password?
-                </button>
-              </div>
-
-              <button type="submit" className="auth-btn primary" disabled={loading}>
-                {loading ? (
-                  <>
-                    <div className="btn-spinner"></div>
-                    Signing In...
-                  </>
-                ) : (
-                  'Login'
-                )}
-              </button>
-
-              <div className="auth-links">
-                <span>Need access? </span>
-                <button type="button" onClick={() => setActiveForm('admin-register')}>
-                  Create Account
-                </button>
-              </div>
-            </form>
-          )}
-
-          {/* Admin Register */}
-          {activeForm === 'admin-register' && (
-            <form onSubmit={handleAdminRegister} className="auth-form">
-              <h3>Create Account</h3>
-              
-              <div className="form-row">
                 <div className="form-group">
-                  <label>Username *</label>
+                  <label>Reset Token</label>
                   <input
                     type="text"
-                    value={adminRegister.username}
-                    onChange={(e) => setAdminRegister({...adminRegister, username: e.target.value})}
-                    placeholder="Choose username"
+                    value={resetPassword.token}
+                    onChange={(e) => setResetPassword({ ...resetPassword, token: e.target.value })}
+                    placeholder="Enter token from your email"
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label>Admin Level *</label>
-                  <select
-                    value={adminRegister.adminLevel}
-                    onChange={(e) => setAdminRegister({...adminRegister, adminLevel: e.target.value})}
-                    required
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>New Password</label>
+                    <input
+                      type="password"
+                      value={resetPassword.newPassword}
+                      onChange={(e) => setResetPassword({ ...resetPassword, newPassword: e.target.value })}
+                      placeholder="Enter new password"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Confirm Password</label>
+                    <input
+                      type="password"
+                      value={resetPassword.confirmPassword}
+                      onChange={(e) => setResetPassword({ ...resetPassword, confirmPassword: e.target.value })}
+                      placeholder="Confirm new password"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <button type="submit" className="auth-btn primary" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <div className="btn-spinner"></div>
+                      Resetting Password...
+                    </>
+                  ) : (
+                    'Reset Password'
+                  )}
+                </button>
+
+                <div className="auth-links">
+                  <button
+                    type="button"
+                    onClick={() => setActiveForm('admin-login')}
                   >
-                    <option value="MANAGER">Manager</option>
+                    Back
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Admin Login */}
+            {activeForm === 'admin-login' && !showForgotPassword && (
+              <form onSubmit={handleAdminLogin} className="auth-form">
+                <h3>Login</h3>
+
+                <div className="form-group">
+                  <label>Username</label>
+                  <input
+                    type="text"
+                    value={adminLogin.username}
+                    onChange={(e) => setAdminLogin({ ...adminLogin, username: e.target.value })}
+                    placeholder="Enter username"
+                    required
+                    className="login-input"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    value={adminLogin.password}
+                    onChange={(e) => setAdminLogin({ ...adminLogin, password: e.target.value })}
+                    placeholder="Enter password"
+                    required
+                    className="login-input"
+                  />
+                </div>
+
+                <div className="forgot-password-link">
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotPassword(true)}
+                    className="forgot-password-btn"
+                  >
+                    Forgot Password?
+                  </button>
+                </div>
+
+                <button type="submit" className="auth-btn primary" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <div className="btn-spinner"></div>
+                      Signing In...
+                    </>
+                  ) : (
+                    'Login'
+                  )}
+                </button>
+
+                <div className="auth-links">
+                  <span>Need access? </span>
+                  <button type="button" onClick={() => setActiveForm('admin-register')}>
+                    Create Account
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Admin Register */}
+            {activeForm === 'admin-register' && (
+              <form onSubmit={handleAdminRegister} className="auth-form">
+                <h3>Create Account</h3>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Username *</label>
+                    <input
+                      type="text"
+                      value={adminRegister.username}
+                      onChange={(e) => setAdminRegister({ ...adminRegister, username: e.target.value })}
+                      placeholder="Choose username"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Admin Level *</label>
+                    <select
+                      value={adminRegister.adminLevel}
+                      onChange={(e) => setAdminRegister({ ...adminRegister, adminLevel: e.target.value })}
+                      required
+                    >
+                      <option value="MANAGER">Manager</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Full Name *</label>
+                  <input
+                    type="text"
+                    value={adminRegister.name}
+                    onChange={(e) => setAdminRegister({ ...adminRegister, name: e.target.value })}
+                    placeholder="Enter full name"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Email *</label>
+                  <input
+                    type="email"
+                    value={adminRegister.email}
+                    onChange={(e) => setAdminRegister({ ...adminRegister, email: e.target.value })}
+                    placeholder="Enter email"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Department Access</label>
+                  <select
+                    value={adminRegister.departmentAccess}
+                    onChange={(e) => setAdminRegister({ ...adminRegister, departmentAccess: e.target.value })}
+                  >
+                    <option value="">All Departments</option>
+                    <option value="IT">IT</option>
+                    <option value="HR">HR</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Operations">Operations</option>
                   </select>
                 </div>
-              </div>
 
-              <div className="form-group">
-                <label>Full Name *</label>
-                <input
-                  type="text"
-                  value={adminRegister.name}
-                  onChange={(e) => setAdminRegister({...adminRegister, name: e.target.value})}
-                  placeholder="Enter full name"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Email *</label>
-                <input
-                  type="email"
-                  value={adminRegister.email}
-                  onChange={(e) => setAdminRegister({...adminRegister, email: e.target.value})}
-                  placeholder="Enter email"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Department Access</label>
-                <select
-                  value={adminRegister.departmentAccess}
-                  onChange={(e) => setAdminRegister({...adminRegister, departmentAccess: e.target.value})}
-                >
-                  <option value="">All Departments</option>
-                  <option value="IT">IT</option>
-                  <option value="HR">HR</option>
-                  <option value="Finance">Finance</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Sales">Sales</option>
-                  <option value="Operations">Operations</option>
-                </select>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Password *</label>
-                  <input
-                    type="password"
-                    value={adminRegister.password}
-                    onChange={(e) => setAdminRegister({...adminRegister, password: e.target.value})}
-                    placeholder="Create password"
-                    required
-                  />
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Password *</label>
+                    <input
+                      type="password"
+                      value={adminRegister.password}
+                      onChange={(e) => setAdminRegister({ ...adminRegister, password: e.target.value })}
+                      placeholder="Create password"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Confirm Password *</label>
+                    <input
+                      type="password"
+                      value={adminRegister.confirmPassword}
+                      onChange={(e) => setAdminRegister({ ...adminRegister, confirmPassword: e.target.value })}
+                      placeholder="Confirm password"
+                      required
+                    />
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label>Confirm Password *</label>
-                  <input
-                    type="password"
-                    value={adminRegister.confirmPassword}
-                    onChange={(e) => setAdminRegister({...adminRegister, confirmPassword: e.target.value})}
-                    placeholder="Confirm password"
-                    required
-                  />
-                </div>
-              </div>
 
-              <button type="submit" className="auth-btn primary" disabled={loading}>
-                {loading ? (
-                  <>
-                    <div className="btn-spinner"></div>
-                    Creating Account...
-                  </>
-                ) : (
-                  'Create Account'
-                )}
-              </button>
-
-              <div className="auth-links">
-                <span>Already have access? </span>
-                <button type="button" onClick={() => setActiveForm('admin-login')}>
-                  Access
+                <button type="submit" className="auth-btn primary" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <div className="btn-spinner"></div>
+                      Creating Account...
+                    </>
+                  ) : (
+                    'Create Account'
+                  )}
                 </button>
-              </div>
-            </form>
-          )}
-        </div>
 
-        <button className="close-btn" onClick={onClose}>
-          ×
-        </button>
+                <div className="auth-links">
+                  <span>Already have access? </span>
+                  <button type="button" onClick={() => setActiveForm('admin-login')}>
+                    Access
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+
+          <button className="close-btn" onClick={onClose}>
+            ×
+          </button>
         </div>
       </div>
     </>

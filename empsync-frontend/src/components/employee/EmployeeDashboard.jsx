@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useToast } from '../ui/Toast';
 import './EmployeeDashboard.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8888/api';
+
 const EmployeeDashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [employeeData, setEmployeeData] = useState(null);
@@ -17,9 +19,9 @@ const EmployeeDashboard = ({ user, onLogout }) => {
     try {
       setLoading(true);
       // Fetch employee data by email or employeeId
-      const response = await fetch(`http://localhost:8888/api/employees/search/name?name=${user.name}`);
+      const response = await fetch(`${API_BASE_URL}/employees/search/name?name=${user.name}`);
       const data = await response.json();
-      
+
       if (data.success && data.employees && data.employees.length > 0) {
         setEmployeeData(data.employees[0]);
       } else {
@@ -303,25 +305,25 @@ const EmployeeDashboard = ({ user, onLogout }) => {
       </div>
 
       <div className="dashboard-nav">
-        <button 
+        <button
           className={`nav-btn ${activeTab === 'overview' ? 'active' : ''}`}
           onClick={() => setActiveTab('overview')}
         >
           <span>📊</span> Overview
         </button>
-        <button 
+        <button
           className={`nav-btn ${activeTab === 'profile' ? 'active' : ''}`}
           onClick={() => setActiveTab('profile')}
         >
           <span>👤</span> My Profile
         </button>
-        <button 
+        <button
           className={`nav-btn ${activeTab === 'attendance' ? 'active' : ''}`}
           onClick={() => setActiveTab('attendance')}
         >
           <span>📅</span> Attendance
         </button>
-        <button 
+        <button
           className={`nav-btn ${activeTab === 'leaves' ? 'active' : ''}`}
           onClick={() => setActiveTab('leaves')}
         >

@@ -2,7 +2,7 @@
 import { useState, useCallback } from 'react';
 
 // Use HTTP instead of HTTPS
-const API_BASE_URL = 'http://localhost:8888/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8888/api';
 
 export const useApi = () => {
   const [loading, setLoading] = useState(false);
@@ -15,9 +15,6 @@ export const useApi = () => {
 
     try {
       const url = `${API_BASE_URL}${endpoint}`;
-      
-      console.log('🔄 Making API call to:', url);
-      console.log('Request options:', options);
 
       const config = {
         method: 'GET', // default method
@@ -34,8 +31,6 @@ export const useApi = () => {
       }
 
       const response = await fetch(url, config);
-      
-      console.log('📥 Response status:', response.status);
 
       if (!response.ok) {
         let errorMessage = `HTTP error! status: ${response.status}`;
@@ -51,7 +46,6 @@ export const useApi = () => {
       }
 
       const result = await response.json();
-      console.log('✅ API Success:', result);
       setData(result);
       return result;
 
