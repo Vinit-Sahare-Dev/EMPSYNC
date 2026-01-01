@@ -29,18 +29,8 @@ public class RestApiApplication {
         logger.info(" [INFO] {} started successfully!", appName);
         logger.info(" Active Profiles: {}", profiles.isEmpty() ? "default" : profiles);
         logger.info(" Running on: http://localhost:{}", port);
-
-        logger.info(" [INFO] {} started successfully!", appName);
-        logger.info(" Active Profiles: {}", profiles.isEmpty() ? "default" : profiles);
-        logger.info(" Running on: http://localhost:{}", port);
-
-        logger.info(" [INFO] {} started successfully!", appName);
-        logger.info(" Active Profiles: {}", profiles.isEmpty() ? "default" : profiles);
-        logger.info(" Running on: http://localhost:{}", port);
-
         logger.info(" Swagger UI: http://localhost:{}/swagger-ui.html", port);
         logger.info(" API Docs: http://localhost:{}/v3/api-docs", port);
-
         logger.info(" Health Check: http://localhost:{}/actuator/health", port);
         logger.info(" Metrics: http://localhost:{}/actuator/metrics", port);
         

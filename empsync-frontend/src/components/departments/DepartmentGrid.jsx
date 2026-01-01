@@ -23,7 +23,7 @@ const useToastFallback = () => {
         max-width: 300px;
       `;
       document.body.appendChild(notification);
-      
+
       setTimeout(() => {
         if (document.body.contains(notification)) {
           document.body.removeChild(notification);
@@ -64,7 +64,7 @@ const DepartmentGrid = () => {
       try {
         setLoading(true);
         console.log('🔍 Loading departments data...');
-        
+
         // Check backend connection
         const health = await empSyncAPI.healthCheck();
         if (health.success) {
@@ -92,10 +92,10 @@ const DepartmentGrid = () => {
       // Get all employees to calculate department stats
       const employeesResponse = await empSyncAPI.getAllEmployees();
       const employees = employeesResponse.employees || employeesResponse || [];
-      
+
       // Calculate departments from employees data
       const departmentMap = {};
-      
+
       employees.forEach(employee => {
         const deptName = employee.department || 'Unassigned';
         if (!departmentMap[deptName]) {
@@ -109,20 +109,20 @@ const DepartmentGrid = () => {
             createdAt: employee.createdAt || new Date().toISOString()
           };
         }
-        
+
         departmentMap[deptName].employeeCount++;
         departmentMap[deptName].totalBudget += parseFloat(employee.salary) || 0;
       });
 
       const departmentList = Object.values(departmentMap);
       setDepartments(departmentList);
-      
+
       // Calculate stats
       calculateStats(departmentList, employees);
-      
+
       console.log(`✅ Loaded ${departmentList.length} departments from backend`);
       toast.showToast('success', `Loaded ${departmentList.length} departments`);
-      
+
     } catch (error) {
       console.error('❌ Error loading departments from backend:', error);
       loadLocalData();
@@ -134,16 +134,16 @@ const DepartmentGrid = () => {
     try {
       const savedDepartments = localStorage.getItem('departments');
       const savedEmployees = localStorage.getItem('employees');
-      
+
       let departmentList = [];
       const employees = savedEmployees ? JSON.parse(savedEmployees) : [];
-      
+
       if (savedDepartments) {
         departmentList = JSON.parse(savedDepartments);
       } else {
         // Generate departments from employees data
         const departmentMap = {};
-        
+
         employees.forEach(employee => {
           const deptName = employee.department || 'Unassigned';
           if (!departmentMap[deptName]) {
@@ -157,7 +157,7 @@ const DepartmentGrid = () => {
               createdAt: employee.createdAt || new Date().toISOString()
             };
           }
-          
+
           departmentMap[deptName].employeeCount++;
           departmentMap[deptName].totalBudget += parseFloat(employee.salary) || 0;
         });
@@ -165,13 +165,13 @@ const DepartmentGrid = () => {
         departmentList = Object.values(departmentMap);
         localStorage.setItem('departments', JSON.stringify(departmentList));
       }
-      
+
       setDepartments(departmentList);
       calculateStats(departmentList, employees);
-      
+
       console.log('🔄 Using localStorage fallback for departments');
       toast.showToast('warning', 'Using local data (backend unavailable)');
-      
+
     } catch (localError) {
       console.error('Local storage fallback failed:', localError);
       setDepartments([]);
@@ -223,7 +223,7 @@ const DepartmentGrid = () => {
       }
 
       setIsModalOpen(false);
-      
+
     } catch (error) {
       console.error('Error adding department:', error);
       toast.showToast('error', `Failed to add department: ${error.message}`);
@@ -234,7 +234,7 @@ const DepartmentGrid = () => {
   const handleEditDepartment = async (departmentData) => {
     try {
       const updatedDepartments = departments.map(dept =>
-        dept.id === editingDepartment.id 
+        dept.id === editingDepartment.id
           ? { ...dept, ...departmentData, updatedAt: new Date().toISOString() }
           : dept
       );
@@ -249,7 +249,7 @@ const DepartmentGrid = () => {
       setDepartments(updatedDepartments);
       setIsModalOpen(false);
       setEditingDepartment(null);
-      
+
     } catch (error) {
       console.error('Error updating department:', error);
       toast.showToast('error', `Failed to update department: ${error.message}`);
@@ -261,7 +261,7 @@ const DepartmentGrid = () => {
     if (window.confirm('Are you sure you want to delete this department? This action cannot be undone.')) {
       try {
         const updatedDepartments = departments.filter(dept => dept.id !== departmentId);
-        
+
         if (backendStatus === 'connected') {
           toast.showToast('success', 'Department deleted successfully!');
         } else {
@@ -271,7 +271,7 @@ const DepartmentGrid = () => {
 
         setDepartments(updatedDepartments);
         calculateStats(updatedDepartments, JSON.parse(localStorage.getItem('employees') || '[]'));
-        
+
       } catch (error) {
         console.error('Error deleting department:', error);
         toast.showToast('error', `Failed to delete department: ${error.message}`);
@@ -303,17 +303,17 @@ const DepartmentGrid = () => {
   // Bulk delete
   const handleBulkDelete = () => {
     if (selectedDepartments.length === 0) return;
-    
+
     if (window.confirm(`Are you sure you want to delete ${selectedDepartments.length} departments?`)) {
       const updatedDepartments = departments.filter(
         dept => !selectedDepartments.includes(dept.id)
       );
-      
+
       localStorage.setItem('departments', JSON.stringify(updatedDepartments));
       setDepartments(updatedDepartments);
       setSelectedDepartments([]);
       calculateStats(updatedDepartments, JSON.parse(localStorage.getItem('employees') || '[]'));
-      
+
       toast.showToast('success', `${selectedDepartments.length} departments deleted successfully`);
     }
   };
@@ -335,28 +335,27 @@ const DepartmentGrid = () => {
         <div>
           <h1>Department Management</h1>
           <p>Manage organizational departments and team structures</p>
-          <div style={{ 
+          <div style={{
             display: 'inline-block',
-            padding: '4px 8px', 
+            padding: '4px 8px',
             borderRadius: '4px',
             fontSize: '12px',
             fontWeight: 'bold',
-            backgroundColor: 
-              backendStatus === 'connected' ? '#d4edda' : 
-              backendStatus === 'checking' ? '#fff3cd' : '#f8d7da',
-            color: 
-              backendStatus === 'connected' ? '#155724' : 
-              backendStatus === 'checking' ? '#856404' : '#721c24',
-            border: `1px solid ${
-              backendStatus === 'connected' ? '#c3e6cb' : 
-              backendStatus === 'checking' ? '#ffeaa7' : '#f5c6cb'
-            }`
+            backgroundColor:
+              backendStatus === 'connected' ? '#d4edda' :
+                backendStatus === 'checking' ? '#fff3cd' : '#f8d7da',
+            color:
+              backendStatus === 'connected' ? '#155724' :
+                backendStatus === 'checking' ? '#856404' : '#721c24',
+            border: `1px solid ${backendStatus === 'connected' ? '#c3e6cb' :
+                ckendStatus === 'checking' ? '#ffeaa7' : '#f5c6cb'
+              }`
           }}>
             Status: {
               backendStatus === 'connected' ? '✅ Connected to Backend' :
-              backendStatus === 'checking' ? '🔄 Checking Connection...' :
-              backendStatus === 'disconnected' ? '⚠️ Using Local Data' :
-              '❌ Connection Error'
+                backendStatus === 'checking' ? '🔄 Checking Connection...' :
+                  backendStatus === 'disconnected' ? '⚠️ Using Local Data' :
+                    '❌ Connection Error'
             }
           </div>
         </div>
@@ -365,9 +364,9 @@ const DepartmentGrid = () => {
             + Add Department
           </button>
           <div className="search-bar">
-            <input 
-              type="text" 
-              placeholder="Search departments..." 
+            <input
+              type="text"
+              placeholder="Search departments..."
               className="search-input"
             />
           </div>
@@ -446,14 +445,14 @@ const DepartmentGrid = () => {
                     </span>
                   </div>
                   <div className="department-actions">
-                    <button 
+                    <button
                       className="btn-icon edit"
                       onClick={() => openEditModal(department)}
                       title="Edit Department"
                     >
                       ✏️
                     </button>
-                    <button 
+                    <button
                       className="btn-icon delete"
                       onClick={() => handleDeleteDepartment(department.id)}
                       title="Delete Department"
@@ -485,10 +484,10 @@ const DepartmentGrid = () => {
                     <span>{Math.round((department.employeeCount / Math.max(stats.avgEmployeesPerDept, 1)) * 100)}%</span>
                   </div>
                   <div className="progress-bar">
-                    <div 
+                    <div
                       className="progress-fill"
-                      style={{ 
-                        width: `${Math.min((department.employeeCount / Math.max(stats.avgEmployeesPerDept, 1)) * 100, 100)}%` 
+                      style={{
+                        width: `${Math.min((department.employeeCount / Math.max(stats.avgEmployeesPerDept, 1)) * 100, 100)}%`
                       }}
                     ></div>
                   </div>
@@ -507,7 +506,7 @@ const DepartmentGrid = () => {
 
       {/* Add/Edit Department Modal */}
       {isModalOpen && (
-        <DepartmentModal 
+        <DepartmentModal
           isOpen={isModalOpen}
           onClose={() => {
             setIsModalOpen(false);

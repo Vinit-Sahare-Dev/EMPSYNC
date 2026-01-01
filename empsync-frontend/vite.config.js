@@ -10,7 +10,7 @@ export default defineConfig({
     // CORRECTED PROXY CONFIGURATION:
     proxy: {
       '/api': {
-        target: 'http://localhost:8889', // ✅ Fixed: Add http:// and remove /api/employees
+        target: 'http://localhost:8888', // ✅ Fixed: Match backend port 8888
         changeOrigin: true,
         secure: false,
         configure: (proxy, _options) => {

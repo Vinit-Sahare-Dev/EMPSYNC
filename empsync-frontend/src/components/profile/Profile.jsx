@@ -10,43 +10,43 @@ const Profile = () => {
   const { showToast } = useToast();
 
   useEffect(() => {
-    loadUserProfile();
-  }, []);
-
-  const loadUserProfile = () => {
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
     setUser(currentUser);
     setFormData(currentUser);
-  };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 1024 * 1024) {
+        showToast('error', 'Image size should be less than 1MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prev => ({ ...prev, avatar: reader.result }));
+        showToast('success', 'Photo uploaded! Save changes to apply.');
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSaveProfile = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Update user data
-      const updatedUser = {
-        ...user,
-        ...formData,
-        updatedAt: new Date().toISOString()
-      };
-      
+      await new Promise(resolve => setTimeout(resolve, 800));
+      const updatedUser = { ...user, ...formData, updatedAt: new Date().toISOString() };
       localStorage.setItem('currentUser', JSON.stringify(updatedUser));
       setUser(updatedUser);
       setIsEditing(false);
-      
       showToast('success', 'Profile updated successfully!');
+      window.location.reload();
     } catch (error) {
       showToast('error', 'Failed to update profile');
     } finally {
@@ -54,297 +54,105 @@ const Profile = () => {
     }
   };
 
-  const handleCancelEdit = () => {
-    setFormData(user);
-    setIsEditing(false);
-  };
-
-  const handlePasswordChange = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const currentPassword = form.currentPassword.value;
-    const newPassword = form.newPassword.value;
-    const confirmPassword = form.confirmPassword.value;
-
-    if (newPassword !== confirmPassword) {
-      showToast('error', 'New passwords do not match');
-      return;
-    }
-
-    if (newPassword.length < 6) {
-      showToast('error', 'Password must be at least 6 characters long');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      // Simulate password change API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      showToast('success', 'Password changed successfully!');
-      form.reset();
-    } catch (error) {
-      showToast('error', 'Failed to change password');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (!user) {
-    return (
-      <div className="profile-container">
-        <div className="loading-spinner">Loading profile...</div>
-      </div>
-    );
-  }
+  if (!user) return <div className="profile-loading">Loading...</div>;
 
   return (
-    <div className="profile-container">
-      {/* Header */}
-      <div className="profile-header">
-        <div className="header-content">
+    <div className="profile-view-container">
+      <div className="profile-header-modern">
+        <div>
           <h1>My Profile</h1>
-          <p>Manage your personal information and account settings</p>
+          <p>Personal account management</p>
         </div>
         {!isEditing && (
-          <button 
-            className="btn btn-primary"
-            onClick={() => setIsEditing(true)}
-          >
-            ✏️ Edit Profile
-          </button>
+          <button className="btn-edit" onClick={() => setIsEditing(true)}>Edit Profile</button>
         )}
       </div>
 
-      <div className="profile-content">
-        {/* Left Column - Personal Information */}
-        <div className="profile-section">
-          <div className="section-header">
-            <h2>Personal Information</h2>
-            <div className="status-badge">
-              <span className={`status-dot ${user.status || 'active'}`}></span>
-              {user.status === 'active' ? 'Active' : 'Inactive'}
-            </div>
+      <div className="profile-layout-grid">
+        <div className="profile-main-card">
+          <div className="card-header-flex">
+            <h2>Account Details</h2>
+            <span className={`status-pill ${user.status || 'active'}`}>{user.status || 'Active'}</span>
           </div>
 
           {isEditing ? (
-            <form onSubmit={handleSaveProfile} className="profile-form">
-              <div className="form-grid">
-                <div className="form-group">
-                  <label htmlFor="name">Full Name *</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name || ''}
-                    onChange={handleInputChange}
-                    required
-                  />
+            <form onSubmit={handleSaveProfile} className="profile-edit-form">
+              <div className="form-row">
+                <div className="input-group">
+                  <label>Full Name</label>
+                  <input type="text" name="name" value={formData.name || ''} onChange={handleInputChange} required />
                 </div>
-
-                <div className="form-group">
-                  <label htmlFor="username">Username *</label>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    value={formData.username || ''}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email Address *</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email || ''}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="phone">Phone Number</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone || ''}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="department">Department</label>
-                  <input
-                    type="text"
-                    id="department"
-                    name="department"
-                    value={formData.department || ''}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="position">Position</label>
-                  <input
-                    type="text"
-                    id="position"
-                    name="position"
-                    value={formData.position || ''}
-                    onChange={handleInputChange}
-                  />
+                <div className="input-group">
+                  <label>Username</label>
+                  <input type="text" name="username" value={formData.username || ''} onChange={handleInputChange} required />
                 </div>
               </div>
-
-              <div className="form-actions">
-                <button 
-                  type="button" 
-                  className="btn btn-secondary"
-                  onClick={handleCancelEdit}
-                  disabled={loading}
-                >
-                  Cancel
-                </button>
-                <button 
-                  type="submit" 
-                  className="btn btn-primary"
-                  disabled={loading}
-                >
-                  {loading ? 'Saving...' : 'Save Changes'}
-                </button>
+              <div className="form-row">
+                <div className="input-group">
+                  <label>Email</label>
+                  <input type="email" name="email" value={formData.email || ''} onChange={handleInputChange} required />
+                </div>
+                <div className="input-group">
+                  <label>Phone</label>
+                  <input type="tel" name="phone" value={formData.phone || ''} onChange={handleInputChange} />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="input-group">
+                  <label>Department</label>
+                  <input type="text" name="department" value={formData.department || ''} onChange={handleInputChange} />
+                </div>
+                <div className="input-group">
+                  <label>Position</label>
+                  <input type="text" name="position" value={formData.position || ''} onChange={handleInputChange} />
+                </div>
+              </div>
+              <div className="edit-actions">
+                <button type="button" className="btn-cancel" onClick={() => { setFormData(user); setIsEditing(false); }}>Cancel</button>
+                <button type="submit" className="btn-save" disabled={loading}>{loading ? 'Saving...' : 'Save Changes'}</button>
               </div>
             </form>
           ) : (
-            <div className="profile-info">
-              <div className="info-grid">
-                <div className="info-item">
-                  <label>Full Name</label>
-                  <span>{user.name || 'Not set'}</span>
-                </div>
-                <div className="info-item">
-                  <label>Username</label>
-                  <span>{user.username}</span>
-                </div>
-                <div className="info-item">
-                  <label>Email</label>
-                  <span>{user.email || 'Not set'}</span>
-                </div>
-                <div className="info-item">
-                  <label>Phone</label>
-                  <span>{user.phone || 'Not set'}</span>
-                </div>
-                <div className="info-item">
-                  <label>Department</label>
-                  <span>{user.department || 'Not assigned'}</span>
-                </div>
-                <div className="info-item">
-                  <label>Position</label>
-                  <span>{user.position || 'Not set'}</span>
-                </div>
-                <div className="info-item">
-                  <label>Role</label>
-                  <span className="role-badge">{user.role}</span>
-                </div>
-                <div className="info-item">
-                  <label>Member Since</label>
-                  <span>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Unknown'}</span>
-                </div>
-              </div>
+            <div className="info-display-grid">
+              <div className="info-box"><label>Full Name</label><p>{user.name || 'Not set'}</p></div>
+              <div className="info-box"><label>Username</label><p>{user.username}</p></div>
+              <div className="info-box"><label>Email</label><p>{user.email || 'Not set'}</p></div>
+              <div className="info-box"><label>Phone</label><p>{user.phone || 'Not set'}</p></div>
+              <div className="info-box"><label>Department</label><p>{user.department || 'Not assigned'}</p></div>
+              <div className="info-box"><label>Position</label><p>{user.position || 'Not set'}</p></div>
+              <div className="info-box"><label>Access Level</label><p className="access-tag">{user.role}</p></div>
+              <div className="info-box"><label>Account Created</label><p>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}</p></div>
             </div>
           )}
         </div>
 
-        {/* Right Column - Security & Preferences */}
-        <div className="profile-sidebar">
-          {/* User Avatar Section */}
-          <div className="avatar-section">
-            <div className="avatar-container">
-              <div className="user-avatar-large">
-                {user.role === 'ADMIN' ? '👑' : '👤'}
+        <div className="profile-side-panel">
+          <div className="user-identity-card">
+            <div className="avatar-wrapper">
+              <div className="large-avatar">
+                {formData.avatar || user.avatar ? (
+                  <img src={formData.avatar || user.avatar} alt="Avatar" />
+                ) : (
+                  <span>{user.name?.charAt(0) || user.username?.charAt(0)}</span>
+                )}
+                {isEditing && (
+                  <label className="photo-upload-overlay">
+                    <input type="file" accept="image/*" onChange={handleFileChange} hidden />
+                    <span>Change</span>
+                  </label>
+                )}
               </div>
             </div>
-            <div className="avatar-info">
+            <div className="identity-text">
               <h3>{user.name || user.username}</h3>
               <p>{user.position || user.role}</p>
-              <span className="user-department">{user.department || 'General'}</span>
             </div>
           </div>
 
-          {/* Security Section */}
-          <div className="security-section">
-            <h3>Security</h3>
-            <form onSubmit={handlePasswordChange} className="password-form">
-              <div className="form-group">
-                <label htmlFor="currentPassword">Current Password</label>
-                <input
-                  type="password"
-                  id="currentPassword"
-                  name="currentPassword"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="newPassword">New Password</label>
-                <input
-                  type="password"
-                  id="newPassword"
-                  name="newPassword"
-                  required
-                  minLength="6"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="confirmPassword">Confirm New Password</label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  required
-                />
-              </div>
-              <button 
-                type="submit" 
-                className="btn btn-warning btn-block"
-                disabled={loading}
-              >
-                {loading ? 'Updating...' : 'Change Password'}
-              </button>
-            </form>
-          </div>
-
-          {/* Account Stats */}
-          <div className="stats-section">
-            <h3>Account Statistics</h3>
-            <div className="stats-grid">
-              <div className="stat-item">
-                <span className="stat-icon">📅</span>
-                <div className="stat-info">
-                  <span className="stat-value">
-                    {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
-                  </span>
-                  <span className="stat-label">Joined Date</span>
-                </div>
-              </div>
-              <div className="stat-item">
-                <span className="stat-icon">👤</span>
-                <div className="stat-info">
-                  <span className="stat-value">{user.role}</span>
-                  <span className="stat-label">Account Type</span>
-                </div>
-              </div>
-              <div className="stat-item">
-                <span className="stat-icon">🔄</span>
-                <div className="stat-info">
-                  <span className="stat-value">
-                    {user.updatedAt ? new Date(user.updatedAt).toLocaleDateString() : 'Never'}
-                  </span>
-                  <span className="stat-label">Last Updated</span>
-                </div>
-              </div>
-            </div>
+          <div className="security-mini-card">
+            <h3>Account Security</h3>
+            <p>Password last changed: {user.updatedAt ? new Date(user.updatedAt).toLocaleDateString() : 'Never'}</p>
+            <button className="btn-outline-sec">Update Security</button>
           </div>
         </div>
       </div>

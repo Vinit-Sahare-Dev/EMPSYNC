@@ -22,9 +22,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
     email: '',
     password: '',
     confirmPassword: '',
-    name: '',
-    adminLevel: 'MANAGER',
-    departmentAccess: ''
+    name: ''
   });
 
   // Forgot Password State
@@ -209,9 +207,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
           email: '',
           password: '',
           confirmPassword: '',
-          name: '',
-          adminLevel: 'MANAGER',
-          departmentAccess: ''
+          name: ''
         });
 
         // Redirect to login
@@ -429,27 +425,15 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
               <form onSubmit={handleAdminRegister} className="auth-form">
                 <h3>Create Account</h3>
 
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Username *</label>
-                    <input
-                      type="text"
-                      value={adminRegister.username}
-                      onChange={(e) => setAdminRegister({ ...adminRegister, username: e.target.value })}
-                      placeholder="Choose username"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Admin Level *</label>
-                    <select
-                      value={adminRegister.adminLevel}
-                      onChange={(e) => setAdminRegister({ ...adminRegister, adminLevel: e.target.value })}
-                      required
-                    >
-                      <option value="MANAGER">Manager</option>
-                    </select>
-                  </div>
+                <div className="form-group">
+                  <label>Username *</label>
+                  <input
+                    type="text"
+                    value={adminRegister.username}
+                    onChange={(e) => setAdminRegister({ ...adminRegister, username: e.target.value })}
+                    placeholder="Choose username"
+                    required
+                  />
                 </div>
 
                 <div className="form-group">
@@ -474,21 +458,6 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
                   />
                 </div>
 
-                <div className="form-group">
-                  <label>Department Access</label>
-                  <select
-                    value={adminRegister.departmentAccess}
-                    onChange={(e) => setAdminRegister({ ...adminRegister, departmentAccess: e.target.value })}
-                  >
-                    <option value="">All Departments</option>
-                    <option value="IT">IT</option>
-                    <option value="HR">HR</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Sales">Sales</option>
-                    <option value="Operations">Operations</option>
-                  </select>
-                </div>
 
                 <div className="form-row">
                   <div className="form-group">

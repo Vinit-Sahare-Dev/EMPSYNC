@@ -1,16 +1,10 @@
-// services/apiService.js
 class EmpSyncAPI {
   constructor() {
-    this.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8888/api';
+    this.baseURL = import.meta.env.VITE_API_BASE_URL || '/api';
   }
 
   async request(endpoint, options = {}) {
     try {
-      // API debugging can be enabled via localStorage if needed
-      if (localStorage.getItem('debug_api') === 'true') {
-        console.log(`🔄 API Call: ${options.method || 'GET'} ${this.baseURL}${endpoint}`);
-      }
-
       const response = await fetch(`${this.baseURL}${endpoint}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -21,15 +15,11 @@ class EmpSyncAPI {
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error(`❌ API Error ${response.status}:`, errorText);
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      const data = await response.json();
-      return data;
-
+      return await response.json();
     } catch (error) {
-      console.error(`❌ API Request Failed:`, error);
       throw error;
     }
   }
@@ -37,17 +27,9 @@ class EmpSyncAPI {
   async getAllEmployees() {
     try {
       const data = await this.request('/employees');
-      // Handle different response formats
-      return {
-        success: true,
-        employees: data.employees || data.data || []
-      };
+      return { success: true, employees: data.employees || data.data || data || [] };
     } catch (error) {
-      return {
-        success: false,
-        message: error.message,
-        employees: []
-      };
+      return { success: false, message: error.message, employees: [] };
     }
   }
 
@@ -57,16 +39,9 @@ class EmpSyncAPI {
         method: 'POST',
         body: JSON.stringify(employeeData),
       });
-      return {
-        success: true,
-        employee: data.employee || data,
-        message: data.message || 'Employee created successfully'
-      };
+      return { success: true, employee: data.employee || data };
     } catch (error) {
-      return {
-        success: false,
-        message: error.message
-      };
+      return { success: false, message: error.message };
     }
   }
 
@@ -76,50 +51,45 @@ class EmpSyncAPI {
         method: 'PUT',
         body: JSON.stringify(employeeData),
       });
-      return {
-        success: true,
-        employee: data.employee || data,
-        message: data.message || 'Employee updated successfully'
-      };
+      return { success: true, employee: data.employee || data };
     } catch (error) {
-      return {
-        success: false,
-        message: error.message
-      };
+      return { success: false, message: error.message };
     }
   }
 
   async deleteEmployee(id) {
     try {
-      const data = await this.request(`/employees/${id}`, {
-        method: 'DELETE',
-      });
-      return {
-        success: true,
-        message: data.message || 'Employee deleted successfully'
-      };
+      await this.request(`/employees/${id}`, { method: 'DELETE' });
+      return { success: true };
     } catch (error) {
-      return {
-        success: false,
-        message: error.message
-      };
+      return { success: false, message: error.message };
+    }
+  }
+
+  async getDepartments() {
+    try {
+      const data = await this.request('/employees/departments');
+      return { success: true, departments: data.departments || data || [] };
+    } catch (error) {
+      return { success: false, message: error.message, departments: [] };
+    }
+  }
+
+  async getDepartmentStats() {
+    try {
+      const data = await this.request('/departments');
+      return { success: true, stats: data || [] };
+    } catch (error) {
+      return { success: false, message: error.message, stats: [] };
     }
   }
 
   async healthCheck() {
     try {
-      await this.request('/employees');
-      return {
-        success: true,
-        connected: true,
-        message: 'Backend connected successfully'
-      };
+      await this.request('/employees/test-db');
+      return { success: true, connected: true };
     } catch (error) {
-      return {
-        success: false,
-        connected: false,
-        message: error.message
-      };
+      return { success: false, connected: false, message: error.message };
     }
   }
 }

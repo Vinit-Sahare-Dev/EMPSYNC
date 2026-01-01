@@ -4,6 +4,7 @@ import EmployeeModal from './EmployeeModal';
 import EmployeeCard from './EmployeeCard';
 import './EmployeeModern.css';
 import { empSyncAPI } from '../../services/apiService';
+import { useToast } from '../ui/Toast';
 
 // Safe toast fallback
 const useToastFallback = () => {
@@ -39,13 +40,7 @@ const EmployeeGrid = ({ view = "grid" }) => {
   const [loading, setLoading] = useState(true);
   const [backendStatus, setBackendStatus] = useState('checking');
 
-  let toast;
-  try {
-    const { useToast } = require('../ui/Toast');
-    toast = useToast();
-  } catch (error) {
-    toast = useToastFallback();
-  }
+  const toast = useToast();
 
   useEffect(() => {
     initializeData();

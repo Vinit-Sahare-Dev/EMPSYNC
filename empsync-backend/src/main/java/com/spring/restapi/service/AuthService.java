@@ -1,4 +1,3 @@
-// src/main/java/com/spring/restapi/service/AuthService.java
 package com.spring.restapi.service;
 
 import com.spring.restapi.dto.AuthResponse;
@@ -9,8 +8,9 @@ import com.spring.restapi.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -31,225 +31,138 @@ public class AuthService {
     @Autowired
     private VerificationService verificationService;
 
-    @Value("${empsync.email.verification.enabled:true}")
-    private boolean emailVerificationEnabled;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AuthResponse authenticate(LoginRequest loginRequest) {
-        String username = loginRequest.getUsername();
-        String password = loginRequest.getPassword();
+        Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
 
-        logger.info("🔐 Login attempt - Username: {}", username);
-
-        try {
-            Optional<User> userOpt = userRepository.findByUsername(username);
-
-            if (userOpt.isPresent()) {
-                User user = userOpt.get();
-
-                // Check password
-                if (user.getPassword().equals(password)) {
-
-                    // Check account status
-                    if (!"ACTIVE".equals(user.getStatus())) {
-                        logger.warn("❌ User account is inactive: {}", username);
-                        return new AuthResponse(false, "Account is inactive", null, null, null, null);
-                    }
-
-                    // Email verification check is now removed for sign-in
-                    // Users can log in regardless of email verification status
-
-                    // Send welcome email on first login (check if verification was sent)
-                    if (user.getVerificationSentAt() != null && user.isEmailVerified()) {
-                        try {
-                            emailService.sendWelcomeEmail(user.getEmail(), user.getName(), user.getUserType());
-                            logger.info("👋 Welcome email sent to: {}", user.getEmail());
-                        } catch (Exception e) {
-                            logger.error("❌ Failed to send welcome email: {}", e.getMessage());
-                            // Don't fail login if email fails
-                        }
-                    }
-
-                    logger.info("✅ Login successful: {}", username);
-                    return new AuthResponse(true, "Login successful",
-                            user.getUsername(), user.getName(),
-                            user.getRole(), user.getUserType());
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            if (passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+                if (!user.isEmailVerified() && !"admin".equals(user.getUserType())) {
+                    return new AuthResponse(false, "Email not verified. Please check your inbox.", null, null, null, null);
                 }
+                return new AuthResponse(true, "Login successful", user.getUsername(), user.getName(), user.getRole(), user.getUserType());
             }
-
-            logger.warn("❌ Login failed - Invalid credentials for user: {}", username);
-            return new AuthResponse(false, "Invalid username or password", null, null, null, null);
-
-        } catch (Exception e) {
-            logger.error("🚨 Authentication error for user {}: {}", username, e.getMessage());
-            return new AuthResponse(false, "Authentication error: " + e.getMessage(), null, null, null, null);
         }
+        return new AuthResponse(false, "Invalid username or password", null, null, null, null);
     }
 
+    @Transactional
     public AuthResponse register(RegisterRequest registerRequest) {
+        if (userRepository.existsByUsername(registerRequest.getUsername())) {
+            return new AuthResponse(false, "Username already exists", null, null, null, null);
+        }
+        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+            return new AuthResponse(false, "Email already exists", null, null, null, null);
+        }
+
+        User user = new User();
+        user.setUsername(registerRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setEmail(registerRequest.getEmail());
+        user.setName(registerRequest.getName());
+        user.setUserType(registerRequest.getUserType());
+        user.setRole("admin".equalsIgnoreCase(registerRequest.getUserType()) ? "ADMIN" : "EMPLOYEE");
+        
+        user.setDepartment(registerRequest.getDepartment());
+        user.setPosition(registerRequest.getPosition());
+        user.setPhoneNumber(registerRequest.getPhoneNumber());
+        user.setEmployeeId(registerRequest.getEmployeeId());
+        if ("admin".equalsIgnoreCase(registerRequest.getUserType())) {
+            user.setAdminLevel(registerRequest.getAdminLevel() != null ? registerRequest.getAdminLevel() : "MANAGER");
+            user.setDepartmentAccess(registerRequest.getDepartmentAccess() != null ? registerRequest.getDepartmentAccess() : "ALL");
+        } else {
+            user.setAdminLevel(null);
+            user.setDepartmentAccess(null);
+        }
+        user.setStatus("ACTIVE");
+        user.setEmailVerified(false);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
+
+        User savedUser = userRepository.save(user);
+
+        // Send verification email
         try {
-            logger.info("📝 Registration attempt - Username: {}, Email: {}, UserType: {}",
-                    registerRequest.getUsername(), registerRequest.getEmail(), registerRequest.getUserType());
-
-            // Validate passwords match
-            if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
-                return new AuthResponse(false, "Passwords do not match", null, null, null, null);
-            }
-
-            // Check if username already exists
-            if (userRepository.existsByUsername(registerRequest.getUsername())) {
-                return new AuthResponse(false, "Username already exists", null, null, null, null);
-            }
-
-            // Check if email already exists - allow for employees
-            if (userRepository.existsByEmail(registerRequest.getEmail()) && registerRequest.getUserType().equals("ADMIN")) {
-                return new AuthResponse(false, "Email already exists", null, null, null, null);
-            }
-
-            // Create new user
-            User newUser = new User();
-            newUser.setUsername(registerRequest.getUsername());
-            newUser.setPassword(registerRequest.getPassword()); // In production, encrypt this!
-            newUser.setEmail(registerRequest.getEmail());
-            newUser.setName(registerRequest.getName());
-            newUser.setUserType(registerRequest.getUserType());
-            newUser.setStatus("ACTIVE");
-            newUser.setEmailVerified(true); // Initialize to avoid null error
-
-            // Set email verification based on configuration
-            if (emailVerificationEnabled) {
-                newUser.setEmailVerified(false); // Not verified yet
-            } else {
-                newUser.setEmailVerified(true); // Auto-verify if verification is disabled
-            }
-
-            // Set role based on user type
-            if ("admin".equals(registerRequest.getUserType())) {
-                newUser.setRole("ADMIN");
-                newUser.setAdminLevel(registerRequest.getAdminLevel());
-                newUser.setDepartmentAccess(registerRequest.getDepartmentAccess());
-            } else {
-                newUser.setRole("EMPLOYEE");
-                newUser.setEmployeeId(registerRequest.getEmployeeId());
-                newUser.setDepartment(registerRequest.getDepartment());
-                newUser.setPosition(registerRequest.getPosition());
-                newUser.setPhoneNumber(registerRequest.getPhoneNumber());
-            }
-
-            User savedUser = userRepository.save(newUser);
-
-            // Send verification email only if enabled
-            if (emailVerificationEnabled) {
-                try {
-                    verificationService.createAndSendEmailVerification(savedUser);
-                    logger.info("📧 Verification email sent to: {}", savedUser.getEmail());
-                } catch (Exception e) {
-                    logger.error("❌ Failed to send verification email: {}", e.getMessage());
-                    // Continue with registration even if email fails
-                }
-            } else {
-                // If verification is disabled, send welcome email directly
-                try {
-                    emailService.sendWelcomeEmail(savedUser.getEmail(), savedUser.getName(), savedUser.getUserType());
-                    logger.info("👋 Welcome email sent to: {}", savedUser.getEmail());
-                } catch (Exception e) {
-                    logger.error("❌ Failed to send welcome email: {}", e.getMessage());
-                }
-            }
-
-            logger.info("✅ User registered successfully: {}", savedUser.getUsername());
-
-            String message = emailVerificationEnabled ?
-                    "Registration successful! Please check your email to verify your account." :
-                    "Registration successful! You can now log in.";
-
-            return new AuthResponse(true, message,
-                    savedUser.getUsername(), savedUser.getName(),
-                    savedUser.getRole(), savedUser.getUserType());
-
+            verificationService.createAndSendEmailVerification(savedUser);
+            return new AuthResponse(true, "Registration successful! Please verify your email.", savedUser.getUsername(), savedUser.getName(), savedUser.getRole(), savedUser.getUserType());
         } catch (Exception e) {
-            logger.error("🚨 Registration error: {}", e.getMessage());
-            return new AuthResponse(false, "Registration failed: " + e.getMessage(), null, null, null, null);
+            logger.error("Failed to send verification email: {}", e.getMessage());
+            return new AuthResponse(true, "Registration successful, but failed to send verification email.", savedUser.getUsername(), savedUser.getName(), savedUser.getRole(), savedUser.getUserType());
         }
     }
 
-    /**
-     * Initialize demo users in database
-     */
-    @Autowired
-    public void initializeDemoUsers() {
-        try {
-            if (!userRepository.existsByUsername("admin_manager")) {
-                User demoAdmin = new User();
-                demoAdmin.setUsername("admin_manager");
-                demoAdmin.setPassword("admin123");
-                demoAdmin.setEmail("admin@company.com");
-                demoAdmin.setName("Admin Manager");
-                demoAdmin.setRole("ADMIN");
-                demoAdmin.setUserType("admin");
-                demoAdmin.setAdminLevel("MANAGER");
-                demoAdmin.setDepartmentAccess("ALL");
-                demoAdmin.setStatus("ACTIVE");
-                demoAdmin.setEmailVerified(true); // Demo users are pre-verified
-                userRepository.save(demoAdmin);
-                logger.info("✅ Demo admin user created: admin_manager");
-            }
-
-            if (!userRepository.existsByUsername("john_employee")) {
-                User demoEmployee = new User();
-                demoEmployee.setUsername("john_employee");
-                demoEmployee.setPassword("password123");
-                demoEmployee.setEmail("john@company.com");
-                demoEmployee.setName("John Employee");
-                demoEmployee.setRole("EMPLOYEE");
-                demoEmployee.setUserType("employee");
-                demoEmployee.setDepartment("IT");
-                demoEmployee.setPosition("Developer");
-                demoEmployee.setEmployeeId("EMP001");
-                demoEmployee.setStatus("ACTIVE");
-                demoEmployee.setEmailVerified(true); // Demo users are pre-verified
-                userRepository.save(demoEmployee);
-                logger.info("✅ Demo employee user created: john_employee");
-            }
-
-        } catch (Exception e) {
-            logger.error("❌ Error initializing demo users: {}", e.getMessage());
-        }
-    }
-
-    /**
-     * Get demo credentials info
-     */
     public Map<String, Object> getDemoCredentials() {
-        Map<String, Object> demoCreds = new HashMap<>();
+        Map<String, Object> demoUsers = new HashMap<>();
+        
+        Map<String, String> admin = new HashMap<>();
+        admin.put("username", "admin");
+        admin.put("password", "admin123");
+        admin.put("role", "ADMIN");
+        
+        Map<String, String> employee = new HashMap<>();
+        employee.put("username", "vinit");
+        employee.put("password", "vinit123");
+        employee.put("role", "EMPLOYEE");
+        
+        demoUsers.put("admin", admin);
+        demoUsers.put("employee", employee);
+        
+        return demoUsers;
+    }
 
-        try {
-            Optional<User> adminUser = userRepository.findByUsername("admin_manager");
-            Optional<User> employeeUser = userRepository.findByUsername("john_employee");
-
-            if (adminUser.isPresent()) {
-                User admin = adminUser.get();
-                Map<String, String> adminInfo = new HashMap<>();
-                adminInfo.put("password", admin.getPassword());
-                adminInfo.put("name", admin.getName());
-                adminInfo.put("role", admin.getRole());
-                adminInfo.put("userType", admin.getUserType());
-                demoCreds.put("admin_manager", adminInfo);
+    @Transactional
+    public void initializeDemoUsers() {
+        // Initialize Admin
+        userRepository.findByUsername("admin").ifPresentOrElse(
+            admin -> {
+                if (!passwordEncoder.matches("admin123", admin.getPassword())) {
+                    admin.setPassword(passwordEncoder.encode("admin123"));
+                    userRepository.save(admin);
+                    logger.info("Updated admin password to secure hash");
+                }
+            },
+            () -> {
+                User admin = new User();
+                admin.setUsername("admin");
+                admin.setPassword(passwordEncoder.encode("admin123"));
+                admin.setEmail("admin@empsync.com");
+                admin.setName("System Administrator");
+                admin.setRole("ADMIN");
+                admin.setUserType("admin");
+                admin.setAdminLevel("SUPER_ADMIN");
+                admin.setStatus("ACTIVE");
+                admin.setEmailVerified(true);
+                userRepository.save(admin);
+                logger.info("Demo admin user created with secure hash");
             }
+        );
 
-            if (employeeUser.isPresent()) {
-                User employee = employeeUser.get();
-                Map<String, String> employeeInfo = new HashMap<>();
-                employeeInfo.put("password", employee.getPassword());
-                employeeInfo.put("name", employee.getName());
-                employeeInfo.put("role", employee.getRole());
-                employeeInfo.put("userType", employee.getUserType());
-                demoCreds.put("john_employee", employeeInfo);
+        // Initialize Vinit
+        userRepository.findByUsername("vinit").ifPresentOrElse(
+            vinit -> {
+                if (!passwordEncoder.matches("vinit123", vinit.getPassword())) {
+                    vinit.setPassword(passwordEncoder.encode("vinit123"));
+                    userRepository.save(vinit);
+                    logger.info("Updated vinit password to secure hash");
+                }
+            },
+            () -> {
+                User vinit = new User();
+                vinit.setUsername("vinit");
+                vinit.setPassword(passwordEncoder.encode("vinit123"));
+                vinit.setEmail("vinit.sahare@empsync.com");
+                vinit.setName("Vinit Sahare");
+                vinit.setRole("EMPLOYEE");
+                vinit.setUserType("employee");
+                vinit.setStatus("ACTIVE");
+                vinit.setEmailVerified(true);
+                vinit.setDepartment("Engineering");
+                userRepository.save(vinit);
+                logger.info("Demo employee user created with secure hash");
             }
-
-        } catch (Exception e) {
-            logger.error("❌ Error getting demo credentials: {}", e.getMessage());
-        }
-
-        return demoCreds;
+        );
     }
 }

@@ -1,4 +1,3 @@
-/* src/components/layout/NavbarModern.css */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 .navbar-modern {
@@ -7,21 +6,18 @@
     left: 0;
     right: 0;
     height: 70px;
-    background: rgba(15, 23, 42, 0.8);
+    background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     padding: 0 2rem;
     z-index: 1000;
     font-family: 'Outfit', sans-serif;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-container {
     width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
 }
 
 .navbar-content {
@@ -33,44 +29,46 @@
 .navbar-left {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 .navbar-logo {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.8rem;
+    cursor: pointer;
+    min-width: fit-content;
 }
 
 .logo-icon {
-    width: 32px;
-    height: 32px;
+    width: 36px !important;
+    height: 36px !important;
 }
 
 .logo-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 800;
+    margin: 0;
+    line-height: 1;
     background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
-    letter-spacing: -0.02em;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.01em;
 }
 
 .desktop-nav {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .nav-link {
     text-decoration: none;
     color: #94a3b8;
     font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    transition: all 0.2s ease;
 }
 
 .nav-link:hover {
@@ -80,14 +78,14 @@
 
 .nav-link-active {
     color: white;
-    background: rgba(59, 130, 246, 0.15);
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background: rgba(59, 130, 246, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.3);
 }
 
 .nav-link-content {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
 }
 
 .nav-icon {
@@ -101,24 +99,15 @@
     gap: 1.5rem;
 }
 
-.user-role-badge {
-    display: flex;
-}
-
 .badge-primary {
     background: rgba(59, 130, 246, 0.1);
     color: #60a5fa;
-    padding: 0.25rem 0.75rem;
+    padding: 0.3rem 0.8rem;
     border-radius: 20px;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.profile-dropdown {
-    position: relative;
 }
 
 .profile-btn {
@@ -126,10 +115,10 @@
     border: none;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
     cursor: pointer;
-    padding: 0.4rem;
-    border-radius: 12px;
+    padding: 0.5rem;
+    border-radius: 14px;
     transition: all 0.2s ease;
 }
 
@@ -137,15 +126,21 @@
     background: rgba(255, 255, 255, 0.05);
 }
 
-.profile-avatar {
-    width: 36px;
-    height: 36px;
+.navbar-profile-avatar {
     border-radius: 10px;
     background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-info {
@@ -160,53 +155,43 @@
 }
 
 .profile-role {
-    color: #94a3b8;
-    font-size: 0.75rem;
+    color: #60a5fa;
+    font-size: 0.7rem;
+    font-weight: 800;
     margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 .dropdown-menu {
     position: absolute;
-    top: calc(100% + 10px);
+    top: calc(100% + 12px);
     right: 0;
-    width: 220px;
-    background: #1e293b;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 0.5rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    animation: slideDown 0.2s ease;
+    width: 240px;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 0.6rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     z-index: 1100;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 .dropdown-header {
-    padding: 0.75rem 1rem;
+    padding: 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     margin-bottom: 0.5rem;
 }
 
 .dropdown-name {
     color: white;
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-weight: 700;
+    font-size: 0.95rem;
     margin: 0;
 }
 
 .dropdown-email {
-    color: #94a3b8;
-    font-size: 0.75rem;
+    color: #64748b;
+    font-size: 0.8rem;
     margin: 0;
 }
 
@@ -214,21 +199,24 @@
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.6rem 1rem;
+    gap: 0.8rem;
+    padding: 0.75rem 1rem;
     background: transparent;
-    border: none;
-    color: #cbd5e1;
-    font-size: 0.875rem;
+    color: #94a3b8;
+    font-size: 0.9rem;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 10px;
     transition: all 0.2s ease;
-    text-align: left;
 }
 
 .dropdown-item:hover {
     background: rgba(255, 255, 255, 0.05);
     color: white;
+}
+
+.dropdown-icon {
+    width: 1.2rem;
+    height: 1.2rem;
 }
 
 .dropdown-logout {
@@ -237,24 +225,18 @@
 
 .dropdown-logout:hover {
     background: rgba(248, 113, 113, 0.1);
-    color: #f87171;
 }
 
 .mobile-menu-btn {
     display: none;
-    background: transparent;
-    border: none;
     color: white;
-    cursor: pointer;
 }
 
-.mobile-logout-btn {
-    display: none;
-}
-
-/* Mobile Responsiveness */
 @media (max-width: 1024px) {
-    .desktop-nav {
+
+    .desktop-nav,
+    .user-role-badge,
+    .profile-info {
         display: none;
     }
 
@@ -262,30 +244,37 @@
         display: block;
     }
 
-    .user-role-badge {
-        display: none;
+    .navbar-left {
+        gap: 1.5rem;
     }
 
-    .profile-info {
+    .logo-title {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .navbar-modern {
+        padding: 0 1rem;
+    }
+
+    .logo-title {
         display: none;
     }
 }
 
-.dropdown-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1050;
-}
-
+/* Mobile Menu Styles */
 .mobile-menu {
     position: fixed;
     top: 70px;
     left: 0;
     right: 0;
+    bottom: 0;
     background: #0f172a;
-    padding: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 1000;
+    z-index: 1050;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    animation: slideDown 0.3s ease-out;
 }
 
 .mobile-nav {
@@ -297,17 +286,63 @@
 .mobile-nav-link {
     text-decoration: none;
     color: #94a3b8;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
 }
 
 .mobile-nav-link-active {
     background: rgba(59, 130, 246, 0.1);
-    color: #60a5fa;
+    color: white;
 }
 
 .mobile-nav-content {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
+}
+
+.mobile-nav-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1040;
+}
+
+.mobile-logout-btn {
+    background: rgba(248, 113, 113, 0.1);
+    border: none;
+    color: #f87171;
+    padding: 0.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .mobile-logout-btn {
+        display: block;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }

@@ -5,18 +5,17 @@ services:
     container_name: empsync-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: newpassword
-      MYSQL_DATABASE: employee_management_system
-      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3307:3306"
-    command: --default-authentication-plugin=mysql_native_password --bind-address=0.0.0.0
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - empsync-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       timeout: 20s
       retries: 10
 
@@ -28,24 +27,24 @@ services:
     container_name: empsync-backend
     restart: unless-stopped
     ports:
-      - "8889:8888"
+      - "${BACKEND_PORT:-8888}:8888"
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/employee_management_system?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: newpassword
-      SMTP_HOST: smtp.gmail.com
-      SMTP_PORT: 587
-      SMTP_USERNAME: empsyncofficial@gmail.com
-      SMTP_PASSWORD: twzixhovwttuuyyh
-      FRONTEND_URL: http://localhost:3001
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE:-docker}
+      SPRING_DATASOURCE_URL: ${DATABASE_URL}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      FRONTEND_URL: ${FRONTEND_URL}
     depends_on:
       mysql:
         condition: service_healthy
     networks:
       - empsync-network
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8888/api/auth/status"]
+      test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8888/api/auth/status" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -59,13 +58,15 @@ services:
     container_name: empsync-frontend
     restart: unless-stopped
     ports:
-      - "3001:80"
+      - "${FRONTEND_PORT:-3000}:80"
+    environment:
+      - VITE_API_BASE_URL=${VITE_API_BASE_URL:-/api}
     depends_on:
       - backend
     networks:
       - empsync-network
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80"]
+      test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80" ]
       interval: 30s
       timeout: 10s
       retries: 3

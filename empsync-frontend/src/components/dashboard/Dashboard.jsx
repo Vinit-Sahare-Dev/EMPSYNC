@@ -16,293 +16,172 @@ const Dashboard = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  // Load data immediately on component mount
   useEffect(() => {
     const user = localStorage.getItem('currentUser');
     if (!user) {
       navigate('/login');
       return;
     }
-    
     loadDashboardData();
   }, [navigate]);
 
   const loadDashboardData = useCallback(async () => {
     try {
-      const backendPromise = empSyncAPI.getAllEmployees().catch(() => null);
-      const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(null), 1000));
-      
-      const result = await Promise.race([backendPromise, timeoutPromise]);
-      
+      const result = await Promise.race([
+        empSyncAPI.getAllEmployees(),
+        new Promise(resolve => setTimeout(() => resolve(null), 1500))
+      ]);
+
       if (result && result.success) {
         setBackendConnected(true);
         processDashboardData(result.employees || []);
       } else {
         setBackendConnected(false);
-        const savedEmployees = localStorage.getItem('employees');
-        const employees = savedEmployees ? JSON.parse(savedEmployees) : getDefaultEmployees();
-        processDashboardData(employees);
+        const saved = localStorage.getItem('employees');
+        processDashboardData(saved ? JSON.parse(saved) : getDefaultEmployees());
       }
     } catch (error) {
-      console.log('Using fallback data');
-      const savedEmployees = localStorage.getItem('employees');
-      const employees = savedEmployees ? JSON.parse(savedEmployees) : getDefaultEmployees();
-      processDashboardData(employees);
+      const saved = localStorage.getItem('employees');
+      processDashboardData(saved ? JSON.parse(saved) : getDefaultEmployees());
     }
   }, []);
 
-  const getDefaultEmployees = () => {
-    return [
-      {
-        id: 1, name: "John Doe", email: "john@company.com", department: "IT",
-        position: "Senior Developer", status: "Active", joinDate: new Date().toISOString(), salary: 85000
-      },
-      {
-        id: 2, name: "Jane Smith", email: "jane@company.com", department: "HR",
-        position: "HR Manager", status: "Active", joinDate: new Date().toISOString(), salary: 75000
-      },
-      {
-        id: 3, name: "Mike Johnson", email: "mike@company.com", department: "Finance",
-        position: "Financial Analyst", status: "Active", joinDate: new Date().toISOString(), salary: 70000
-      },
-      {
-        id: 4, name: "Sarah Wilson", email: "sarah@company.com", department: "Marketing",
-        position: "Marketing Specialist", status: "Active", joinDate: new Date().toISOString(), salary: 65000
-      },
-      {
-        id: 5, name: "David Brown", email: "david@company.com", department: "IT",
-        position: "IT Manager", status: "Active", joinDate: new Date().toISOString(), salary: 95000
-      },
-      {
-        id: 6, name: "Emily Davis", email: "emily@company.com", department: "Sales",
-        position: "Sales Representative", status: "Active", joinDate: new Date().toISOString(), salary: 60000
-      },
-      {
-        id: 7, name: "Robert Miller", email: "robert@company.com", department: "IT",
-        position: "DevOps Engineer", status: "Active", joinDate: new Date().toISOString(), salary: 80000
-      },
-      {
-        id: 8, name: "Lisa Anderson", email: "lisa@company.com", department: "HR",
-        position: "Recruiter", status: "Active", joinDate: new Date().toISOString(), salary: 55000
-      }
-    ];
-  };
+  const getDefaultEmployees = () => [
+    { id: 1, name: "John Doe", department: "IT", position: "Senior Developer", status: "Active", joinDate: new Date().toISOString() },
+    { id: 2, name: "Jane Smith", department: "HR", position: "HR Manager", status: "Active", joinDate: new Date().toISOString() },
+    { id: 3, name: "Mike Johnson", department: "Finance", position: "Financial Analyst", status: "Active", joinDate: new Date().toISOString() },
+    { id: 4, name: "Sarah Wilson", department: "Marketing", position: "Specialist", status: "Active", joinDate: new Date().toISOString() }
+  ];
 
   const processDashboardData = (employees) => {
     const stats = {
       total: employees.length,
-      active: employees.filter(emp => emp.status === 'Active' || !emp.status).length,
-      departments: new Set(employees.map(emp => emp.department)).size,
-      newHires: employees.filter(emp => {
-        const joinDate = new Date(emp.joinDate);
-        const thirtyDaysAgo = new Date();
-        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-        return joinDate > thirtyDaysAgo;
+      active: employees.filter(e => e.status === 'Active' || !e.status).length,
+      departments: new Set(employees.map(e => e.department)).size,
+      newHires: employees.filter(e => {
+        const d = new Date(e.joinDate);
+        const limit = new Date();
+        limit.setDate(limit.getDate() - 30);
+        return d > limit;
       }).length
     };
 
-    const departmentData = {};
-    employees.forEach(emp => {
-      const dept = emp.department || 'Unknown';
-      if (!departmentData[dept]) {
-        departmentData[dept] = { count: 0, recentHires: 0 };
-      }
-      departmentData[dept].count++;
-      
-      const joinDate = new Date(emp.joinDate);
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      if (joinDate > thirtyDaysAgo) {
-        departmentData[dept].recentHires++;
-      }
+    const deptMap = {};
+    employees.forEach(e => {
+      const d = e.department || 'Unknown';
+      if (!deptMap[d]) deptMap[d] = { count: 0, new: 0 };
+      deptMap[d].count++;
+      if (new Date(e.joinDate) > new Date(Date.now() - 30 * 86400000)) deptMap[d].new++;
     });
 
-    const departmentStats = Object.entries(departmentData)
+    const deptStats = Object.entries(deptMap)
       .sort((a, b) => b[1].count - a[1].count)
       .slice(0, 6)
-      .map(([name, data], index) => ({
+      .map(([name, data], i) => ({
         name,
         count: data.count,
-        percentage: Math.round((data.count / employees.length) * 100),
-        recentHires: data.recentHires,
-        growth: Math.floor(10 + Math.random() * 25),
-        color: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4'][index]
+        percentage: Math.round((data.count / (employees.length || 1)) * 100),
+        new: data.new,
+        color: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4'][i]
       }));
 
-    const recentActivity = employees
-      .sort((a, b) => new Date(b.joinDate) - new Date(a.joinDate))
-      .slice(0, 3)
-      .map(emp => ({
-        id: emp.id || Math.random(),
-        name: emp.name,
-        department: emp.department,
-        position: emp.position,
-        time: 'Recently',
-        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(emp.name)}&background=3B82F6&color=fff&size=64`,
-        status: 'active'
-      }));
-
-    setDashboardData({ 
-      stats, 
-      departmentStats, 
-      recentActivity, 
-      employees
-    });
+    setDashboardData({ stats, departmentStats: deptStats, employees });
   };
 
   const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
-  const DepartmentChart = ({ data }) => {
-    const maxCount = Math.max(...data.map(dept => dept.count), 1);
-    
-    return (
-      <div className="department-chart">
-        <div className="chart-bars">
-          {data.map((dept, index) => (
-            <div key={dept.name} className="chart-bar-container">
-              <div className="bar-info">
-                <div className="bar-label">
-                  <span className="dept-icon">
-                    {dept.name === 'IT' ? '💻' : 
-                     dept.name === 'HR' ? '👥' :
-                     dept.name === 'Finance' ? '💰' :
-                     dept.name === 'Marketing' ? '📢' :
-                     dept.name === 'Sales' ? '🎯' : '⚙️'}
-                  </span>
-                  {dept.name}
-                </div>
-                <div className="bar-meta">
-                  <span className="meta-item">{dept.count} employees</span>
-                  {dept.recentHires > 0 && (
-                    <span className="meta-item new">+{dept.recentHires} new</span>
-                  )}
-                </div>
-              </div>
-              <div className="bar-wrapper">
-                <div 
-                  className="chart-bar"
-                  style={{
-                    width: `${(dept.count / maxCount) * 100}%`,
-                    backgroundColor: dept.color
-                  }}
-                >
-                  <span className="bar-count">{dept.count}</span>
-                </div>
-              </div>
-              <div className="bar-details">
-                <div className="bar-percentage">{dept.percentage}%</div>
-                <div className="bar-growth">↑ {dept.growth}%</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className="dashboard-professional">
-      {/* Hero Section - Inspired by Landing Page */}
+      <div className="news-ticker">
+        <div className="ticker-content">
+          <span>🚀 System Update: Employee Database v2.1 is now online.</span>
+          <span>📈 Monthly reports are ready for review.</span>
+          <span>💡 Tip: Use Quick Navigation for faster accessibility.</span>
+          <span>🏢 Welcome to our 5 new team members this week!</span>
+        </div>
+      </div>
+
       <div className="dashboard-hero">
         <div className="hero-content">
           <div className="hero-welcome">
-            <h1 className="hero-title">
-              Welcome back, <span className="hero-name">{currentUser.name}</span>
-            </h1>
-            <p className="hero-subtitle">Team overview & workforce analytics</p>
+            <h1 className="hero-title">Welcome, <span className="hero-name">{currentUser.name || 'User'}</span></h1>
+            <p className="hero-subtitle">You have <span className="highlight-text">{dashboardData.stats.newHires} new notifications</span> today.</p>
           </div>
-          
+
           <div className="hero-stats">
             <div className="hero-stat">
               <span className="hero-number">{dashboardData.stats.total}</span>
-              <span className="hero-label">Total Employees</span>
+              <span className="hero-label">Team Members</span>
+              <div className="stat-progress"><div className="stat-progress-fill" style={{ width: '75%' }}></div></div>
             </div>
             <div className="hero-stat">
               <span className="hero-number">{dashboardData.stats.active}</span>
               <span className="hero-label">Active Now</span>
+              <div className="stat-progress"><div className="stat-progress-fill success" style={{ width: '90%' }}></div></div>
             </div>
             <div className="hero-stat">
               <span className="hero-number">{dashboardData.stats.departments}</span>
-              <span className="hero-label">Departments</span>
+              <span className="hero-label">Units</span>
+              <div className="stat-progress"><div className="stat-progress-fill warning" style={{ width: '60%' }}></div></div>
             </div>
             <div className="hero-stat">
               <span className="hero-number">{dashboardData.stats.newHires}</span>
               <span className="hero-label">New Hires</span>
+              <div className="stat-progress"><div className="stat-progress-fill purple" style={{ width: '40%' }}></div></div>
             </div>
           </div>
 
           <div className="hero-actions">
             <div className="hero-time">
-              <span className="time-date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              <span className="time-date">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
               <span className="time-clock">{new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
             <div className="hero-quick-actions">
-              <button className="hero-action-btn" onClick={() => navigate('/employees')}>
-                <span className="action-icon">➕</span>
-                <span className="action-text">Add Employee</span>
+              <button className="hero-action-btn primary" onClick={() => navigate('/employees')}>
+                <span className="btn-icon">+</span> Quick Add
               </button>
-              <button className="hero-action-btn" onClick={() => navigate('/analytics')}>
-                <span className="action-icon">📊</span>
-                <span className="action-text">View Analytics</span>
+              <button className="hero-action-btn secondary" onClick={() => navigate('/analytics')}>
+                <span className="btn-icon">📊</span> View Reports
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      
-      {/* Main Content Grid */}
       <div className="dashboard-main-grid">
-        {/* Left Column - Recent Employees */}
         <div className="dashboard-left-column">
           <div className="recent-employees-professional">
-            <h2>Recent Employees</h2>
+            <h2>Recent Activity</h2>
             <div className="recent-employees-grid">
-              {dashboardData.employees.slice(0, 4).map((employee, index) => (
-                <div key={`employee-${employee.id || index}`} className="recent-employee-card">
-                  <img 
-                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(employee.name)}&background=3B82F6&color=fff&size=64`} 
-                    alt={employee.name} 
-                    className="recent-employee-avatar" 
-                  />
+              {dashboardData.employees.slice(0, 4).map((emp, i) => (
+                <div key={emp.id || i} className="recent-employee-card">
+                  <div className="recent-avatar-sm" style={{ background: dashboardData.departmentStats.find(d => d.name === emp.department)?.color || '#3b82f6' }}>
+                    {emp.name.charAt(0)}
+                  </div>
                   <div className="recent-employee-info">
-                    <h4>{employee.name}</h4>
-                    <p>{employee.position}</p>
-                    <div className="recent-employee-meta">
-                      <span className="employee-department">{employee.department}</span>
-                      <span className="employee-status active">Active</span>
-                    </div>
+                    <h4>{emp.name}</h4>
+                    <p>{emp.position}</p>
+                    <div className="recent-meta-pill">{emp.department}</div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          
-          {/* Department Distribution */}
+
           <div className="chart-section-professional">
-            <div className="chart-header-professional">
-              <div>
-                <h2>Department Distribution</h2>
-                <span className="chart-subtitle">Team composition overview</span>
-              </div>
-              <div className="connection-status">
-                <span className={`status-indicator ${backendConnected ? 'connected' : 'demo'}`}></span>
-                <span>{backendConnected ? 'Live Data' : 'Demo Mode'}</span>
+            <div className="chart-header-flex">
+              <h2>Department Growth</h2>
+              <div className={`status-badge-mini ${backendConnected ? 'live' : 'offline'}`}>
+                {backendConnected ? 'Live' : 'Cached'}
               </div>
             </div>
-            
-            <div className="chart-container-professional">
-              {dashboardData.departmentStats.length > 0 ? (
-                <DepartmentChart data={dashboardData.departmentStats} />
-              ) : (
-                <div className="no-chart-data">
-                  <div className="no-data-icon">📊</div>
-                  <p>No department data available</p>
-                  <button className="btn btn-primary" onClick={loadDashboardData} disabled={loading}>
-                    {loading ? 'Loading...' : 'Load Sample Data'}
-                  </button>
+            <div className="custom-bar-chart">
+              {dashboardData.departmentStats.map(dept => (
+                <div key={dept.name} className="chart-row">
+                  <div className="row-label"><span>{dept.name}</span><span>{dept.count}</span></div>
+                  <div className="row-track"><div className="row-fill" style={{ width: `${dept.percentage}%`, background: dept.color }} /></div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </div>

@@ -33,5 +33,7 @@ public interface VerificationTokenRepository extends JpaRepository<VerificationT
     
     void deleteByUser(User user);
     
+    void deleteByUserAndTokenType(User user, String tokenType);
+    
     void deleteByExpiryDateBefore(LocalDateTime dateTime);
 }

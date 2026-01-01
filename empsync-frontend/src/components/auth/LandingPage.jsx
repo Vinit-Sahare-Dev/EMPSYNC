@@ -270,7 +270,6 @@ const LandingPage = ({ onLogin }) => {
                 onClick={handleLoginToggle}
               >
                 <span>Get Started</span>
-                <div className="btn-arrow">→</div>
                 <div className="ripple-effect"></div>
               </button>
               <button
