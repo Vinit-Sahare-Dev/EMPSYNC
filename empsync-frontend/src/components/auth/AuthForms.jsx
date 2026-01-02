@@ -12,7 +12,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
 
   // Admin Login State
   const [adminLogin, setAdminLogin] = useState({
-    username: '',
+    email: '',
     password: ''
   });
 
@@ -367,12 +367,12 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
                 <h3>Login</h3>
 
                 <div className="form-group">
-                  <label>Username</label>
+                  <label>Email Address</label>
                   <input
-                    type="text"
-                    value={adminLogin.username}
-                    onChange={(e) => setAdminLogin({ ...adminLogin, username: e.target.value })}
-                    placeholder="Enter username"
+                    type="email"
+                    value={adminLogin.email}
+                    onChange={(e) => setAdminLogin({ ...adminLogin, email: e.target.value })}
+                    placeholder="Enter email address"
                     required
                     className="login-input"
                   />

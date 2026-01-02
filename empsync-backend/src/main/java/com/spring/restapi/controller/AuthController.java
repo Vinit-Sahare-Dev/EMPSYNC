@@ -37,19 +37,19 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         try {
-            logger.info("🔐 Login request for user: {}", loginRequest.getUsername());
+            logger.info("🔐 Login request for user: {}", loginRequest.getEmail());
 
             AuthResponse response = authService.authenticate(loginRequest);
 
             if (response.isSuccess()) {
-                logger.info("✅ Login successful for user: {}", loginRequest.getUsername());
+                logger.info("✅ Login successful for user: {}", loginRequest.getEmail());
                 return ResponseEntity.ok(response);
             } else {
-                logger.warn("❌ Login failed for user: {}", loginRequest.getUsername());
+                logger.warn("❌ Login failed for user: {}", loginRequest.getEmail());
                 return ResponseEntity.status(401).body(response);
             }
         } catch (Exception e) {
-            logger.error("🚨 Login error for user {}: {}", loginRequest.getUsername(), e.getMessage());
+            logger.error("🚨 Login error for user {}: {}", loginRequest.getEmail(), e.getMessage());
             AuthResponse errorResponse = new AuthResponse(false, "Login failed: " + e.getMessage(), null, null, null, null);
             return ResponseEntity.status(500).body(errorResponse);
         }

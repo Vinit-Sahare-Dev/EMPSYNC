@@ -49,11 +49,6 @@ public class User {
     @Column(name = "employee_id", length = 20)
     private String employeeId;
 
-    @Column(name = "admin_level", length = 20)
-    private String adminLevel = "MANAGER";
-
-    @Column(name = "department_access", length = 50)
-    private String departmentAccess;
 
     @Column(name = "status", length = 20)
     private String status = "ACTIVE";
@@ -130,11 +125,6 @@ public class User {
     public String getEmployeeId() { return employeeId; }
     public void setEmployeeId(String employeeId) { this.employeeId = employeeId; }
 
-    public String getAdminLevel() { return adminLevel; }
-    public void setAdminLevel(String adminLevel) { this.adminLevel = adminLevel; }
-
-    public String getDepartmentAccess() { return departmentAccess; }
-    public void setDepartmentAccess(String departmentAccess) { this.departmentAccess = departmentAccess; }
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }

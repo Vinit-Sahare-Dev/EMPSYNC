@@ -8,7 +8,7 @@ import './PickEffect.css';
 const LandingPage = ({ onLogin }) => {
   const [showLogin, setShowLogin] = useState(false);
   const [credentials, setCredentials] = useState({
-    username: '',
+    email: '',
     password: ''
   });
   const [loading, setLoading] = useState(false);
@@ -44,8 +44,8 @@ const LandingPage = ({ onLogin }) => {
     setLoading(true);
 
     try {
-      if (!credentials.username || !credentials.password) {
-        showToast('error', 'Please enter both username and password');
+      if (!credentials.email || !credentials.password) {
+        showToast('error', 'Please enter both email and password');
         setLoading(false);
         return;
       }
@@ -53,7 +53,7 @@ const LandingPage = ({ onLogin }) => {
       // Admin-only authentication
       let user = null;
 
-      if (credentials.username === 'admin' && credentials.password === 'admin123') {
+      if (credentials.email === 'admin@empsync.com' && credentials.password === 'admin123') {
         user = {
           username: 'admin',
           role: 'ADMIN',
@@ -84,7 +84,7 @@ const LandingPage = ({ onLogin }) => {
   };
 
   const fillDemoCredentials = () => {
-    setCredentials({ username: 'admin', password: 'admin123' });
+    setCredentials({ email: 'admin@empsync.com', password: 'admin123' });
     showToast('info', 'Demo credentials filled!');
   };
 

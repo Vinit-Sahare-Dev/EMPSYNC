@@ -35,7 +35,7 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
 
     public AuthResponse authenticate(LoginRequest loginRequest) {
-        Optional<User> userOpt = userRepository.findByUsername(loginRequest.getUsername());
+        Optional<User> userOpt = userRepository.findByEmail(loginRequest.getEmail());
 
         if (userOpt.isPresent()) {
             User user = userOpt.get();
@@ -46,7 +46,7 @@ public class AuthService {
                 return new AuthResponse(true, "Login successful", user.getUsername(), user.getName(), user.getRole(), user.getUserType());
             }
         }
-        return new AuthResponse(false, "Invalid username or password", null, null, null, null);
+        return new AuthResponse(false, "Invalid email or password", null, null, null, null);
     }
 
     @Transactional
@@ -70,13 +70,7 @@ public class AuthService {
         user.setPosition(registerRequest.getPosition());
         user.setPhoneNumber(registerRequest.getPhoneNumber());
         user.setEmployeeId(registerRequest.getEmployeeId());
-        if ("admin".equalsIgnoreCase(registerRequest.getUserType())) {
-            user.setAdminLevel(registerRequest.getAdminLevel() != null ? registerRequest.getAdminLevel() : "MANAGER");
-            user.setDepartmentAccess(registerRequest.getDepartmentAccess() != null ? registerRequest.getDepartmentAccess() : "ALL");
-        } else {
-            user.setAdminLevel(null);
-            user.setDepartmentAccess(null);
-        }
+
         user.setStatus("ACTIVE");
         user.setEmailVerified(false);
         user.setCreatedAt(LocalDateTime.now());
@@ -132,7 +126,7 @@ public class AuthService {
                 admin.setName("System Administrator");
                 admin.setRole("ADMIN");
                 admin.setUserType("admin");
-                admin.setAdminLevel("SUPER_ADMIN");
+
                 admin.setStatus("ACTIVE");
                 admin.setEmailVerified(true);
                 userRepository.save(admin);

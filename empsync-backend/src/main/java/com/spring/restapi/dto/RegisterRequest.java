@@ -13,8 +13,7 @@ public class RegisterRequest {
     private String position;
     private String phoneNumber;
     private String address;
-    private String adminLevel;
-    private String departmentAccess;
+
     
     // Constructors
     public RegisterRequest() {}
@@ -53,9 +52,5 @@ public class RegisterRequest {
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
     
-    public String getAdminLevel() { return adminLevel; }
-    public void setAdminLevel(String adminLevel) { this.adminLevel = adminLevel; }
-    
-    public String getDepartmentAccess() { return departmentAccess; }
-    public void setDepartmentAccess(String departmentAccess) { this.departmentAccess = departmentAccess; }
+
 }
