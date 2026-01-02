@@ -1,21 +1,22 @@
 services:
-  # MySQL Database
-  mysql:
-    image: mysql:8.0
-    container_name: empsync-mysql
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: empsync-postgres
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      POSTGRES_DB: ${POSTGRES_DATABASE:-employee_management_system}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "3307:3306"
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - empsync-network
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DATABASE:-employee_management_system}" ]
       timeout: 20s
       retries: 10
 
@@ -39,7 +40,7 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD}
       FRONTEND_URL: ${FRONTEND_URL}
     depends_on:
-      mysql:
+      postgres:
         condition: service_healthy
     networks:
       - empsync-network
@@ -72,7 +73,7 @@ services:
       retries: 3
 
 volumes:
-  mysql_data:
+  postgres_data:
     driver: local
 
 networks:
