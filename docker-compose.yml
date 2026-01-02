@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DATABASE:-employee_management_system}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Vinit@51}
     ports:
       - "5432:5432"
     volumes:
@@ -31,9 +31,9 @@ services:
       - "${BACKEND_PORT:-8888}:8888"
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE:-docker}
-      SPRING_DATASOURCE_URL: ${DATABASE_URL}
-      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+      SPRING_DATASOURCE_URL: ${DATABASE_URL:-jdbc:postgresql://postgres:5432/employee_management_system}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD:-Vinit@51}
       SMTP_HOST: ${SMTP_HOST}
       SMTP_PORT: ${SMTP_PORT}
       SMTP_USERNAME: ${SMTP_USERNAME}
