@@ -326,40 +326,23 @@ const DepartmentGrid = () => {
       <div className="department-grid-container">
         <div className="loading-container">
           <div>Loading departments...</div>
+        </div>
+      </div>
+    );
   }
-};
 
-// Handle deleting department
-const handleDeleteDepartment = async (departmentId) => {
-  if (window.confirm('Are you sure you want to delete this department? This action cannot be undone.')) {
-    try {
-      const updatedDepartments = departments.filter(dept => dept.id !== departmentId);
+  return (
+    <div className="department-grid-container">
+      {/* Department Hero Section */}
+      <div className="department-hero">
+        <div className="hero-content">
+          <div className="hero-left">
+          </div>
 
-      if (backendStatus === 'connected') {
-        toast.showToast('success', 'Department deleted successfully!');
-      } else {
-        localStorage.setItem('departments', JSON.stringify(updatedDepartments));
-        toast.showToast('warning', 'Department deleted locally (backend unavailable)');
-      }
-
-      setDepartments(updatedDepartments);
-      calculateStats(updatedDepartments, JSON.parse(localStorage.getItem('employees') || '[]'));
-
-    } catch (error) {
-      console.error('Error deleting department:', error);
-      toast.showToast('error', `Failed to delete department: ${error.message}`);
-    }
-  }
-};
-
-// Format currency
-const formatRupees = (amount) => {
-  if (amount === 0) return '₹0';
-  if (amount >= 10000000) return `₹${(amount / 10000000).toFixed(2)}Cr`;
-  if (amount >= 100000) return `₹${(amount / 100000).toFixed(2)}L`;
-  if (amount >= 1000) return `₹${(amount / 1000).toFixed(1)}K`;
-  return `₹${amount.toLocaleString('en-IN')}`;
-};
+          <div className="hero-actions">
+            <div className="hero-status">
+              <div className={`
+                inline-flex items-center px-4 py-2 rounded-full text-sm font-medium
                 ${backendStatus === 'connected' 
                   ? 'bg-success-100 text-success-800 border border-success-200' 
                   : backendStatus === 'checking' 
