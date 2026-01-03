@@ -13,6 +13,8 @@ const Dashboard = () => {
   });
   const [backendConnected, setBackendConnected] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedMetric, setSelectedMetric] = useState('total');
+  const [searchTerm, setSearchTerm] = useState('');
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -90,8 +92,64 @@ const Dashboard = () => {
 
   const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
+  const metricCards = [
+    { 
+      id: 'total', 
+      label: 'Team Members', 
+      value: dashboardData.stats.total, 
+      icon: '👥', 
+      color: '#3B82F6',
+      trend: '+12%',
+      description: 'Total workforce'
+    },
+    { 
+      id: 'active', 
+      label: 'Active Now', 
+      value: dashboardData.stats.active, 
+      icon: '✨', 
+      color: '#10B981',
+      trend: '+8%',
+      description: 'Currently active'
+    },
+    { 
+      id: 'departments', 
+      label: 'Departments', 
+      value: dashboardData.stats.departments, 
+      icon: '🏢', 
+      color: '#F59E0B',
+      trend: '+2',
+      description: 'Total units'
+    },
+    { 
+      id: 'newHires', 
+      label: 'New Hires', 
+      value: dashboardData.stats.newHires, 
+      icon: '🎯', 
+      color: '#8B5CF6',
+      trend: '+25%',
+      description: 'This month'
+    }
+  ];
+
+  const quickActions = [
+    { icon: '➕', label: 'Add Employee', action: () => navigate('/employees'), color: '#3B82F6' },
+    { icon: '📊', label: 'Analytics', action: () => navigate('/analytics'), color: '#10B981' },
+    { icon: '📅', label: 'Schedule', action: () => navigate('/schedule'), color: '#F59E0B' },
+    { icon: '💬', label: 'Messages', action: () => navigate('/messages'), color: '#8B5CF6' }
+  ];
+
   return (
     <div className="dashboard-professional">
+      {/* Animated Background */}
+      <div className="animated-bg">
+        <div className="floating-shapes">
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+          <div className="shape shape-3"></div>
+        </div>
+      </div>
+
+      {/* News Ticker */}
       <div className="news-ticker">
         <div className="ticker-content">
           <span>🚀 System Update: Employee Database v2.1 is now online.</span>
@@ -101,57 +159,96 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="dashboard-hero">
-        <div className="hero-content">
-          <div className="hero-welcome">
-            <h1 className="hero-title">Welcome, <span className="hero-name">{currentUser.name || 'User'}</span></h1>
-            <p className="hero-subtitle">You have <span className="highlight-text">{dashboardData.stats.newHires} new notifications</span> today.</p>
-          </div>
-
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <span className="hero-number">{dashboardData.stats.total}</span>
-              <span className="hero-label">Team Members</span>
-              <div className="stat-progress"><div className="stat-progress-fill" style={{ width: '75%' }}></div></div>
-            </div>
-            <div className="hero-stat">
-              <span className="hero-number">{dashboardData.stats.active}</span>
-              <span className="hero-label">Active Now</span>
-              <div className="stat-progress"><div className="stat-progress-fill success" style={{ width: '90%' }}></div></div>
-            </div>
-            <div className="hero-stat">
-              <span className="hero-number">{dashboardData.stats.departments}</span>
-              <span className="hero-label">Units</span>
-              <div className="stat-progress"><div className="stat-progress-fill warning" style={{ width: '60%' }}></div></div>
-            </div>
-            <div className="hero-stat">
-              <span className="hero-number">{dashboardData.stats.newHires}</span>
-              <span className="hero-label">New Hires</span>
-              <div className="stat-progress"><div className="stat-progress-fill purple" style={{ width: '40%' }}></div></div>
-            </div>
-          </div>
-
-          <div className="hero-actions">
-            <div className="hero-time">
-              <span className="time-date">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
-              <span className="time-clock">{new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
-            </div>
-            <div className="hero-quick-actions">
-              <button className="hero-action-btn primary" onClick={() => navigate('/employees')}>
-                <span className="btn-icon">+</span> Quick Add
-              </button>
-              <button className="hero-action-btn secondary" onClick={() => navigate('/analytics')}>
-                <span className="btn-icon">📊</span> View Reports
-              </button>
-            </div>
+      {/* Header */}
+      <div className="dashboard-header">
+        <div className="header-left">
+          <h1 className="dashboard-title">
+            Welcome back, <span className="user-name">{currentUser.name || 'User'}</span> 👋
+          </h1>
+          <p className="dashboard-subtitle">Here's what's happening with your team today</p>
+        </div>
+        <div className="header-right">
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search employees..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+            <span className="search-icon">🔍</span>
           </div>
         </div>
       </div>
 
+      {/* Metrics Grid */}
+      <div className="metrics-grid">
+        {metricCards.map((metric) => (
+          <div 
+            key={metric.id}
+            className={`metric-card ${selectedMetric === metric.id ? 'active' : ''}`}
+            onClick={() => setSelectedMetric(metric.id)}
+          >
+            <div className="metric-header">
+              <div className="metric-icon" style={{ background: metric.color }}>
+                {metric.icon}
+              </div>
+              <div className="metric-trend">
+                <span className="trend-value">{metric.trend}</span>
+                <span className="trend-arrow">↑</span>
+              </div>
+            </div>
+            <div className="metric-content">
+              <div className="metric-value">{metric.value}</div>
+              <div className="metric-label">{metric.label}</div>
+              <div className="metric-description">{metric.description}</div>
+            </div>
+            <div className="metric-sparkline">
+              <svg viewBox="0 0 100 20" className="sparkline">
+                <polyline
+                  fill="none"
+                  stroke={metric.color}
+                  strokeWidth="2"
+                  points="0,15 20,10 40,12 60,8 80,5 100,10"
+                />
+              </svg>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Quick Actions */}
+      <div className="quick-actions-section">
+        <h2 className="section-title">Quick Actions</h2>
+        <div className="quick-actions-grid">
+          {quickActions.map((action, index) => (
+            <button
+              key={index}
+              className="quick-action-btn"
+              onClick={action.action}
+              style={{ '--action-color': action.color }}
+            >
+              <span className="action-icon">{action.icon}</span>
+              <span className="action-label">{action.label}</span>
+              <div className="action-ripple"></div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Content Grid */}
       <div className="dashboard-main-grid">
         <div className="dashboard-left-column">
+          {/* Recent Activity */}
           <div className="recent-employees-professional">
-            <h2>Recent Activity</h2>
+            <div className="section-header">
+              <h2>Recent Activity</h2>
+              <div className="activity-filter">
+                <button className="filter-btn active">All</button>
+                <button className="filter-btn">New</button>
+                <button className="filter-btn">Updated</button>
+              </div>
+            </div>
             <div className="recent-employees-grid">
               {dashboardData.employees.slice(0, 4).map((emp, i) => (
                 <div key={emp.id || i} className="recent-employee-card">
@@ -162,26 +259,121 @@ const Dashboard = () => {
                     <h4>{emp.name}</h4>
                     <p>{emp.position}</p>
                     <div className="recent-meta-pill">{emp.department}</div>
+                    <div className="activity-time">2 hours ago</div>
+                  </div>
+                  <div className="employee-status">
+                    <div className={`status-dot ${emp.status === 'Active' ? 'active' : 'inactive'}`}></div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Department Chart */}
           <div className="chart-section-professional">
             <div className="chart-header-flex">
-              <h2>Department Growth</h2>
-              <div className={`status-badge-mini ${backendConnected ? 'live' : 'offline'}`}>
-                {backendConnected ? 'Live' : 'Cached'}
+              <h2>Department Distribution</h2>
+              <div className="chart-controls">
+                <button className="chart-control-btn active">Bar</button>
+                <button className="chart-control-btn">Pie</button>
+                <div className={`status-badge-mini ${backendConnected ? 'live' : 'offline'}`}>
+                  {backendConnected ? 'Live' : 'Cached'}
+                </div>
               </div>
             </div>
-            <div className="custom-bar-chart">
-              {dashboardData.departmentStats.map(dept => (
-                <div key={dept.name} className="chart-row">
-                  <div className="row-label"><span>{dept.name}</span><span>{dept.count}</span></div>
-                  <div className="row-track"><div className="row-fill" style={{ width: `${dept.percentage}%`, background: dept.color }} /></div>
+            <div className="chart-container">
+              <div className="custom-bar-chart">
+                {dashboardData.departmentStats.map((dept, index) => (
+                  <div key={dept.name} className="chart-row">
+                    <div className="row-label">
+                      <span>{dept.name}</span>
+                      <span className="row-count">{dept.count}</span>
+                    </div>
+                    <div className="row-track">
+                      <div 
+                        className="row-fill" 
+                        style={{ 
+                          width: `${dept.percentage}%`, 
+                          background: dept.color,
+                          animationDelay: `${index * 0.1}s`
+                        }} 
+                      />
+                    </div>
+                    <div className="row-percentage">{dept.percentage}%</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="dashboard-right-column">
+          {/* Performance Overview */}
+          <div className="performance-card">
+            <h3>Performance Overview</h3>
+            <div className="performance-metrics">
+              <div className="performance-item">
+                <div className="performance-label">Productivity</div>
+                <div className="performance-bar">
+                  <div className="performance-fill" style={{ width: '85%' }}></div>
                 </div>
-              ))}
+                <div className="performance-value">85%</div>
+              </div>
+              <div className="performance-item">
+                <div className="performance-label">Attendance</div>
+                <div className="performance-bar">
+                  <div className="performance-fill" style={{ width: '92%' }}></div>
+                </div>
+                <div className="performance-value">92%</div>
+              </div>
+              <div className="performance-item">
+                <div className="performance-label">Satisfaction</div>
+                <div className="performance-bar">
+                  <div className="performance-fill" style={{ width: '78%' }}></div>
+                </div>
+                <div className="performance-value">78%</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Upcoming Events */}
+          <div className="events-card">
+            <h3>Upcoming Events</h3>
+            <div className="events-list">
+              <div className="event-item">
+                <div className="event-date">
+                  <div className="date-day">15</div>
+                  <div className="date-month">JAN</div>
+                </div>
+                <div className="event-content">
+                  <h4>Team Meeting</h4>
+                  <p>Quarterly review and planning</p>
+                  <div className="event-time">10:00 AM</div>
+                </div>
+              </div>
+              <div className="event-item">
+                <div className="event-date">
+                  <div className="date-day">20</div>
+                  <div className="date-month">JAN</div>
+                </div>
+                <div className="event-content">
+                  <h4>Training Session</h4>
+                  <p>New software onboarding</p>
+                  <div className="event-time">2:00 PM</div>
+                </div>
+              </div>
+              <div className="event-item">
+                <div className="event-date">
+                  <div className="date-day">25</div>
+                  <div className="date-month">JAN</div>
+                </div>
+                <div className="event-content">
+                  <h4>Team Building</h4>
+                  <p>Monthly team activity</p>
+                  <div className="event-time">4:00 PM</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

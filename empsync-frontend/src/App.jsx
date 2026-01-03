@@ -5,6 +5,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import LandingPage from './components/auth/LandingPage';
 import AuthForms from './components/auth/AuthForms';
 import EmployeeGridModern from './components/employees/EmployeeGridModern';
+import DepartmentGrid from './components/departments/DepartmentGrid';
 import Analytics from './components/dashboard/Analytics';
 import Profile from './components/profile/Profile';
 import Settings from './components/settings/Settings';
@@ -75,7 +76,7 @@ const AppContent = () => {
                     } />
                     <Route path="/departments" element={
                         <ProtectedRoute>
-                            <div style={{ padding: '2rem', color: 'white' }}>Departments Page (Coming Soon)</div>
+                            <DepartmentGrid />
                         </ProtectedRoute>
                     } />
                     <Route path="/analytics" element={

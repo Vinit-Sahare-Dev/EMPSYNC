@@ -5,13 +5,13 @@ import EmployeeCard from './EmployeeCard';
 import EmployeeTable from './EmployeeTable';
 import { empSyncAPI } from '../../services/apiService';
 import {
-  MagnifyingGlassIcon,
   PlusIcon,
   UserPlusIcon,
   ExclamationTriangleIcon,
   ArrowPathIcon,
   DocumentArrowDownIcon,
 } from '@heroicons/react/24/outline';
+import './EmployeeModern.css';
 
 // Safe toast fallback
 const useToastFallback = () => {
@@ -109,7 +109,7 @@ const EmployeeGridModern = ({ view = "grid" }) => {
         const backendEmployees = response.employees || [];
         setEmployees(backendEmployees);
         console.log(`✅ Loaded ${backendEmployees.length} employees from backend database`);
-        toast.showToast('success', `Loaded ${backendEmployees.length} employees from database`);
+        // toast.showToast('success', `Loaded ${backendEmployees.length} employees from database`);
         localStorage.removeItem('employees');
       } else {
         throw new Error(response.message || 'Failed to load employees from backend');
@@ -238,17 +238,23 @@ const EmployeeGridModern = ({ view = "grid" }) => {
 
   return (
     <div className="space-y-6">
-      {/* Header with Backend Status */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-6">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-1">Employee Navigator</h1>
-            <p className="text-gray-600 mb-4">Manage your workforce efficiently</p>
-            
-            {/* Backend Status Indicator */}
-            <div className="flex items-center gap-3">
+      {/* Employee Hero Section */}
+      <div className="employee-hero">
+        <div className="hero-content">
+          <div className="hero-left">
+            <div className="hero-text">
+              <h1 className="hero-title">Employee Navigator</h1>
+              <p className="hero-subtitle">Manage your workforce efficiently likewise</p>
+            </div>
+          </div>
+
+          <div className="hero-actions">
+            <div className="hero-section-title">
+              <h3 className="section-title">Employee Navigator</h3>
+            </div>
+            <div className="hero-status">
               <div className={`
-                inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
+                inline-flex items-center px-4 py-2 rounded-full text-sm font-medium
                 ${backendStatus === 'connected' 
                   ? 'bg-success-100 text-success-800 border border-success-200' 
                   : backendStatus === 'checking' 
@@ -268,38 +274,80 @@ const EmployeeGridModern = ({ view = "grid" }) => {
                   '❌ Backend Connection Failed'
                 }
               </div>
-
+              
               {backendStatus !== 'connected' && (
                 <button
                   onClick={retryBackendConnection}
                   disabled={loading}
-                  className="btn btn-outline btn-sm flex items-center gap-2"
+                  className="btn btn-outline btn-sm flex items-center gap-2 ml-3"
                 >
-                  <ArrowPathIcon className="h-4 w-4" />
-                  Retry Connection
+                  <ArrowPathIcon className="h-3 w-3" />
+                  Retry
                 </button>
               )}
             </div>
+            <div className="hero-search">
+              <input
+                type="text"
+                placeholder="Search employees by name, email, department, or position..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="hero-search-input"
+              />
+            </div>
+            <div className="hero-buttons">
+              <button
+                onClick={openAddModal}
+                disabled={backendStatus !== 'connected'}
+                className="btn btn-primary"
+              >
+                Add Employee
+              </button>
+              <button className="btn btn-outline">
+                Export Data
+              </button>
+            </div>
           </div>
+        </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
-            <button
-              onClick={openAddModal}
-              disabled={backendStatus !== 'connected'}
-              className="btn btn-primary flex items-center gap-2"
-            >
-              <UserPlusIcon className="h-5 w-5" />
-              Add Employee
-            </button>
+        {/* Employee Statistics Row */}
+        <div className="hero-stats">
+          <div className="employee-stat-card primary">
+            <div className="stat-icon"></div>
+            <div className="stat-content">
+              <h3>{filteredEmployees.length}</h3>
+              <p>Total Employees</p>
+            </div>
+          </div>
+          <div className="employee-stat-card success">
+            <div className="stat-icon"></div>
+            <div className="stat-content">
+              <h3>{[...new Set(filteredEmployees.map(emp => emp.department))].length}</h3>
+              <p>Departments</p>
+            </div>
+          </div>
+          <div className="employee-stat-card info">
+            <div className="stat-icon"></div>
+            <div className="stat-content">
+              <h3>{filteredEmployees.filter(emp => emp.status === 'active').length}</h3>
+              <p>Active</p>
+            </div>
+          </div>
+          <div className="employee-stat-card warning">
+            <div className="stat-icon"></div>
+            <div className="stat-content">
+              <h3>{filteredEmployees.filter(emp => emp.status === 'inactive').length}</h3>
+              <p>Inactive</p>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Connection Error Message */}
       {backendStatus !== 'connected' && (
-        <div className="bg-warning-50 border border-warning-200 rounded-xl p-4">
+        <div className="bg-warning-50 border border-warning-200 rounded-xl p-4 mb-6">
           <div className="flex items-start gap-3">
-            <ExclamationTriangleIcon className="h-5 w-5 text-warning-600 flex-shrink-0 mt-0.5" />
+            <ExclamationTriangleIcon className="h-4 w-4 text-warning-600 flex-shrink-0 mt-0.5" />
             <div>
               <h3 className="font-medium text-warning-800">⚠️ Backend Connection Required</h3>
               <p className="text-warning-700 text-sm mt-1">
@@ -311,32 +359,12 @@ const EmployeeGridModern = ({ view = "grid" }) => {
         </div>
       )}
 
-      {/* Search and Filters */}
-      <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-6">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1 relative">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search employees by name, email, department, or position..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="input pl-10"
-            />
-          </div>
-          <button className="btn btn-outline flex items-center gap-2">
-            <DocumentArrowDownIcon className="h-5 w-5" />
-            Export Data
-          </button>
-        </div>
-      </div>
-
       {/* Employee List */}
       <div className="bg-white rounded-xl shadow-soft border border-gray-100">
         {filteredEmployees.length === 0 ? (
           <div className="p-12 text-center">
             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <UserPlusIcon className="h-8 w-8 text-gray-400" />
+              <UserPlusIcon className="h-6 w-6 text-gray-400" />
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">
               {backendStatus === 'connected' ? 'No employees found' : 'Cannot load employees'}
@@ -361,6 +389,7 @@ const EmployeeGridModern = ({ view = "grid" }) => {
         ) : (
           <div className="p-6">
             <div className={`employee-view ${view}`}>
+            <div className="employee-cards-container">
               {view === "grid" ? (
                 <EmployeeCard
                   employees={filteredEmployees}
@@ -383,6 +412,7 @@ const EmployeeGridModern = ({ view = "grid" }) => {
                 />
               )}
             </div>
+          </div>
           </div>
         )}
       </div>

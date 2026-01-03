@@ -115,6 +115,12 @@ const NavbarModern = ({ user, onLogout }) => {
         <>
           <div className="mobile-menu-overlay" onClick={() => setMobileMenuOpen(false)} />
           <div className="mobile-menu">
+            <div className="mobile-menu-header">
+              <h3 className="mobile-menu-title">Navigation</h3>
+              <button onClick={() => setMobileMenuOpen(false)} className="mobile-menu-close">
+                <XMarkIcon className="h-5 w-5" />
+              </button>
+            </div>
             <nav className="mobile-nav">
               {filteredNavigation.map((item) => (
                 <NavLink
@@ -132,6 +138,27 @@ const NavbarModern = ({ user, onLogout }) => {
             </nav>
           </div>
         </>
+      )}
+
+      {/* Mobile Bottom Navigation */}
+      {user && (
+        <div className="mobile-bottom-nav">
+          {filteredNavigation.slice(0, 5).map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.href}
+              className={({ isActive }) => `mobile-bottom-nav-item ${isActive ? 'mobile-bottom-nav-active' : ''}`}
+              title={item.name}
+            >
+              <item.icon className="mobile-bottom-nav-icon" />
+              <span className="mobile-bottom-nav-label">{item.name}</span>
+            </NavLink>
+          ))}
+          <button onClick={onLogout} className="mobile-bottom-nav-item mobile-bottom-nav-logout" title="Logout">
+            <ArrowRightOnRectangleIcon className="mobile-bottom-nav-icon" />
+            <span className="mobile-bottom-nav-label">Logout</span>
+          </button>
+        </div>
       )}
     </nav>
   );
