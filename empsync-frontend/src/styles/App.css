@@ -256,6 +256,9 @@ textarea:focus {
     --glass-bg: rgba(255, 255, 255, 0.1);
   }
 }
+
+/* Additional responsive styles for high contrast */
+@media (prefers-contrast: high) and (max-width: 768px) {
   .empsync-main {
     padding: 0;
   }
