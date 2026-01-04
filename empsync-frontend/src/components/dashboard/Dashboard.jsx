@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { empSyncAPI } from '../../services/apiService';
+import { attendanceService } from '../../services/attendanceService';
 import { useToast } from '../ui/Toast';
 import './Dashboard.css';
 
@@ -15,6 +16,11 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [selectedMetric, setSelectedMetric] = useState('total');
   const [searchTerm, setSearchTerm] = useState('');
+  const [attendanceData, setAttendanceData] = useState({
+    todayAttendance: null,
+    weeklyStats: { present: 0, absent: 0, late: 0 },
+    monthlyStats: { totalDays: 0, averageHours: 0 }
+  });
   const { showToast } = useToast();
   const navigate = useNavigate();
 
@@ -37,16 +43,52 @@ const Dashboard = () => {
       if (result && result.success) {
         setBackendConnected(true);
         processDashboardData(result.employees || []);
+        loadAttendanceData();
       } else {
         setBackendConnected(false);
         const saved = localStorage.getItem('employees');
         processDashboardData(saved ? JSON.parse(saved) : getDefaultEmployees());
+        loadAttendanceData();
       }
     } catch (error) {
       const saved = localStorage.getItem('employees');
       processDashboardData(saved ? JSON.parse(saved) : getDefaultEmployees());
+      loadAttendanceData();
     }
   }, []);
+
+  const loadAttendanceData = async () => {
+    try {
+      const [todayResult, weeklyResult, monthlyResult] = await Promise.allSettled([
+        attendanceService.getActiveAttendance(),
+        attendanceService.getAttendanceStats(),
+        attendanceService.getAttendanceStats()
+      ]);
+
+      if (todayResult.status === 'fulfilled' && todayResult.value.success) {
+        setAttendanceData(prev => ({
+          ...prev,
+          todayAttendance: todayResult.value.attendance
+        }));
+      }
+
+      if (weeklyResult.status === 'fulfilled' && weeklyResult.value.success) {
+        setAttendanceData(prev => ({
+          ...prev,
+          weeklyStats: weeklyResult.value.stats
+        }));
+      }
+
+      if (monthlyResult.status === 'fulfilled' && monthlyResult.value.success) {
+        setAttendanceData(prev => ({
+          ...prev,
+          monthlyStats: monthlyResult.value.stats
+        }));
+      }
+    } catch (error) {
+      console.error('Failed to load attendance data:', error);
+    }
+  };
 
   const getDefaultEmployees = () => [
     { id: 1, name: "John Doe", department: "IT", position: "Senior Developer", status: "Active", joinDate: new Date().toISOString() },
@@ -134,9 +176,37 @@ const Dashboard = () => {
   const quickActions = [
     { icon: '➕', label: 'Add Employee', action: () => navigate('/employees'), color: '#3B82F6' },
     { icon: '📊', label: 'Analytics', action: () => navigate('/analytics'), color: '#10B981' },
-    { icon: '📅', label: 'Schedule', action: () => navigate('/schedule'), color: '#F59E0B' },
-    { icon: '💬', label: 'Messages', action: () => navigate('/messages'), color: '#8B5CF6' }
+    { icon: '⏰', label: 'Check In', action: () => handleCheckIn(), color: '#F59E0B' },
+    { icon: '⏱️', label: 'Check Out', action: () => handleCheckOut(), color: '#EF4444' }
   ];
+
+  const handleCheckIn = async () => {
+    try {
+      const result = await attendanceService.checkIn();
+      if (result.success) {
+        showToast('success', 'Successfully checked in!');
+        loadAttendanceData();
+      } else {
+        showToast('error', result.message || 'Failed to check in');
+      }
+    } catch (error) {
+      showToast('error', 'Failed to check in. Please try again.');
+    }
+  };
+
+  const handleCheckOut = async () => {
+    try {
+      const result = await attendanceService.checkOut();
+      if (result.success) {
+        showToast('success', 'Successfully checked out!');
+        loadAttendanceData();
+      } else {
+        showToast('error', result.message || 'Failed to check out');
+      }
+    } catch (error) {
+      showToast('error', 'Failed to check out. Please try again.');
+    }
+  };
 
   return (
     <div className="dashboard-professional">
@@ -309,6 +379,49 @@ const Dashboard = () => {
 
         {/* Right Column */}
         <div className="dashboard-right-column">
+          {/* Attendance Overview */}
+          <div className="attendance-overview-card">
+            <h3>Today's Attendance</h3>
+            <div className="attendance-status">
+              {attendanceData.todayAttendance ? (
+                <div className="attendance-active">
+                  <div className="status-icon">✓</div>
+                  <div className="status-info">
+                    <span className="status-text">Checked In</span>
+                    <span className="check-time">
+                      {attendanceData.todayAttendance.checkIn ? 
+                        new Date(attendanceData.todayAttendance.checkIn).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : 
+                        'Loading...'
+                      }
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div className="attendance-inactive">
+                  <div className="status-icon">○</div>
+                  <div className="status-info">
+                    <span className="status-text">Not Checked In</span>
+                    <span className="check-time">Ready to check in</span>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="attendance-stats">
+              <div className="stat-item">
+                <span className="stat-number">{attendanceData.weeklyStats.present}</span>
+                <span className="stat-label">Present</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">{attendanceData.weeklyStats.absent}</span>
+                <span className="stat-label">Absent</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">{attendanceData.weeklyStats.late}</span>
+                <span className="stat-label">Late</span>
+              </div>
+            </div>
+          </div>
+
           {/* Performance Overview */}
           <div className="performance-card">
             <h3>Performance Overview</h3>

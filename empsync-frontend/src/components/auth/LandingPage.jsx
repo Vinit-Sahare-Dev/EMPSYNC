@@ -255,10 +255,10 @@ const LandingPage = ({ onLogin }) => {
       {!showLogin ? (
         <section className="hero-section">
           <div className="hero-content">
-            <h1 className="hero-title">
-              Streamline Your <span className="workforce">workforce</span> Management
+            <h1 className="hero-title" style={{ fontSize: '4.5rem', lineHeight: '1.1', marginBottom: '1.5rem', color: '#ffffff' }}>
+              Streamline Your <span className="workforce" style={{ color: '#fbbf24' }}>workforce</span> Management
             </h1>
-            <p className="hero-subtitle">
+            <p className="hero-subtitle" style={{ fontSize: '1.4rem', lineHeight: '1.6', marginBottom: '2.5rem' }}>
               EMPSYNC provides powerful tools for administrators to manage employees,
               track attendance, monitor performance, and optimize your organization's workflow
               with cutting-edge technology.
@@ -373,21 +373,21 @@ const LandingPage = ({ onLogin }) => {
                 </p>
               </div>
               <div className="about-stats">
-                <div className="stat-item">
-                  <span className="stat-number">50+</span>
-                  <span className="stat-label">Organizations</span>
+                <div className="stat-item" style={{ backgroundColor: '#ffffff' }}>
+                  <span className="stat-number" style={{ color: '#1f2937' }}>50+</span>
+                  <span className="stat-label" style={{ color: '#4b5563' }}>Organizations</span>
                 </div>
-                <div className="stat-item">
-                  <span className="stat-number">1000+</span>
-                  <span className="stat-label">Employees</span>
+                <div className="stat-item" style={{ backgroundColor: '#ffffff' }}>
+                  <span className="stat-number" style={{ color: '#1f2937' }}>1000+</span>
+                  <span className="stat-label" style={{ color: '#4b5563' }}>Employees</span>
                 </div>
-                <div className="stat-item">
-                  <span className="stat-number">99.9%</span>
-                  <span className="stat-label">Uptime</span>
+                <div className="stat-item" style={{ backgroundColor: '#ffffff' }}>
+                  <span className="stat-number" style={{ color: '#1f2937' }}>99.9%</span>
+                  <span className="stat-label" style={{ color: '#4b5563' }}>Uptime</span>
                 </div>
-                <div className="stat-item">
-                  <span className="stat-number">24/7</span>
-                  <span className="stat-label">Support</span>
+                <div className="stat-item" style={{ backgroundColor: '#ffffff' }}>
+                  <span className="stat-number" style={{ color: '#1f2937' }}>24/7</span>
+                  <span className="stat-label" style={{ color: '#4b5563' }}>Support</span>
                 </div>
               </div>
             </div>

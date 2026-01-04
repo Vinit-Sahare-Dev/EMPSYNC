@@ -9,6 +9,9 @@ import DepartmentGrid from './components/departments/DepartmentGrid';
 import Analytics from './components/dashboard/Analytics';
 import Profile from './components/profile/Profile';
 import Settings from './components/settings/Settings';
+import AttendanceTracker from './components/attendance/AttendanceTracker';
+import AttendanceHistory from './components/attendance/AttendanceHistory';
+import PerformanceDashboard from './components/performance/PerformanceDashboard';
 import { ToastProvider } from './components/ui/Toast';
 import './styles/App.css';
 
@@ -92,6 +95,21 @@ const AppContent = () => {
                     <Route path="/settings" element={
                         <ProtectedRoute>
                             <Settings />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/attendance" element={
+                        <ProtectedRoute>
+                            <AttendanceTracker />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/attendance-history" element={
+                        <ProtectedRoute>
+                            <AttendanceHistory />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/performance" element={
+                        <ProtectedRoute>
+                            <PerformanceDashboard />
                         </ProtectedRoute>
                     } />
 

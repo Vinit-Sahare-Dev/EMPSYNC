@@ -1,6 +1,7 @@
 // src/components/dashboard/Analytics.jsx
 import React, { useState, useEffect } from 'react';
 import { empSyncAPI } from '../../services/apiService';
+import { performanceService } from '../../services/performanceService';
 import '../../styles/Analytics.css';
 
 const Analytics = () => {
@@ -17,16 +18,50 @@ const Analytics = () => {
     employeeCount: 0,
     activeEmployees: 0
   });
+  const [performanceData, setPerformanceData] = useState({
+    overallStats: { averageRating: 0, totalReviews: 0, completedReviews: 0 },
+    ratingDistribution: {},
+    recentReviews: []
+  });
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
 
   useEffect(() => {
     loadAnalyticsData();
+    loadPerformanceData();
     
     // Refresh data every 30 seconds
-    const interval = setInterval(loadAnalyticsData, 30000);
+    const interval = setInterval(() => {
+      loadAnalyticsData();
+      loadPerformanceData();
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
+
+  const loadPerformanceData = async () => {
+    try {
+      const [statsResult, reviewsResult] = await Promise.allSettled([
+        performanceService.getOverallPerformanceStats(),
+        performanceService.getPerformanceHistory()
+      ]);
+
+      if (statsResult.status === 'fulfilled' && statsResult.value.success) {
+        setPerformanceData(prev => ({
+          ...prev,
+          overallStats: statsResult.value.stats
+        }));
+      }
+
+      if (reviewsResult.status === 'fulfilled' && reviewsResult.value.success) {
+        setPerformanceData(prev => ({
+          ...prev,
+          recentReviews: reviewsResult.value.performances?.slice(0, 5) || []
+        }));
+      }
+    } catch (error) {
+      console.error('Failed to load performance data:', error);
+    }
+  };
 
   const loadAnalyticsData = async () => {
     try {
@@ -188,7 +223,7 @@ const Analytics = () => {
       <div className="analytics-header">
         <div className="header-content">
           <h1>Employee Analytics Dashboard</h1>
-          <p>Real-time insights and salary statistics in Indian Rupees</p>
+          <p>Real-time insights, salary statistics, and performance metrics</p>
           {lastUpdated && (
             <div className="last-updated">
               Last updated: {lastUpdated.toLocaleTimeString()}
@@ -282,6 +317,34 @@ const Analytics = () => {
               <div className="salary-amount">{formatRupees(analyticsData.salaryStats.total)}</div>
               <p>Total company payroll</p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Performance Section */}
+      <div className="section">
+        <h2>Performance Overview</h2>
+        <div className="performance-metrics">
+          <div className="performance-item">
+            <div className="performance-label">Average Rating</div>
+            <div className="performance-bar">
+              <div className="performance-fill" style={{ width: `${(performanceData.overallStats.averageRating / 5) * 100}%` }}></div>
+            </div>
+            <div className="performance-value">{performanceData.overallStats.averageRating.toFixed(1)}/5.0</div>
+          </div>
+          <div className="performance-item">
+            <div className="performance-label">Total Reviews</div>
+            <div className="performance-bar">
+              <div className="performance-fill" style={{ width: '100%' }}></div>
+            </div>
+            <div className="performance-value">{performanceData.overallStats.totalReviews}</div>
+          </div>
+          <div className="performance-item">
+            <div className="performance-label">Completed Reviews</div>
+            <div className="performance-bar">
+              <div className="performance-fill" style={{ width: `${(performanceData.overallStats.completedReviews / performanceData.overallStats.totalReviews) * 100}%` }}></div>
+            </div>
+            <div className="performance-value">{performanceData.overallStats.completedReviews}</div>
           </div>
         </div>
       </div>

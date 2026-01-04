@@ -250,7 +250,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
                 setShowForgotPassword(false);
               }}
             >
-              Access
+              Login
             </button>
           </div>
 
@@ -496,7 +496,7 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
                 <div className="auth-links">
                   <span>Already have access? </span>
                   <button type="button" onClick={() => setActiveForm('admin-login')}>
-                    Access
+                    Login
                   </button>
                 </div>
               </form>

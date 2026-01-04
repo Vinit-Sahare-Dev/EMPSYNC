@@ -10,7 +10,8 @@ import {
   UserGroupIcon,
   BuildingOfficeIcon,
   ChartBarIcon,
-  Cog6ToothIcon
+  Cog6ToothIcon,
+  ClockIcon
 } from '@heroicons/react/24/outline';
 
 const NavbarModern = ({ user, onLogout }) => {

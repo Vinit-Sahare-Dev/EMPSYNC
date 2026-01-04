@@ -1,6 +1,5 @@
 {
   "name": "empsync-frontend",
-  "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -11,7 +10,8 @@
     "serve": "vite preview --port 3000",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
-    "analyze": "vite-bundle-analyzer dist"
+    "analyze": "vite-bundle-analyzer dist",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "axios": "^1.12.2",
@@ -28,6 +28,27 @@
     "sass": "^1.93.2",
     "vite": "^4.5.14",
     "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32"
+    "postcss": "^8.4.32",
+    "typescript": "^5.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "not ie > 0",
+      "not chrome < 90",
+      "not safari < 12",
+      "not edge < 90"
+    ],
+    "development": [
+      "last 2 chrome version",
+      "last 2 firefox version",
+      "last 2 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   }
 }
