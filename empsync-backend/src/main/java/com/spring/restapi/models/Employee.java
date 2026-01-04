@@ -37,7 +37,7 @@ public class Employee {
     
     @NotNull(message = "Salary is required")
     @Positive(message = "Salary must be positive")
-    @Column(name = "salary", nullable = false, precision = 10, scale = 2)
+    @Column(name = "salary", nullable = false)
     private BigDecimal salary;
     
     @Column(name = "gender", length = 10)
@@ -47,19 +47,19 @@ public class Employee {
     @Column(name = "join_date", nullable = false)
     private LocalDate joinDate;
     
-    @Column(name = "address", length = 500) // CHANGED: Remove columnDefinition
+    @Column(name = "address", length = 500) 
     private String address;
     
     @Column(name = "status", length = 10)
     private String status = "Active";
     
-    @Column(name = "bonus", precision = 10, scale = 2)
+    @Column(name = "bonus")
     private BigDecimal bonus = BigDecimal.ZERO;
     
-    @Column(name = "pf", precision = 10, scale = 2)
+    @Column(name = "pf")
     private BigDecimal pf = BigDecimal.ZERO;
     
-    @Column(name = "tax", precision = 10, scale = 2)
+    @Column(name = "tax")
     private BigDecimal tax = BigDecimal.ZERO;
     
     @Column(name = "created_at", updatable = false)

@@ -1,10 +1,10 @@
--- Create database
+
 CREATE DATABASE employee_management_system;
 
--- Connect to the database
+
 \c employee_management_system;
 
--- Create users table
+e
 CREATE TABLE users (
     id BIGSERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create employees table
+
 CREATE TABLE employees (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE employees (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create verification_tokens table
+
 CREATE TABLE verification_tokens (
     id BIGSERIAL PRIMARY KEY,
     token VARCHAR(255) UNIQUE NOT NULL,
@@ -55,7 +55,29 @@ CREATE TABLE verification_tokens (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Insert Indian employee data
+
+CREATE TABLE performance (
+    id BIGSERIAL PRIMARY KEY,
+    employee_id BIGINT NOT NULL REFERENCES employees(id),
+    review_period VARCHAR(20) NOT NULL,
+    reviewer_id BIGINT NOT NULL REFERENCES employees(id),
+    overall_rating DECIMAL(2,1) NOT NULL,
+    quality_rating DECIMAL(2,1) NOT NULL,
+    productivity_rating DECIMAL(2,1) NOT NULL,
+    teamwork_rating DECIMAL(2,1) NOT NULL,
+    communication_rating DECIMAL(2,1) NOT NULL,
+    initiative_rating DECIMAL(2,1) NOT NULL,
+    strengths TEXT NOT NULL,
+    areas_for_improvement TEXT NOT NULL,
+    goals TEXT NOT NULL,
+    reviewer_comments TEXT NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    review_date TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
 INSERT INTO employees (name, email, phone, department, position, salary, gender, join_date, address, status, bonus, pf, tax) VALUES
 ('Rajesh Kumar', 'rajesh.kumar@company.com', '+91-9876543210', 'IT', 'Senior Software Engineer', 850000.00, 'Male', '2022-01-15', '123 MG Road, Bangalore, Karnataka', 'Active', 50000.00, 85000.00, 102000.00),
 ('Priya Sharma', 'priya.sharma@company.com', '+91-9876543211', 'HR', 'HR Manager', 750000.00, 'Female', '2021-06-10', '456 Brigade Road, Bangalore, Karnataka', 'Active', 45000.00, 75000.00, 90000.00),
@@ -68,7 +90,7 @@ INSERT INTO employees (name, email, phone, department, position, salary, gender,
 ('Arjun Joshi', 'arjun.joshi@company.com', '+91-9876543218', 'IT', 'QA Engineer', 520000.00, 'Male', '2023-01-10', '369 Lavelle Road, Bangalore, Karnataka', 'Active', 22000.00, 52000.00, 62400.00),
 ('Divya Iyer', 'divya.iyer@company.com', '+91-9876543219', 'HR', 'HR Executive', 480000.00, 'Female', '2023-03-15', '741 Vittal Mallya Road, Bangalore, Karnataka', 'Active', 18000.00, 48000.00, 57600.00);
 
--- Insert corresponding users with default passwords (password: password123)
+
 INSERT INTO users (username, password, email, name, role, user_type, department, position, phone_number, employee_id, status, email_verified) VALUES
 ('rajesh.kumar', '$2a$10$YourHashedPasswordHere', 'rajesh.kumar@company.com', 'Rajesh Kumar', 'EMPLOYEE', 'employee', 'IT', 'Senior Software Engineer', '+91-9876543210', 'EMP001', 'ACTIVE', TRUE),
 ('priya.sharma', '$2a$10$YourHashedPasswordHere', 'priya.sharma@company.com', 'Priya Sharma', 'MANAGER', 'employee', 'HR', 'HR Manager', '+91-9876543211', 'EMP002', 'ACTIVE', TRUE),
@@ -81,11 +103,11 @@ INSERT INTO users (username, password, email, name, role, user_type, department,
 ('arjun.joshi', '$2a$10$YourHashedPasswordHere', 'arjun.joshi@company.com', 'Arjun Joshi', 'EMPLOYEE', 'employee', 'IT', 'QA Engineer', '+91-9876543218', 'EMP009', 'ACTIVE', TRUE),
 ('divya.iyer', '$2a$10$YourHashedPasswordHere', 'divya.iyer@company.com', 'Divya Iyer', 'EMPLOYEE', 'employee', 'HR', 'HR Executive', '+91-9876543219', 'EMP010', 'ACTIVE', TRUE);
 
--- Create an admin user
+
 INSERT INTO users (username, password, email, name, role, user_type, department, position, phone_number, employee_id, status, email_verified) VALUES
 ('admin', '$2a$10$YourHashedPasswordHere', 'admin@company.com', 'System Administrator', 'ADMIN', 'admin', 'IT', 'Administrator', '+91-9876543220', 'ADMIN001', 'ACTIVE', TRUE);
 
--- Create indexes for better performance
+
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_username ON users(username);
 CREATE INDEX idx_employees_email ON employees(email);
@@ -93,7 +115,6 @@ CREATE INDEX idx_employees_department ON employees(department);
 CREATE INDEX idx_verification_tokens_token ON verification_tokens(token);
 CREATE INDEX idx_verification_tokens_user_id ON verification_tokens(user_id);
 
--- Grant permissions (if needed)
--- GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO postgres;
+
 
 COMMIT;

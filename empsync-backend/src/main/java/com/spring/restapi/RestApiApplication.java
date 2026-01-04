@@ -5,12 +5,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import com.spring.restapi.service.AuthService;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {
+    DataSourceAutoConfiguration.class,
+    HibernateJpaAutoConfiguration.class
+})
 @EnableScheduling  // ADD THIS to enable scheduled tasks for token cleanup
 public class RestApiApplication {
 
@@ -40,7 +45,8 @@ public class RestApiApplication {
 
         logger.info(" Ready to handle requests!");
         
-        // Initialize demo users
+        // Initialize demo users - DISABLED TEMPORARILY
+        /*
         try {
             logger.info(" Initializing demo users...");
             // Get the AuthService bean and initialize demo users
@@ -54,6 +60,7 @@ public class RestApiApplication {
         } catch (Exception e) {
             logger.error(" Error initializing demo users: {}", e.getMessage());
         }
+        */
         
         Runtime.getRuntime().addShutdownHook(new Thread(() ->
             logger.info(" {} is shutting down gracefully...", appName)

@@ -28,10 +28,10 @@ public class Attendance {
     @Column(name = "status", length = 20)
     private String status = "Present";
     
-    @Column(name = "work_hours", precision = 5, scale = 2)
+    @Column(name = "work_hours")
     private Double workHours;
     
-    @Column(name = "overtime_hours", precision = 5, scale = 2)
+    @Column(name = "overtime_hours")
     private Double overtimeHours = 0.0;
     
     @Column(name = "location", length = 100)
