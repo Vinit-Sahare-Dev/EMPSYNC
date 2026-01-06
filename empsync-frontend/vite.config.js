@@ -41,7 +41,8 @@ export default defineConfig({
     // CORRECTED PROXY CONFIGURATION:
     proxy: {
       '/api': {
-        target: 'http://localhost:8888', // ✅ Fixed: Match backend port 8888
+        target: process.env.VITE_API_BASE_URL.replace('/api', ''), // Use VITE_API_BASE_URL from environment
+        // target: 'http://localhost:8888', // ✅ Fixed: Match backend port 8888
         changeOrigin: true,
         secure: false,
         configure: (proxy, _options) => {
@@ -72,6 +73,7 @@ export default defineConfig({
     include: ['react', 'react-dom']
   },
   define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    'process.env.VITE_API_BASE_URL': JSON.stringify(process.env.VITE_API_BASE_URL)
   }
 })
