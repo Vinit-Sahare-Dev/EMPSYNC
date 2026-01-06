@@ -29,16 +29,8 @@ services:
     restart: unless-stopped
     ports:
       - "${BACKEND_PORT:-8888}:8888"
-    environment:
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE:-docker}
-      SPRING_DATASOURCE_URL: ${DATABASE_URL:-jdbc:postgresql://postgres:5432/employee_management_system}
-      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME:-postgres}
-      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD:-Vinit@51}
-      SMTP_HOST: ${SMTP_HOST}
-      SMTP_PORT: ${SMTP_PORT}
-      SMTP_USERNAME: ${SMTP_USERNAME}
-      SMTP_PASSWORD: ${SMTP_PASSWORD}
-      FRONTEND_URL: ${FRONTEND_URL}
+    env_file:
+      - ./.env.backend
     depends_on:
       postgres:
         condition: service_healthy
@@ -60,8 +52,8 @@ services:
     restart: unless-stopped
     ports:
       - "${FRONTEND_PORT:-3000}:80"
-    environment:
-      - VITE_API_BASE_URL=${VITE_API_BASE_URL:-/api}
+    env_file:
+      - ./.env.frontend
     depends_on:
       - backend
     networks:

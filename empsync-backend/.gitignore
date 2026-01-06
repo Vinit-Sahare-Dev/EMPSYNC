@@ -33,6 +33,8 @@ build/
 .vscode/
 all.env
 env.properties
+.env.backend
+.env.example
 
 # Compiled artifacts
 *.jar
