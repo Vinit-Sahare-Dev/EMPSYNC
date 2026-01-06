@@ -85,6 +85,11 @@ export const attendanceService = {
     }
   },
 
+  // Get attendance stats (alias for getOverallAttendanceStats for compatibility)
+  getAttendanceStats: async (days = 30) => {
+    return attendanceService.getOverallAttendanceStats(days);
+  },
+
   // Get overall attendance statistics
   getOverallAttendanceStats: async (days = 30) => {
     try {

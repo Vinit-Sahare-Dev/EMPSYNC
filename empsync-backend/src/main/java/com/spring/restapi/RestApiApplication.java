@@ -12,10 +12,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import com.spring.restapi.service.AuthService;
 
-@SpringBootApplication(exclude = {
-    DataSourceAutoConfiguration.class,
-    HibernateJpaAutoConfiguration.class
-})
+@SpringBootApplication
 @EnableScheduling  // ADD THIS to enable scheduled tasks for token cleanup
 public class RestApiApplication {
 

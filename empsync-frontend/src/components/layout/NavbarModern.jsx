@@ -19,7 +19,7 @@ const NavbarModern = ({ user, onLogout }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigation = [
-    { name: 'Dashboard', href: user?.role === 'EMPLOYEE' ? '/employee-dashboard' : '/dashboard', icon: HomeIcon, roles: ['ADMIN', 'EMPLOYEE'] },
+    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, roles: ['ADMIN', 'EMPLOYEE'] },
     { name: 'Employees', href: '/employees', icon: UserGroupIcon, roles: ['ADMIN'] },
     { name: 'Departments', href: '/departments', icon: BuildingOfficeIcon, roles: ['ADMIN', 'EMPLOYEE'] },
     { name: 'Analytics', href: '/analytics', icon: ChartBarIcon, roles: ['ADMIN'] },

@@ -4,8 +4,16 @@ class EmpSyncAPI {
   }
 
   async request(endpoint, options = {}) {
+    let url = `${this.baseURL}${endpoint}`;
+    
+    // Handle query parameters
+    if (options.params) {
+      const queryString = new URLSearchParams(options.params).toString();
+      url += (url.includes('?') ? '&' : '?') + queryString;
+    }
+
     try {
-      const response = await fetch(`${this.baseURL}${endpoint}`, {
+      const response = await fetch(url, {
         headers: {
           'Content-Type': 'application/json',
           ...options.headers,
@@ -18,10 +26,28 @@ class EmpSyncAPI {
         throw new Error(`HTTP ${response.status}: ${errorText}`);
       }
 
-      return await response.json();
+      // Handle empty responses
+      const text = await response.text();
+      return text ? JSON.parse(text) : {};
     } catch (error) {
       throw error;
     }
+  }
+
+  async get(endpoint, options = {}) {
+    return this.request(endpoint, { ...options, method: 'GET' });
+  }
+
+  async post(endpoint, body, options = {}) {
+    return this.request(endpoint, { ...options, method: 'POST', body: JSON.stringify(body) });
+  }
+
+  async put(endpoint, body, options = {}) {
+    return this.request(endpoint, { ...options, method: 'PUT', body: JSON.stringify(body) });
+  }
+
+  async delete(endpoint, options = {}) {
+    return this.request(endpoint, { ...options, method: 'DELETE' });
   }
 
   async getAllEmployees() {

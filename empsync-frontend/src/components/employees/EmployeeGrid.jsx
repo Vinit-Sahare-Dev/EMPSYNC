@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import EmployeeModal from './EmployeeModal';
 import EmployeeCard from './EmployeeCard';
-import './EmployeeModern.css';
+
 import { empSyncAPI } from '../../services/apiService';
 import { useToast } from '../ui/Toast';
 

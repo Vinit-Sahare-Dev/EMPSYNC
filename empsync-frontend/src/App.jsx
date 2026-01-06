@@ -4,7 +4,7 @@ import NavbarModern from './components/layout/NavbarModern';
 import Dashboard from './components/dashboard/Dashboard';
 import LandingPage from './components/auth/LandingPage';
 import AuthForms from './components/auth/AuthForms';
-import EmployeeGridModern from './components/employees/EmployeeGridModern';
+import EmployeeGrid from './components/employees/EmployeeGrid';
 import DepartmentGrid from './components/departments/DepartmentGrid';
 import Analytics from './components/dashboard/Analytics';
 import Profile from './components/profile/Profile';
@@ -74,7 +74,7 @@ const AppContent = () => {
                     } />
                     <Route path="/employees" element={
                         <ProtectedRoute>
-                            <EmployeeGridModern />
+                            <EmployeeGrid />
                         </ProtectedRoute>
                     } />
                     <Route path="/departments" element={
