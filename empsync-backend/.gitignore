@@ -31,3 +31,23 @@ build/
 
 ### VS Code ###
 .vscode/
+all.env
+env.properties
+
+# Compiled artifacts
+*.jar
+*.war
+*.class
+bin/
+out/
+
+# Log files
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
