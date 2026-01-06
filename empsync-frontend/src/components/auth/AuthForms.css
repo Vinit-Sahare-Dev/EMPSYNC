@@ -181,60 +181,6 @@
   }
 }
 
-/* Header */
-.auth-header {
-  text-align: center;
-  margin-bottom: 1.3rem;
-}
-
-.auth-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 16px;
-  margin-bottom: 0.4rem;
-  font-size: 1.6rem;
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-  animation: bounceIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-.auth-header h2 {
-  color: #f8fafc;
-  margin-bottom: 0.25rem;
-  font-weight: 800;
-  font-size: 1.75rem;
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  letter-spacing: -0.02em;
-}
-
-.auth-header p {
-  color: #94a3b8;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
 /* Tab Styles */
 .auth-tabs {
   display: flex;
@@ -614,10 +560,6 @@
     padding: 1rem;
   }
 
-  .auth-header h2 {
-    font-size: 1.75rem;
-  }
-
   .login-input {
     padding: 0.875rem 1rem !important;
   }
@@ -627,10 +569,6 @@
   .auth-forms-container {
     padding: 1.5rem 1.25rem;
     border-radius: 18px;
-  }
-
-  .auth-header h2 {
-    font-size: 1.5rem;
   }
 
   .auth-form h3 {
@@ -651,4 +589,12 @@
     padding: 0.75rem 1rem !important;
     font-size: 0.95rem !important;
   }
+}
+.auth-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
 }
