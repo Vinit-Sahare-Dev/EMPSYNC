@@ -41,7 +41,7 @@ export default defineConfig({
     // CORRECTED PROXY CONFIGURATION:
     proxy: {
       '/api': {
-        target: process.env.VITE_API_BASE_URL.replace('/api', ''), // Use VITE_API_BASE_URL from environment
+        target: (process.env.VITE_API_BASE_URL || 'http://localhost:8888/api').replace('/api', ''), // Use VITE_API_BASE_URL from environment
         // target: 'http://localhost:8888', // ✅ Fixed: Match backend port 8888
         changeOrigin: true,
         secure: false,

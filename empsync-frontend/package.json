@@ -29,7 +29,8 @@
     "vite": "^4.5.14",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "terser": "^5.31.0"
   },
   "browserslist": {
     "production": [
