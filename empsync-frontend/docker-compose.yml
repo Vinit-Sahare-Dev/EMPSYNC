@@ -9,7 +9,7 @@ services:
       - "3000:80"
     environment:
       - NODE_ENV=production
-      - VITE_API_BASE_URL=https://empsync-2.onrender.com/api
+
     depends_on:
       - backend
     volumes:
