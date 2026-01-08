@@ -12,7 +12,7 @@ import Settings from './components/settings/Settings';
 import AttendanceTracker from './components/attendance/AttendanceTracker';
 import AttendanceHistory from './components/attendance/AttendanceHistory';
 import PerformanceDashboard from './components/performance/PerformanceDashboard';
-import { ToastProvider } from './components/ui/Toast';
+
 import './styles/App.css';
 
 // Protected Route wrapper

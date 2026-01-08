@@ -30,6 +30,7 @@ class EmpSyncAPI {
       const text = await response.text();
       return text ? JSON.parse(text) : {};
     } catch (error) {
+      console.error("API Request Error:", error);
       throw error;
     }
   }

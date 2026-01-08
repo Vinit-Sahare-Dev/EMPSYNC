@@ -1,498 +1,300 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { empSyncAPI } from '../../services/apiService';
-import { attendanceService } from '../../services/attendanceService';
-import { useToast } from '../ui/Toast';
-import './Dashboard.css';
-
-const Dashboard = () => {
-  const [dashboardData, setDashboardData] = useState({
-    stats: { total: 0, active: 0, departments: 0, newHires: 0 },
-    departmentStats: [],
-    recentActivity: [],
-    employees: []
-  });
-  const [backendConnected, setBackendConnected] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [selectedMetric, setSelectedMetric] = useState('total');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [attendanceData, setAttendanceData] = useState({
-    todayAttendance: null,
-    weeklyStats: { present: 0, absent: 0, late: 0 },
-    monthlyStats: { totalDays: 0, averageHours: 0 }
-  });
-  const { showToast } = useToast();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const user = localStorage.getItem('currentUser');
-    if (!user) {
-      navigate('/login');
-      return;
-    }
-    loadDashboardData();
-  }, [navigate]);
-
-  const loadDashboardData = useCallback(async () => {
-    try {
-      const result = await Promise.race([
-        empSyncAPI.getAllEmployees(),
-        new Promise(resolve => setTimeout(() => resolve(null), 1500))
-      ]);
-
-      if (result && result.success) {
-        setBackendConnected(true);
-        processDashboardData(result.employees || []);
-        loadAttendanceData();
-      } else {
-        setBackendConnected(false);
-        const saved = localStorage.getItem('employees');
-        processDashboardData(saved ? JSON.parse(saved) : getDefaultEmployees());
-        loadAttendanceData();
-      }
-    } catch (error) {
-      const saved = localStorage.getItem('employees');
-      processDashboardData(saved ? JSON.parse(saved) : getDefaultEmployees());
-      loadAttendanceData();
-    }
-  }, []);
-
-  const loadAttendanceData = async () => {
-    try {
-      const [todayResult, weeklyResult, monthlyResult] = await Promise.allSettled([
-        attendanceService.getActiveAttendance(),
-        attendanceService.getAttendanceStats(),
-        attendanceService.getAttendanceStats()
-      ]);
-
-      if (todayResult.status === 'fulfilled' && todayResult.value.success) {
-        setAttendanceData(prev => ({
-          ...prev,
-          todayAttendance: todayResult.value.attendance
-        }));
-      }
-
-      if (weeklyResult.status === 'fulfilled' && weeklyResult.value.success) {
-        setAttendanceData(prev => ({
-          ...prev,
-          weeklyStats: weeklyResult.value.stats
-        }));
-      }
-
-      if (monthlyResult.status === 'fulfilled' && monthlyResult.value.success) {
-        setAttendanceData(prev => ({
-          ...prev,
-          monthlyStats: monthlyResult.value.stats
-        }));
-      }
-    } catch (error) {
-      console.error('Failed to load attendance data:', error);
-    }
-  };
-
-  const getDefaultEmployees = () => [
-    { id: 1, name: "John Doe", department: "IT", position: "Senior Developer", status: "Active", joinDate: new Date().toISOString() },
-    { id: 2, name: "Jane Smith", department: "HR", position: "HR Manager", status: "Active", joinDate: new Date().toISOString() },
-    { id: 3, name: "Mike Johnson", department: "Finance", position: "Financial Analyst", status: "Active", joinDate: new Date().toISOString() },
-    { id: 4, name: "Sarah Wilson", department: "Marketing", position: "Specialist", status: "Active", joinDate: new Date().toISOString() }
-  ];
-
-  const processDashboardData = (employees) => {
-    const stats = {
-      total: employees.length,
-      active: employees.filter(e => e.status === 'Active' || !e.status).length,
-      departments: new Set(employees.map(e => e.department)).size,
-      newHires: employees.filter(e => {
-        const d = new Date(e.joinDate);
-        const limit = new Date();
-        limit.setDate(limit.getDate() - 30);
-        return d > limit;
-      }).length
-    };
-
-    const deptMap = {};
-    employees.forEach(e => {
-      const d = e.department || 'Unknown';
-      if (!deptMap[d]) deptMap[d] = { count: 0, new: 0 };
-      deptMap[d].count++;
-      if (new Date(e.joinDate) > new Date(Date.now() - 30 * 86400000)) deptMap[d].new++;
-    });
-
-    const deptStats = Object.entries(deptMap)
-      .sort((a, b) => b[1].count - a[1].count)
-      .slice(0, 6)
-      .map(([name, data], i) => ({
-        name,
-        count: data.count,
-        percentage: Math.round((data.count / (employees.length || 1)) * 100),
-        new: data.new,
-        color: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4'][i]
-      }));
-
-    setDashboardData({ stats, departmentStats: deptStats, employees });
-  };
-
-  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-
-  const metricCards = [
-    { 
-      id: 'total', 
-      label: 'Team Members', 
-      value: dashboardData.stats.total, 
-      icon: '👥', 
-      color: '#3B82F6',
-      trend: '+12%',
-      description: 'Total workforce'
-    },
-    { 
-      id: 'active', 
-      label: 'Active Now', 
-      value: dashboardData.stats.active, 
-      icon: '✨', 
-      color: '#10B981',
-      trend: '+8%',
-      description: 'Currently active'
-    },
-    { 
-      id: 'departments', 
-      label: 'Departments', 
-      value: dashboardData.stats.departments, 
-      icon: '🏢', 
-      color: '#F59E0B',
-      trend: '+2',
-      description: 'Total units'
-    },
-    { 
-      id: 'newHires', 
-      label: 'New Hires', 
-      value: dashboardData.stats.newHires, 
-      icon: '🎯', 
-      color: '#8B5CF6',
-      trend: '+25%',
-      description: 'This month'
-    }
-  ];
-
-  const quickActions = [
-    { icon: '➕', label: 'Add Employee', action: () => navigate('/employees'), color: '#3B82F6' },
-    { icon: '📊', label: 'Analytics', action: () => navigate('/analytics'), color: '#10B981' },
-    { icon: '⏰', label: 'Check In', action: () => handleCheckIn(), color: '#F59E0B' },
-    { icon: '⏱️', label: 'Check Out', action: () => handleCheckOut(), color: '#EF4444' }
-  ];
-
-  const handleCheckIn = async () => {
-    try {
-      const result = await attendanceService.checkIn();
-      if (result.success) {
-        showToast('success', 'Successfully checked in!');
-        loadAttendanceData();
-      } else {
-        showToast('error', result.message || 'Failed to check in');
-      }
-    } catch (error) {
-      showToast('error', 'Failed to check in. Please try again.');
-    }
-  };
-
-  const handleCheckOut = async () => {
-    try {
-      const result = await attendanceService.checkOut();
-      if (result.success) {
-        showToast('success', 'Successfully checked out!');
-        loadAttendanceData();
-      } else {
-        showToast('error', result.message || 'Failed to check out');
-      }
-    } catch (error) {
-      showToast('error', 'Failed to check out. Please try again.');
-    }
-  };
-
-  return (
-    <div className="dashboard-professional">
-      {/* Animated Background */}
-      <div className="animated-bg">
-        <div className="floating-shapes">
-          <div className="shape shape-1"></div>
-          <div className="shape shape-2"></div>
-          <div className="shape shape-3"></div>
-        </div>
-      </div>
-
-      {/* News Ticker */}
-      <div className="news-ticker">
-        <div className="ticker-content">
-          <span>🚀 System Update: Employee Database v2.1 is now online.</span>
-          <span>📈 Monthly reports are ready for review.</span>
-          <span>💡 Tip: Use Quick Navigation for faster accessibility.</span>
-          <span>🏢 Welcome to our 5 new team members this week!</span>
-        </div>
-      </div>
-
-      {/* Header */}
-      <div className="dashboard-header">
-        <div className="header-left">
-          <h1 className="dashboard-title">
-            Welcome back, <span className="user-name">{currentUser.name || 'User'}</span> 👋
-          </h1>
-          <p className="dashboard-subtitle">Here's what's happening with your team today</p>
-        </div>
-        <div className="header-right">
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search employees..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
-            />
-            <span className="search-icon">🔍</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Metrics Grid */}
-      <div className="metrics-grid">
-        {metricCards.map((metric) => (
-          <div 
-            key={metric.id}
-            className={`metric-card ${selectedMetric === metric.id ? 'active' : ''}`}
-            onClick={() => setSelectedMetric(metric.id)}
-          >
-            <div className="metric-header">
-              <div className="metric-icon" style={{ background: metric.color }}>
-                {metric.icon}
-              </div>
-              <div className="metric-trend">
-                <span className="trend-value">{metric.trend}</span>
-                <span className="trend-arrow">↑</span>
-              </div>
-            </div>
-            <div className="metric-content">
-              <div className="metric-value">{metric.value}</div>
-              <div className="metric-label">{metric.label}</div>
-              <div className="metric-description">{metric.description}</div>
-            </div>
-            <div className="metric-sparkline">
-              <svg viewBox="0 0 100 20" className="sparkline">
-                <polyline
-                  fill="none"
-                  stroke={metric.color}
-                  strokeWidth="2"
-                  points="0,15 20,10 40,12 60,8 80,5 100,10"
-                />
-              </svg>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Quick Actions */}
-      <div className="quick-actions-section">
-        <h2 className="section-title">Quick Actions</h2>
-        <div className="quick-actions-grid">
-          {quickActions.map((action, index) => (
-            <button
-              key={index}
-              className="quick-action-btn"
-              onClick={action.action}
-              style={{ '--action-color': action.color }}
-            >
-              <span className="action-icon">{action.icon}</span>
-              <span className="action-label">{action.label}</span>
-              <div className="action-ripple"></div>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="dashboard-main-grid">
-        <div className="dashboard-left-column">
-          {/* Recent Activity */}
-          <div className="recent-employees-professional">
-            <div className="section-header">
-              <h2>Recent Activity</h2>
-              <div className="activity-filter">
-                <button className="filter-btn active">All</button>
-                <button className="filter-btn">New</button>
-                <button className="filter-btn">Updated</button>
-              </div>
-            </div>
-            <div className="recent-employees-grid">
-              {dashboardData.employees.slice(0, 4).map((emp, i) => (
-                <div key={emp.id || i} className="recent-employee-card">
-                  <div className="recent-avatar-sm" style={{ background: dashboardData.departmentStats.find(d => d.name === emp.department)?.color || '#3b82f6' }}>
-                    {emp.name.charAt(0)}
-                  </div>
-                  <div className="recent-employee-info">
-                    <h4>{emp.name}</h4>
-                    <p>{emp.position}</p>
-                    <div className="recent-meta-pill">{emp.department}</div>
-                    <div className="activity-time">2 hours ago</div>
-                  </div>
-                  <div className="employee-status">
-                    <div className={`status-dot ${emp.status === 'Active' ? 'active' : 'inactive'}`}></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Department Chart */}
-          <div className="chart-section-professional">
-            <div className="chart-header-flex">
-              <h2>Department Distribution</h2>
-              <div className="chart-controls">
-                <button className="chart-control-btn active">Bar</button>
-                <button className="chart-control-btn">Pie</button>
-                <div className={`status-badge-mini ${backendConnected ? 'live' : 'offline'}`}>
-                  {backendConnected ? 'Live' : 'Cached'}
-                </div>
-              </div>
-            </div>
-            <div className="chart-container">
-              <div className="custom-bar-chart">
-                {dashboardData.departmentStats.map((dept, index) => (
-                  <div key={dept.name} className="chart-row">
-                    <div className="row-label">
-                      <span>{dept.name}</span>
-                      <span className="row-count">{dept.count}</span>
-                    </div>
-                    <div className="row-track">
-                      <div 
-                        className="row-fill" 
-                        style={{ 
-                          width: `${dept.percentage}%`, 
-                          background: dept.color,
-                          animationDelay: `${index * 0.1}s`
-                        }} 
-                      />
-                    </div>
-                    <div className="row-percentage">{dept.percentage}%</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column */}
-        <div className="dashboard-right-column">
-          {/* Attendance Overview */}
-          <div className="attendance-overview-card">
-            <h3>Today's Attendance</h3>
-            <div className="attendance-status">
-              {attendanceData.todayAttendance ? (
-                <div className="attendance-active">
-                  <div className="status-icon">✓</div>
-                  <div className="status-info">
-                    <span className="status-text">Checked In</span>
-                    <span className="check-time">
-                      {attendanceData.todayAttendance.checkIn ? 
-                        new Date(attendanceData.todayAttendance.checkIn).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}) : 
-                        'Loading...'
-                      }
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                <div className="attendance-inactive">
-                  <div className="status-icon">○</div>
-                  <div className="status-info">
-                    <span className="status-text">Not Checked In</span>
-                    <span className="check-time">Ready to check in</span>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="attendance-stats">
-              <div className="stat-item">
-                <span className="stat-number">{attendanceData.weeklyStats.present}</span>
-                <span className="stat-label">Present</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">{attendanceData.weeklyStats.absent}</span>
-                <span className="stat-label">Absent</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">{attendanceData.weeklyStats.late}</span>
-                <span className="stat-label">Late</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Performance Overview */}
-          <div className="performance-card">
-            <h3>Performance Overview</h3>
-            <div className="performance-metrics">
-              <div className="performance-item">
-                <div className="performance-label">Productivity</div>
-                <div className="performance-bar">
-                  <div className="performance-fill" style={{ width: '85%' }}></div>
-                </div>
-                <div className="performance-value">85%</div>
-              </div>
-              <div className="performance-item">
-                <div className="performance-label">Attendance</div>
-                <div className="performance-bar">
-                  <div className="performance-fill" style={{ width: '92%' }}></div>
-                </div>
-                <div className="performance-value">92%</div>
-              </div>
-              <div className="performance-item">
-                <div className="performance-label">Satisfaction</div>
-                <div className="performance-bar">
-                  <div className="performance-fill" style={{ width: '78%' }}></div>
-                </div>
-                <div className="performance-value">78%</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Upcoming Events */}
-          <div className="events-card">
-            <h3>Upcoming Events</h3>
-            <div className="events-list">
-              <div className="event-item">
-                <div className="event-date">
-                  <div className="date-day">15</div>
-                  <div className="date-month">JAN</div>
-                </div>
-                <div className="event-content">
-                  <h4>Team Meeting</h4>
-                  <p>Quarterly review and planning</p>
-                  <div className="event-time">10:00 AM</div>
-                </div>
-              </div>
-              <div className="event-item">
-                <div className="event-date">
-                  <div className="date-day">20</div>
-                  <div className="date-month">JAN</div>
-                </div>
-                <div className="event-content">
-                  <h4>Training Session</h4>
-                  <p>New software onboarding</p>
-                  <div className="event-time">2:00 PM</div>
-                </div>
-              </div>
-              <div className="event-item">
-                <div className="event-date">
-                  <div className="date-day">25</div>
-                  <div className="date-month">JAN</div>
-                </div>
-                <div className="event-content">
-                  <h4>Team Building</h4>
-                  <p>Monthly team activity</p>
-                  <div className="event-time">4:00 PM</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Dashboard;
+2026-01-07T12:37:17.700843497Z #15 sha256:5b8007edd66bab6d1c68463c2a313deb13b319de66422e9b16eaf4a14de89248 46.72MB / 46.72MB 0.4s done
+2026-01-07T12:37:17.857055047Z #15 extracting sha256:5b8007edd66bab6d1c68463c2a313deb13b319de66422e9b16eaf4a14de89248
+2026-01-07T12:37:21.597721916Z #15 extracting sha256:5b8007edd66bab6d1c68463c2a313deb13b319de66422e9b16eaf4a14de89248 3.9s done
+2026-01-07T12:37:21.811781149Z #15 sha256:90f0c913436040e8043051a25779be2670ee72a7efec25b6e4bbb08d54877db4 126B / 126B done
+2026-01-07T12:37:21.811807131Z #15 extracting sha256:90f0c913436040e8043051a25779be2670ee72a7efec25b6e4bbb08d54877db4
+2026-01-07T12:37:26.121834918Z #15 extracting sha256:90f0c913436040e8043051a25779be2670ee72a7efec25b6e4bbb08d54877db4 4.5s done
+2026-01-07T12:37:26.245097141Z #15 sha256:867c03b825a35a5db0249203ef051f7e12f2bc4c110f281f6de68072d3c55bab 2.28kB / 2.28kB done
+2026-01-07T12:37:26.245116612Z #15 extracting sha256:867c03b825a35a5db0249203ef051f7e12f2bc4c110f281f6de68072d3c55bab 0.1s done
+2026-01-07T12:37:26.494246659Z #15 sha256:2992308204b3d0ed6a5a7491cc7dcf666ce4ce832df982aad5e83f2abf3fa1e7 92B / 92B done
+2026-01-07T12:37:26.516943664Z #15 extracting sha256:2992308204b3d0ed6a5a7491cc7dcf666ce4ce832df982aad5e83f2abf3fa1e7 0.0s done
+2026-01-07T12:37:26.516965735Z #15 CACHED
+2026-01-07T12:37:26.516969735Z 
+2026-01-07T12:37:26.516973896Z #16 [stage-1 3/4] COPY --from=build /app/target/*.jar app.jar
+2026-01-07T12:37:26.729770911Z #16 DONE 0.4s
+2026-01-07T12:37:26.852586053Z 
+2026-01-07T12:37:26.852610695Z #17 [stage-1 4/4] RUN mkdir -p /app/logs
+2026-01-07T12:37:26.852614225Z #17 DONE 0.1s
+2026-01-07T12:37:27.008936862Z 
+2026-01-07T12:37:27.008954723Z #18 exporting to docker image format
+2026-01-07T12:37:27.008958644Z #18 exporting layers
+2026-01-07T12:37:29.297390383Z #18 exporting layers 2.4s done
+2026-01-07T12:37:29.469487375Z #18 exporting manifest sha256:a4d8732afdc3ac11a538e767fd263fb2736f5682b9a17bb5dc19bb6ba0cae44d 0.0s done
+2026-01-07T12:37:29.469518377Z #18 exporting config sha256:6982781fce422489241b792d862a64d56b16fca15546c3f19be54107aa5e4175 0.0s done
+2026-01-07T12:37:30.112078713Z #18 DONE 3.3s
+2026-01-07T12:37:30.112097934Z 
+2026-01-07T12:37:30.112102154Z #19 exporting cache to client directory
+2026-01-07T12:37:30.112105654Z #19 preparing build cache for export
+2026-01-07T12:37:44.926629816Z #19 writing cache image manifest sha256:66a5426137796d4fea3c3d7e16a022c48bd03c4bef071736a29eab6b1971a734
+2026-01-07T12:37:45.092490845Z #19 writing cache image manifest sha256:66a5426137796d4fea3c3d7e16a022c48bd03c4bef071736a29eab6b1971a734 0.3s done
+2026-01-07T12:37:45.092515937Z #19 DONE 15.0s
+2026-01-07T12:38:02.446156583Z Pushing image to registry...
+2026-01-07T12:38:10.689864858Z Upload succeeded
+2026-01-07T12:38:44.263315908Z ==> Setting WEB_CONCURRENCY=1 by default, based on available CPUs in the instance
+2026-01-07T12:38:44.340232114Z ==> Deploying...
+2026-01-07T12:39:10.028315763Z 
+2026-01-07T12:39:10.028373744Z   .   ____          _            __ _ _
+2026-01-07T12:39:10.028379325Z  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+2026-01-07T12:39:10.028381785Z ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+2026-01-07T12:39:10.028383894Z  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+2026-01-07T12:39:10.028385974Z   '  |____| .__|_| |_|_| |_\__, | / / / /
+2026-01-07T12:39:10.028389205Z  =========|_|==============|___/=/_/_/_/
+2026-01-07T12:39:10.028392475Z 
+2026-01-07T12:39:10.028868896Z  :: Spring Boot ::                (v3.5.6)
+2026-01-07T12:39:10.028875766Z 
+2026-01-07T12:39:11.227692196Z 12:39:11.226 [INFO ] c.s.r.RestApiApplication - Starting RestApiApplication v0.0.1-SNAPSHOT using Java 17.0.17 with PID 1 (/app/app.jar started by root in /app)
+2026-01-07T12:39:11.229002097Z 12:39:11.228 [INFO ] c.s.r.RestApiApplication - The following 1 profile is active: "docker"
+2026-01-07T12:39:49.012795216Z ==> No open ports detected, continuing to scan...
+2026-01-07T12:39:49.257411075Z ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+2026-01-07T12:39:52.626131025Z 12:39:52.534 [WARN ] i.u.w.jsr - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2026-01-07T12:39:53.026819694Z 12:39:53.026 [INFO ] i.u.servlet - Initializing Spring embedded WebApplicationContext
+2026-01-07T12:41:36.433733247Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:36.433735417Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:36.433747197Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:36.433751237Z 	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+2026-01-07T12:41:36.433753427Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:36.433755597Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:36.433757758Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:36.433760038Z 	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+2026-01-07T12:41:36.433762287Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:36.433764488Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:36.433766608Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:36.433768768Z 	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+2026-01-07T12:41:36.433770978Z 	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+2026-01-07T12:41:36.433773158Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:36.433775348Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:36.433777538Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:36.433779748Z 	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+2026-01-07T12:41:36.433781938Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:36.433784088Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:36.433786258Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:36.433788418Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:36.433790578Z 	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+2026-01-07T12:41:36.433796318Z 	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+2026-01-07T12:41:36.433798579Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:36.433800768Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:36.433802919Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:36.433805069Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:36.433807269Z 	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+2026-01-07T12:41:36.433809459Z 	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+2026-01-07T12:41:36.433811629Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:36.433813799Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:36.433815999Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:36.433818199Z 	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+2026-01-07T12:41:36.433820369Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:36.433829559Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:36.433832009Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:36.433834159Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:36.433836349Z 	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+2026-01-07T12:41:36.433838549Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:36.433840769Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:36.433842969Z 	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:334)
+2026-01-07T12:41:36.43384516Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:225)
+2026-01-07T12:41:36.43384744Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:36.43384962Z 	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+2026-01-07T12:41:36.43385182Z 	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+2026-01-07T12:41:36.43385398Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+2026-01-07T12:41:36.43385619Z 	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+2026-01-07T12:41:36.43386183Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+2026-01-07T12:41:36.43386403Z 	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+2026-01-07T12:41:36.43386629Z 	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319)
+2026-01-07T12:41:36.43386852Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+2026-01-07T12:41:36.43387076Z 	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+2026-01-07T12:41:36.43387293Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+2026-01-07T12:41:36.43387513Z 	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+2026-01-07T12:41:36.43387735Z 	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240)
+2026-01-07T12:41:36.43387953Z 	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+2026-01-07T12:41:36.433881661Z 	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+2026-01-07T12:41:36.433883821Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:36.433886001Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:36.433888151Z 	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+2026-01-07T12:41:36.433890311Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:36.433892461Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:36.433894671Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:36.433896891Z 	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+2026-01-07T12:41:36.433899061Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:36.433901211Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:36.433903361Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:36.433905531Z 	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+2026-01-07T12:41:36.433907691Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:36.433909831Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:36.433912011Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:36.433924431Z 	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+2026-01-07T12:41:36.433926782Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:36.433928882Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:36.433931092Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:36.433933262Z 	at io.undertow.servlet.handlers.FilterHandler.handleRequest(FilterHandler.java:84)
+2026-01-07T12:41:36.433938772Z 	at io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+2026-01-07T12:41:36.433941062Z 	at io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+2026-01-07T12:41:36.433943232Z 	at io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+2026-01-07T12:41:36.433945372Z 	at io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+2026-01-07T12:41:36.433947572Z 	at io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:117)
+2026-01-07T12:41:36.433949802Z 	at io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)
+2026-01-07T12:41:36.433952012Z 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+2026-01-07T12:41:36.433954252Z 	at io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)
+2026-01-07T12:41:36.433956462Z 	at io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)
+2026-01-07T12:41:36.433958732Z 	at io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)
+2026-01-07T12:41:36.433960922Z 	at io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:75)
+2026-01-07T12:41:36.433963152Z 	at io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)
+2026-01-07T12:41:36.433965363Z 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+2026-01-07T12:41:36.433967552Z 	at io.undertow.servlet.handlers.SendErrorPageHandler.handleRequest(SendErrorPageHandler.java:52)
+2026-01-07T12:41:36.433969733Z 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+2026-01-07T12:41:36.433971903Z 	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:271)
+2026-01-07T12:41:36.433974073Z 	at io.undertow.servlet.handlers.ServletInitialHandler$1.call(ServletInitialHandler.java:130)
+2026-01-07T12:41:36.433976693Z 	at io.undertow.servlet.handlers.ServletInitialHandler$1.call(ServletInitialHandler.java:127)
+2026-01-07T12:41:36.433979463Z 	at io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)
+2026-01-07T12:41:36.433981663Z 	at io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)
+2026-01-07T12:41:36.433983843Z 	at io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:251)
+2026-01-07T12:41:36.433986173Z 	at io.undertow.servlet.handlers.ServletInitialHandler.lambda$new$1(ServletInitialHandler.java:99)
+2026-01-07T12:41:36.433988333Z 	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:395)
+2026-01-07T12:41:36.433990493Z 	at io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:896)
+2026-01-07T12:41:36.433992683Z 	at org.jboss.threads.ContextHandler$1.runWith(ContextHandler.java:18)
+2026-01-07T12:41:36.433994863Z 	at org.jboss.threads.EnhancedQueueExecutor$Task.doRunWith(EnhancedQueueExecutor.java:2691)
+2026-01-07T12:41:36.433997043Z 	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2670)
+2026-01-07T12:41:36.433999203Z 	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1589)
+2026-01-07T12:41:36.434001383Z 	at org.xnio.XnioWorker$WorkerThreadFactory$1$1.run(XnioWorker.java:1282)
+2026-01-07T12:41:36.434007433Z 	at java.base/java.lang.Thread.run(Unknown Source)
+2026-01-07T12:41:37.532066867Z 12:41:37.529 [ERROR] c.s.r.e.GlobalExceptionHandler - 🚨 Unhandled exception: 
+2026-01-07T12:41:37.532088728Z org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .
+2026-01-07T12:41:37.532091928Z 	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:585)
+2026-01-07T12:41:37.532094598Z 	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:52)
+2026-01-07T12:41:37.532096448Z 	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+2026-01-07T12:41:37.532098278Z 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+2026-01-07T12:41:37.532099998Z 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+2026-01-07T12:41:37.532101868Z 	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
+2026-01-07T12:41:37.532103668Z 	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:527)
+2026-01-07T12:41:37.532105388Z 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+2026-01-07T12:41:37.532107208Z 	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614)
+2026-01-07T12:41:37.532108938Z 	at io.undertow.servlet.handlers.ServletHandler.handleRequest(ServletHandler.java:74)
+2026-01-07T12:41:37.532110738Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:129)
+2026-01-07T12:41:37.532112538Z 	at org.springframework.web.servlet.resource.ResourceUrlEncodingFilter.doFilter(ResourceUrlEncodingFilter.java:66)
+2026-01-07T12:41:37.532114248Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:37.532115958Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:37.532117688Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+2026-01-07T12:41:37.532119518Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+2026-01-07T12:41:37.532121318Z 	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231)
+2026-01-07T12:41:37.532123829Z 	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:490)
+2026-01-07T12:41:37.532126259Z 	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:351)
+2026-01-07T12:41:37.532128509Z 	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:83)
+2026-01-07T12:41:37.532130259Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:129)
+2026-01-07T12:41:37.532131979Z 	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+2026-01-07T12:41:37.532133679Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532135359Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.532137109Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532149259Z 	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125)
+2026-01-07T12:41:37.532151169Z 	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)
+2026-01-07T12:41:37.532152889Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532154609Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.532156339Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532158159Z 	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+2026-01-07T12:41:37.532159999Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.53216179Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.53218974Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532200471Z 	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179)
+2026-01-07T12:41:37.532206791Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532209571Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.532212451Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532215071Z 	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+2026-01-07T12:41:37.532217791Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532220611Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.532223411Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532226081Z 	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)
+2026-01-07T12:41:37.532228821Z 	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93)
+2026-01-07T12:41:37.532231731Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532234401Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.532237001Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532239861Z 	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+2026-01-07T12:41:37.532242641Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:37.532251882Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532254482Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.532256672Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532258722Z 	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+2026-01-07T12:41:37.532260822Z 	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+2026-01-07T12:41:37.532263202Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:37.532265382Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532267722Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.532269952Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532272232Z 	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+2026-01-07T12:41:37.532274462Z 	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+2026-01-07T12:41:37.532277042Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532279912Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.532282742Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532285782Z 	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+2026-01-07T12:41:37.532288682Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:37.532300063Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532303533Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+2026-01-07T12:41:37.532306403Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532309313Z 	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+2026-01-07T12:41:37.532311993Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:37.532314723Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:241)
+2026-01-07T12:41:37.532317633Z 	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:334)
+2026-01-07T12:41:37.532320143Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:225)
+2026-01-07T12:41:37.532327543Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:138)
+2026-01-07T12:41:37.532330554Z 	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233)
+2026-01-07T12:41:37.532333274Z 	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191)
+2026-01-07T12:41:37.532336074Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+2026-01-07T12:41:37.532338814Z 	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+2026-01-07T12:41:37.532341524Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+2026-01-07T12:41:37.532344384Z 	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+2026-01-07T12:41:37.532347004Z 	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319)
+2026-01-07T12:41:37.532349704Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+2026-01-07T12:41:37.532352544Z 	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267)
+2026-01-07T12:41:37.532355744Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+2026-01-07T12:41:37.532358654Z 	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+2026-01-07T12:41:37.532361834Z 	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240)
+2026-01-07T12:41:37.532364795Z 	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362)
+2026-01-07T12:41:37.532367515Z 	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278)
+2026-01-07T12:41:37.532370444Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:37.532373025Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:37.532375865Z 	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+2026-01-07T12:41:37.532378345Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:37.532381105Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:37.532384005Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:37.532389375Z 	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+2026-01-07T12:41:37.532392065Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:37.532394865Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:37.532397125Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:37.532400395Z 	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+2026-01-07T12:41:37.532402745Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:37.532405215Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:37.532408096Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:37.532431086Z 	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+2026-01-07T12:41:37.532434226Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+2026-01-07T12:41:37.532437536Z 	at io.undertow.servlet.core.ManagedFilter.doFilter(ManagedFilter.java:67)
+2026-01-07T12:41:37.532440476Z 	at io.undertow.servlet.handlers.FilterHandler$FilterChainImpl.doFilter(FilterHandler.java:131)
+2026-01-07T12:41:37.532443106Z 	at io.undertow.servlet.handlers.FilterHandler.handleRequest(FilterHandler.java:84)
+2026-01-07T12:41:37.532445656Z 	at io.undertow.servlet.handlers.security.ServletSecurityRoleHandler.handleRequest(ServletSecurityRoleHandler.java:62)
+2026-01-07T12:41:37.532448117Z 	at io.undertow.servlet.handlers.ServletChain$1.handleRequest(ServletChain.java:68)
+2026-01-07T12:41:37.532450657Z 	at io.undertow.servlet.handlers.ServletDispatchingHandler.handleRequest(ServletDispatchingHandler.java:36)
+2026-01-07T12:41:37.532452997Z 	at io.undertow.servlet.handlers.RedirectDirHandler.handleRequest(RedirectDirHandler.java:68)
+2026-01-07T12:41:37.532455367Z 	at io.undertow.servlet.handlers.security.SSLInformationAssociationHandler.handleRequest(SSLInformationAssociationHandler.java:117)
+2026-01-07T12:41:37.532457717Z 	at io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler.handleRequest(ServletAuthenticationCallHandler.java:57)
+2026-01-07T12:41:37.532460557Z 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+2026-01-07T12:41:37.532463087Z 	at io.undertow.security.handlers.AbstractConfidentialityHandler.handleRequest(AbstractConfidentialityHandler.java:46)
+2026-01-07T12:41:37.532465327Z 	at io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler.handleRequest(ServletConfidentialityConstraintHandler.java:64)
+2026-01-07T12:41:37.532468547Z 	at io.undertow.security.handlers.AuthenticationMechanismsHandler.handleRequest(AuthenticationMechanismsHandler.java:60)
+2026-01-07T12:41:37.532471197Z 	at io.undertow.servlet.handlers.security.CachedAuthenticatedSessionHandler.handleRequest(CachedAuthenticatedSessionHandler.java:75)
+2026-01-07T12:41:37.532473747Z 	at io.undertow.security.handlers.AbstractSecurityContextAssociationHandler.handleRequest(AbstractSecurityContextAssociationHandler.java:43)
+2026-01-07T12:41:37.532476057Z 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+2026-01-07T12:41:37.532478327Z 	at io.undertow.servlet.handlers.SendErrorPageHandler.handleRequest(SendErrorPageHandler.java:52)
+2026-01-07T12:41:37.532481067Z 	at io.undertow.server.handlers.PredicateHandler.handleRequest(PredicateHandler.java:43)
+2026-01-07T12:41:37.532483477Z 	at io.undertow.servlet.handlers.ServletInitialHandler.handleFirstRequest(ServletInitialHandler.java:271)
+2026-01-07T12:41:37.532485817Z 	at io.undertow.servlet.handlers.ServletInitialHandler$1.call(ServletInitialHandler.java:130)
+2026-01-07T12:41:37.532487938Z 	at io.undertow.servlet.handlers.ServletInitialHandler$1.call(ServletInitialHandler.java:127)
+2026-01-07T12:41:37.532490678Z 	at io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1.call(ServletRequestContextThreadSetupAction.java:48)
+2026-01-07T12:41:37.532493378Z 	at io.undertow.servlet.core.ContextClassLoaderSetupAction$1.call(ContextClassLoaderSetupAction.java:43)
+2026-01-07T12:41:37.532496008Z 	at io.undertow.servlet.handlers.ServletInitialHandler.dispatchRequest(ServletInitialHandler.java:251)
+2026-01-07T12:41:37.532498588Z 	at io.undertow.servlet.handlers.ServletInitialHandler.lambda$new$1(ServletInitialHandler.java:99)
+2026-01-07T12:41:37.532501358Z 	at io.undertow.server.Connectors.executeRootHandler(Connectors.java:395)
+2026-01-07T12:41:37.532508908Z 	at io.undertow.server.HttpServerExchange$1.run(HttpServerExchange.java:896)
+2026-01-07T12:41:37.532510758Z 	at org.jboss.threads.ContextHandler$1.runWith(ContextHandler.java:18)
+2026-01-07T12:41:37.532512528Z 	at org.jboss.threads.EnhancedQueueExecutor$Task.doRunWith(EnhancedQueueExecutor.java:2691)
+2026-01-07T12:41:37.532514358Z 	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2670)
+2026-01-07T12:41:37.532516138Z 	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1589)
+2026-01-07T12:41:37.532517898Z 	at org.xnio.XnioWorker$WorkerThreadFactory$1$1.run(XnioWorker.java:1282)
+2026-01-07T12:41:37.532520058Z 	at java.base/java.lang.Thread.run(Unknown Source)
+2026-01-07T12:46:43.83271698Z ==> Detected service running on port 8888
+2026-01-07T12:46:44.13519264Z ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
+2026-01-07T12:56:40.093430168Z 12:56:40.092 [INFO ] c.s.r.RestApiApplication -  EMPSYNC is shutting down gracefully...
+2026-01-07T12:56:40.101640868Z 12:56:40.101 [INFO ] io.undertow - stopping server: Undertow - 2.3.19.Final
+2026-01-07T12:56:40.129463375Z 12:56:40.129 [INFO ] i.u.servlet - Destroying Spring FrameworkServlet 'dispatcherServlet'

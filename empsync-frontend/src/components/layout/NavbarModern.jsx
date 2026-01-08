@@ -41,7 +41,7 @@ const NavbarModern = ({ user, onLogout }) => {
             )}
 
             <div className="navbar-logo" onClick={() => window.location.href = '/'}>
-              <img src="/empSync-logo.svg" alt="Logo" className="logo-icon" />
+              <img src="/empsync-logo.svg" alt="Logo" className="logo-icon" />
               <h1 className="logo-title">EMPSYNC</h1>
             </div>
 

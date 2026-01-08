@@ -35,14 +35,14 @@ const AuthForms = ({ onLogin, onClose, defaultForm = 'admin-login' }) => {
     confirmPassword: ''
   });
 
-  // Toast notification function
-  const showToast = (type, message) => {
-    if (typeof Toast === 'function') {
-      Toast[type](message);
-    } else {
-      // Fallback if Toast is not available
-    }
-  };
+    // Toast notification function
+    const showToast = (type, message) => {
+      if (typeof Toast === 'function') {
+        Toast[type](message);
+      } else {
+        // Fallback if Toast is not available
+      }
+    };
 
   // Test backend connection
   const testBackendConnection = async () => {
