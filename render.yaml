@@ -1,0 +1,40 @@
+# Exported from Render on 2026-01-13T04:39:32Z
+version: "1"
+projects:
+- name: veridia
+  environments:
+  - name: Production
+    services:
+    - type: web
+      name: EMPSYNC-2
+      runtime: docker
+      repo: https://github.com/Vinit-Sahare-Dev/EMPSYNC
+      plan: free
+      envVars:
+      - key: VITE_API_BASE_URL
+        sync: true
+      - key: FRONTEND_URL
+        sync: true
+      - key: SMTP_PASSWORD
+        sync: true
+      - key: SMTP_USERNAME
+        sync: true
+      - key: SMTP_PORT
+        sync: true
+      - key: SMTP_HOST
+        sync: true
+      - key: SERVER_PORT
+        sync: true
+      - key: SPRING_PROFILE
+        sync: true
+      - key: JDBC_DATABASE_PASSWORD
+        sync: true
+      - key: JDBC_DATABASE_USERNAME
+        sync: true
+      - key: JDBC_DATABASE_URL
+        sync: true
+      region: virginia
+      dockerContext: .
+      dockerfilePath: ./Dockerfile
+      autoDeployTrigger: commit
+      rootDir: empsync-backend
