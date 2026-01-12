@@ -14,6 +14,7 @@ import AttendanceHistory from './components/attendance/AttendanceHistory';
 import PerformanceDashboard from './components/performance/PerformanceDashboard';
 
 import './styles/App.css';
+import { ToastProvider } from './contexts/ToastContext';
 
 // Protected Route wrapper
 const ProtectedRoute = ({ children }) => {

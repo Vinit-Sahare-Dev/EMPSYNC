@@ -71,6 +71,67 @@ a {
   text-decoration: none;
 }
 
+/* Add any global styles here */
+
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast-item {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease-in-out;
+}
+
+.toast-item.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-item.hide {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.toast-item button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.toast-item.toast-info {
+  background-color: #2196f3; /* Blue */
+}
+
+.toast-item.toast-success {
+  background-color: #4CAF50; /* Green */
+}
+
+.toast-item.toast-warning {
+  background-color: #ff9800; /* Orange */
+}
+
+.toast-item.toast-error {
+  background-color: #f44336; /* Red */
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;

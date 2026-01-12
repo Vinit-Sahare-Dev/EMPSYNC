@@ -23,15 +23,17 @@ projects:
         sync: true
       - key: SMTP_HOST
         sync: true
-      - key: SERVER_PORT
-        sync: true
-      - key: SPRING_PROFILE
-        sync: true
-      - key: JDBC_DATABASE_PASSWORD
+        - key: SERVER_PORT
+          sync: true
+      - key: JDBC_DATABASE_URL
         sync: true
       - key: JDBC_DATABASE_USERNAME
         sync: true
-      - key: JDBC_DATABASE_URL
+      - key: JDBC_DATABASE_PASSWORD
+        sync: true
+      - key: DATABASE_DRIVER
+        sync: true
+      - key: DATABASE_DIALECT
         sync: true
       region: virginia
       dockerContext: .

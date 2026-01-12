@@ -8,10 +8,8 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": {
-      "node": true,
-      "module": "esnext"
-    },
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "jsx": "react-jsx",
     "declaration": true,
     "declarationMap": true,
@@ -27,7 +25,7 @@
       "@assets/*": ["./src/assets/*"],
       "@utils/*": ["./src/utils/*"]
     },
-    "allowImportingTsExtensions": [".ts", ".tsx", ".js", ".jsx"],
+    "allowImportingTsExtensions": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

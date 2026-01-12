@@ -27,7 +27,7 @@ RUN mkdir -p /app/logs
 EXPOSE 8888
 
 # Set environment variables (can be overridden)
-ENV SPRING_PROFILES_ACTIVE=docker
+ENV SPRING_PROFILES_ACTIVE=production
 ENV JAVA_OPTS="-Xmx512m -Xms256m"
 
 # Health check
